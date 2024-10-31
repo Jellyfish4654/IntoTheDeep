@@ -27,7 +27,8 @@ public class JeleTelly extends LinearOpMode {
         backLeftMotor = hardwareMap.get(DcMotor.class, "motorBL");
         frontRightMotor = hardwareMap.get(DcMotor.class, "motorFR");
         backRightMotor = hardwareMap.get(DcMotor.class, "motorBR");
-        DcMotorEx slideMotorLeft, slideMotorRight;
+        DcMotorEx slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
+        DcMotorEx slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight")
         imu = hardwareMap.get(IMU.class, "imu");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -54,9 +55,9 @@ public class JeleTelly extends LinearOpMode {
             if (GamepadEx1.wasJustPressed(GamepadKeys.Button.BACK)) {
                 imu.resetYaw();
             }
-            double 2y = -gamepad2.right_stick_y;
-            slideMotorLeft.setPower(2y);
-            slideMotorRight.setPower(2y);
+            double y3 = -gamepad2.right_stick_y;
+            slideMotorLeft.setPower(y3);
+            slideMotorRight.setPower(y3);
 
         }
     }
