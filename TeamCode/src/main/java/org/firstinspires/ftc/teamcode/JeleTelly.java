@@ -6,6 +6,7 @@ import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -26,6 +27,7 @@ public class JeleTelly extends LinearOpMode {
         backLeftMotor = hardwareMap.get(DcMotor.class, "motorBL");
         frontRightMotor = hardwareMap.get(DcMotor.class, "motorFR");
         backRightMotor = hardwareMap.get(DcMotor.class, "motorBR");
+        DcMotorEx slideMotorLeft, slideMotorRight;
         imu = hardwareMap.get(IMU.class, "imu");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
@@ -34,7 +36,8 @@ public class JeleTelly extends LinearOpMode {
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         imu.initialize(parameters);
-        thegamepad=new GamepadEx(gamepad1);
+        GamepadEx GamepadEx1 = new GamepadEx(gamepad1);
+        GamepadEx GamepadEx2 = new GamepadEx(gamepad2);
         waitForStart();
         while (opModeIsActive()) {
             double Yaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
@@ -48,9 +51,13 @@ public class JeleTelly extends LinearOpMode {
             backLeftMotor.setPower((y2-x2+r)/denominator);
             frontRightMotor.setPower((y2-x2-r)/denominator);
             backRightMotor.setPower((y2+x2-r)/denominator);
-            if (thegamepad.wasJustPressed(GamepadKeys.Button.BACK)) {
+            if (GamepadEx1.wasJustPressed(GamepadKeys.Button.BACK)) {
                 imu.resetYaw();
             }
+            double 2y = -gamepad2.right_stick_y;
+            slideMotorLeft.setPower(2y);
+            slideMotorRight.setPower(2y);
+
         }
     }
 }
