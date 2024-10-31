@@ -28,7 +28,7 @@ public class JeleTelly extends LinearOpMode {
         frontRightMotor = hardwareMap.get(DcMotor.class, "motorFR");
         backRightMotor = hardwareMap.get(DcMotor.class, "motorBR");
         DcMotorEx slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
-        DcMotorEx slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight")
+        DcMotorEx slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
         imu = hardwareMap.get(IMU.class, "imu");
 
         frontRightMotor.setDirection(DcMotorSimple.Direction.REVERSE);
