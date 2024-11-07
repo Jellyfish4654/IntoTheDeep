@@ -10,8 +10,12 @@ public class test extends OpMode {
         telemetry.addData("hello", "world");
     }
 
+    static int counter=0;
     @Override
     public void loop(){
-
+        if(counter<10) {
+            telemetry.addData("count", "" + counter);
+        }
+        counter++;
     }
 }
