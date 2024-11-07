@@ -58,7 +58,7 @@ public class JeleTelly extends LinearOpMode {
             double y3 = -gamepad2.right_stick_y;
             slideMotorLeft.setPower(y3);
             slideMotorRight.setPower(y3);
-
+            
         }
     }
 }
