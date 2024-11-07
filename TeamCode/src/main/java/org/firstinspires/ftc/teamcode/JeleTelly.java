@@ -14,7 +14,7 @@ import com.qualcomm.robotcore.hardware.IMU;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 @TeleOp(name = "JeleTelly", group = "OpMode")
-public class JeleTelly extends LinearOpMode {
+public class JeleTelly extends BaseOpMode {
     GamepadEx thegamepad;
     DcMotor frontLeftMotor;
     DcMotor backLeftMotor;
