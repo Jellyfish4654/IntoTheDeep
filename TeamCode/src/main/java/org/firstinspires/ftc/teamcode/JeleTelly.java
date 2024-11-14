@@ -59,6 +59,8 @@ public class JeleTelly extends LinearOpMode {
             slideMotorLeft.setPower(y3);
             slideMotorRight.setPower(y3);
 
+            telemetry.addData("yaw", Yaw);
+            telemetry.update();
         }
     }
 }
