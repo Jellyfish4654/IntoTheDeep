@@ -10,8 +10,8 @@ public class Intake
     public boolean run(@NonNull TelemetryPacket telemetryPacket)
 
     if (!initialized) {
-			setTargetPosition(360);
-			initialized = true;
+	setTargetPosition(360);
+	initialized = true;
 
         start() {
             if (Gamepad1.b.isPressed) {
