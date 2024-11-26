@@ -1,11 +1,19 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Framework;
+
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class Intake 
 {
-    private DcMotor armMotor;
-    armMotor = hardwareMap.get(DcMotor.class, "Arm Motor");
+    private DcMotorEx armMotor;
     
     private boolean initialized = false;
+    public Intake(DcMotorEx armMotor) {
+        this.armMotor = armMotor;
+    }
+
+    public void update() {
+        control(targetPosition);
+    }
     @Override
     public boolean run(@NonNull TelemetryPacket telemetryPacket)
 

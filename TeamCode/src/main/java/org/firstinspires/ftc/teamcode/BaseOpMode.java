@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -10,6 +9,10 @@ import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
+
+import org.firstinspires.ftc.teamcode.Framework.Intake;
+import org.firstinspires.ftc.teamcode.Framework.Slides;
+
 public abstract class BaseOpMode extends LinearOpMode {
     //placeholder until i know what im doing
 
@@ -56,7 +59,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         Servo outtakeServo = hardwareMap.get(Servo.class, "outtakeServo");
         intakeServo.setDirection(Servo.Direction.REVERSE);
 
-        armMotor = hardwareMap.get(DcMotorEx.class, "RotatingBar");
+        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
