@@ -2,10 +2,12 @@ package org.firstinspires.ftc.teamcode;
 
 import static android.icu.util.UniversalTimeScale.MAX_SCALE;
 
+import com.acmerobotics.roadrunner.Rotation2d;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.geometry.Pose2d;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
+import com.qualcomm.hardware.sparkfun.SparkFunOTOS;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -49,7 +51,6 @@ public class JeleTelly extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         initHardware();
         initializeSlewRateLimiters();
-        drive = new MecanumDrive(hardwareMap, new Pose2d(0, 0, 0));
         imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
@@ -64,12 +65,7 @@ public class JeleTelly extends BaseOpMode {
             controlIntake();
             controlSlideMotors();
             controlOuttake();
-
-
         }
-
-
-
     }
     private void readGamepadInputs()
     {
@@ -112,10 +108,11 @@ public class JeleTelly extends BaseOpMode {
             case FIELDCENTRIC:
                 motorSpeeds = FieldCentricDrive();
                 break;
-            case DWFIELDCENTRIC:
+            //case DWFIELDCENTRIC:
             default:
-              //  motorSpeeds = DWFieldCentricDrive();
-              //  break;
+              motorSpeeds = MecanumDrive();
+              break;
+              //  add dwfieldcentric later;
         }
         setMotorSpeeds(precisionMultiplier, motorSpeeds);
     }
