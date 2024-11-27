@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Framework;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -10,9 +10,6 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-//import org.firstinspires.ftc.teamcode.Framework.Intake;
-import org.firstinspires.ftc.teamcode.Framework.Slides;
-import org.firstinspires.ftc.teamcode.Framework.IntakeRotatingArm;
 
 public abstract class BaseOpMode extends LinearOpMode {
 
