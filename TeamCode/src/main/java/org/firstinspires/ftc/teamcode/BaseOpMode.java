@@ -14,7 +14,6 @@ import org.firstinspires.ftc.teamcode.Framework.Intake;
 import org.firstinspires.ftc.teamcode.Framework.Slides;
 
 public abstract class BaseOpMode extends LinearOpMode {
-    //placeholder until i know what im doing
 
     protected DcMotor[] driveMotors;
     protected Intake intakeSystem;
