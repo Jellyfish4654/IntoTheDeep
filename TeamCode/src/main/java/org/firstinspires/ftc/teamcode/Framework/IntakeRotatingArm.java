@@ -2,18 +2,14 @@ package org.firstinspires.ftc.teamcode.Framework;
 import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfile;
 import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionState;
 import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfileGenerator;
-import androidx.annotation.NonNull;
 
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDController;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-public class Intake
+public class IntakeRotatingArm
 {
     private DcMotorEx armMotor;
     private VoltageSensor voltageSensor;
@@ -30,7 +26,7 @@ public class Intake
     private double voltageCompensation;
     
     private boolean initialized = false;
-    public Intake(DcMotorEx armMotor, VoltageSensor sensor) {
+    public IntakeRotatingArm(DcMotorEx armMotor, VoltageSensor sensor) {
         this.armMotor = armMotor;
 
         this.controller = new PIDController(kP, kI, kD);
