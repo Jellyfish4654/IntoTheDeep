@@ -10,14 +10,14 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
-import org.firstinspires.ftc.teamcode.Framework.Intake;
+//import org.firstinspires.ftc.teamcode.Framework.Intake;
 import org.firstinspires.ftc.teamcode.Framework.Slides;
 
 public abstract class BaseOpMode extends LinearOpMode {
     //placeholder until i know what im doing
 
     protected DcMotor[] driveMotors;
-    protected Intake intakeSystem;
+    //protected Intake intakeSystem;
     protected DcMotorEx slideMotorLeft;
     protected DcMotorEx slideMotorRight;
     protected DcMotorEx armMotor;

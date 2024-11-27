@@ -27,6 +27,6 @@ public class Slides {
     }
 
     public void setTargetPosition(int TargetPosition) {
-        double startVelocity
+        double startVelocity;
     }
 }

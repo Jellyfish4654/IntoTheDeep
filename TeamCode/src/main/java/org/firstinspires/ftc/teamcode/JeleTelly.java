@@ -87,6 +87,7 @@ public class JeleTelly extends BaseOpMode {
     private void controlSlideMotors() {
     }
     private void controlIntake() {
+
     }
     private void controlOuttake() {
 
