@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 //import org.firstinspires.ftc.teamcode.Framework.Intake;
 import org.firstinspires.ftc.teamcode.Framework.Slides;
+import org.firstinspires.ftc.teamcode.Framework.IntakeRotatingArm;
 
 public abstract class BaseOpMode extends LinearOpMode {
 
