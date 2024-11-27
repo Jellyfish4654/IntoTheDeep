@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-public class Intake 
+public class Intake
 {
     private DcMotorEx armMotor;
     
@@ -25,7 +26,7 @@ public class Intake
             if (Gamepad1.b.isPressed) {
                 int desiredPosition = 1000
                 armMotor.setTargetPosition (desiredPosition);
-                armmotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 }
         
             if (!currentGamepad1.b && previousGamepad1.b) {
