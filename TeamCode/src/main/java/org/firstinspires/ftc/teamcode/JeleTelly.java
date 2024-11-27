@@ -12,7 +12,6 @@ import org.firstinspires.ftc.teamcode.Framework.SlewRateLimiter;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
@@ -200,6 +199,17 @@ public class JeleTelly extends BaseOpMode {
         }
         return max;
     }
+    private void controlIntakeMotor()
+    {
+        double joystickValue = applyDeadband(-gamepad2.left_stick_y);
+        if (joystickValue > 0) {
+
+        } else if (joystickValue < 0) {
+
+        }
+        armMotor.setPower(joystickValue);
+    }
+
 
     //  private double[] DWFieldCentricDrive()
   // {
