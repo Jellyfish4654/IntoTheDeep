@@ -4,15 +4,19 @@ import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionState;
 import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfileGenerator;
 import androidx.annotation.NonNull;
 
+<<<<<<< HEAD
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDController;
+=======
+import com.qualcomm.robotcore.hardware.DcMotor;
+>>>>>>> df8e35307fb93ca061ef4c30201d535b0c402aa7
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-public class Intake 
+public class Intake
 {
     private DcMotorEx armMotor;
     private VoltageSensor voltageSensor;
@@ -63,9 +67,22 @@ public class Intake
         armMotor.setPower(leftPower);
     }
 
+<<<<<<< HEAD
     private double calculateMotorPower(DcMotorEx motor, MotionState targetState, PIDController controller) {
         int currentPosition = motor.getCurrentPosition();
         double power = controller.calculate(currentPosition, targetState.getX());
+=======
+        start() {
+            if (Gamepad1.b.isPressed) {
+                int desiredPosition = 1000
+                armMotor.setTargetPosition (desiredPosition);
+                armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                }
+        
+            if (!currentGamepad1.b && previousGamepad1.b) {
+                armMotor.setPosition(armMotor.getPosition() - 0.1);
+                }
+>>>>>>> df8e35307fb93ca061ef4c30201d535b0c402aa7
 
         if (currentPosition > 900) {
             double angle = (targetState.getX() - currentPosition) / ticks_in_degrees;
