@@ -60,6 +60,7 @@ public class JeleTelly extends BaseOpMode {
             controlIntake();
             controlSlideMotors();
             controlOuttake();
+            telemetry.update();
         }
     }
 
@@ -211,6 +212,10 @@ public class JeleTelly extends BaseOpMode {
             slideMotorLeft.setPower(slidePower);
             slideMotorRight.setPower(slidePower);
         }
+        double leftpos = slideMotorLeft.getCurrentPosition();
+        double rightpos = slideMotorRight.getCurrentPosition();
+        telemetry.addData("Left",leftpos);
+        telemetry.addData("Right", rightpos);
 
 
         //  private double[] DWFieldCentricDrive()
