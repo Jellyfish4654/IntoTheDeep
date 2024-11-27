@@ -26,7 +26,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class JeleTelly extends BaseOpMode {
     private final double ENDGAME_ALERT_TIME = 110.0;
     private final double DEADBAND_VALUE = 0.02;
-    private final double STRAFE_ADJUSTMENT_FACTOR = (14.0/13.0);
+    private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
     private MecanumDrive drive;
@@ -44,6 +44,7 @@ public class JeleTelly extends BaseOpMode {
         FIELDCENTRIC,
         DWFIELDCENTRIC
     }
+
     protected DriveMode driveMode = DriveMode.DWFIELDCENTRIC;
 
 
@@ -67,41 +68,35 @@ public class JeleTelly extends BaseOpMode {
             controlOuttake();
         }
     }
-    private void readGamepadInputs()
-    {
+
+    private void readGamepadInputs() {
         GamepadEx1.readButtons();
         GamepadEx2.readButtons();
         updateDriveModeFromGamepad();
     }
-    private void controlSlideMotors() {
-    }
+
     private void controlIntake() {
 
     }
+
     private void controlOuttake() {
 
     }
-    private void updateDriveModeFromGamepad()
-    {
-        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X))
-        {
+
+    private void updateDriveModeFromGamepad() {
+        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.FIELDCENTRIC;
-        }
-        else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.Y))
-        {
+        } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
             driveMode = DriveMode.DWFIELDCENTRIC;
-        }
-        else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A))
-        {
+        } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
             driveMode = DriveMode.MECANUM;
         }
         //resetIMU();
     }
-    private void updateDriveMode(double precisionMultiplier)
-    {
+
+    private void updateDriveMode(double precisionMultiplier) {
         double[] motorSpeeds;
-        switch (driveMode)
-        {
+        switch (driveMode) {
             case MECANUM:
                 motorSpeeds = MecanumDrive();
                 break;
@@ -110,14 +105,14 @@ public class JeleTelly extends BaseOpMode {
                 break;
             //case DWFIELDCENTRIC:
             default:
-              motorSpeeds = MecanumDrive();
-              break;
-              //  add dwfieldcentric later;
+                motorSpeeds = MecanumDrive();
+                break;
+            //  add dwfieldcentric later;
         }
         setMotorSpeeds(precisionMultiplier, motorSpeeds);
     }
-    private double[] MecanumDrive()
-    {
+
+    private double[] MecanumDrive() {
         double pivot = applyDeadband(gamepad1.right_stick_x);
         double strafe = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
         double forward = -applyDeadband(gamepad1.left_stick_y);
@@ -128,13 +123,13 @@ public class JeleTelly extends BaseOpMode {
                 forward + strafe - pivot
         };
     }
-    private double applyDeadband(double joystickValue)
-    {
+
+    private double applyDeadband(double joystickValue) {
         double sign = Math.signum(joystickValue);
         return joystickValue + (-sign * DEADBAND_VALUE);
     }
-    private double[] FieldCentricDrive()
-    {
+
+    private double[] FieldCentricDrive() {
         double y = -applyDeadband(gamepad1.left_stick_y);
         double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
         double r = applyDeadband(gamepad1.right_stick_x);
@@ -150,63 +145,56 @@ public class JeleTelly extends BaseOpMode {
 
         };
     }
-    protected void setMotorSpeeds(double multiplier, double[] powers)
-    {
+
+    protected void setMotorSpeeds(double multiplier, double[] powers) {
         applyPrecisionAndScale(multiplier, powers);
         int averagePosition = (slideMotorLeft.getCurrentPosition() + slideMotorRight.getCurrentPosition() / 2);
         double rate = 1.0;
-        if (averagePosition >= 2000)
-        {
+        if (averagePosition >= 2000) {
             rate = 0.99 - ((double) (averagePosition - 2000) / 10) * 0.0005;
             rate = Math.max(rate, 0);
             applySlewRateLimit(powers, rate);
         }
-        for (int i = 0; i < driveMotors.length; i++)
-        {
+        for (int i = 0; i < driveMotors.length; i++) {
             driveMotors[i].setPower(powers[i]);
         }
     }
-    private void applyPrecisionAndScale(double multiplier, double[] powers)
-    {
-        for (int i = 0; i < powers.length; i++)
-        {
+
+    private void applyPrecisionAndScale(double multiplier, double[] powers) {
+        for (int i = 0; i < powers.length; i++) {
             powers[i] *= multiplier;
         }
 
         double maxPower = findMaxPower(powers);
         double scale = maxPower > MAX_SCALE ? MAX_SCALE / maxPower : 1.0;
 
-        for (int i = 0; i < powers.length; i++)
-        {
+        for (int i = 0; i < powers.length; i++) {
             powers[i] *= scale;
         }
     }
-    private void applySlewRateLimit(double[] powers, double rate)
-    {
-        for (int i = 0; i < slewRateLimiters.length; i++)
-        {
+
+    private void applySlewRateLimit(double[] powers, double rate) {
+        for (int i = 0; i < slewRateLimiters.length; i++) {
             slewRateLimiters[i].setRate(rate);
             powers[i] = slewRateLimiters[i].calculate(powers[i]);
         }
     }
-    private void initializeSlewRateLimiters()
-    {
-        for (int i = 0; i < slewRateLimiters.length; i++)
-        {
+
+    private void initializeSlewRateLimiters() {
+        for (int i = 0; i < slewRateLimiters.length; i++) {
             slewRateLimiters[i] = new SlewRateLimiter(1.0);
         }
     }
-    private double findMaxPower(double[] powers)
-    {
+
+    private double findMaxPower(double[] powers) {
         double max = 0;
-        for (double power : powers)
-        {
+        for (double power : powers) {
             max = Math.max(max, Math.abs(power));
         }
         return max;
     }
-    private void controlIntakeMotor()
-    {
+
+    private void controlIntakeMotor() {
         double joystickValue = applyDeadband(-gamepad2.left_stick_y);
         if (joystickValue > 0) {
 
@@ -216,23 +204,38 @@ public class JeleTelly extends BaseOpMode {
         armMotor.setPower(joystickValue);
     }
 
+    private void controlSlideMotors() {
+        double slidePower = 0;
+        if (gamepad2.left_bumper) {
+           slidePower = 1;
+        } else if (gamepad2.right_bumper) {
+            slidePower = -1;
+        } else if (!gamepad2.left_bumper && !gamepad2.right_bumper) {
+            slidePower = 0;
+        }
+        if (applyDeadband(slidePower) != 0) {
+            slideMotorLeft.setPower(slidePower);
+            slideMotorRight.setPower(slidePower);
+        }
 
-    //  private double[] DWFieldCentricDrive()
-  // {
-     //   double y = -applyDeadband(gamepad1.left_stick_y);
-       // double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
+
+        //  private double[] DWFieldCentricDrive()
+        // {
+        //   double y = -applyDeadband(gamepad1.left_stick_y);
+        // double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
         //double r = applyDeadband(gamepad1.right_stick_x);
-       // double botHeading = drive.pose.heading.toDouble();
+        // double botHeading = drive.pose.heading.toDouble();
 
         // double x2 = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
         // double y2 = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
         // return new double[]{
-           //     y2 + x2 + r,
-           //     y2 - x2 + r,
-           //     y2 - x2 - r,
-           //     y2 + x2 - r
-       // };
-   // }
+        //     y2 + x2 + r,
+        //     y2 - x2 + r,
+        //     y2 - x2 - r,
+        //     y2 + x2 - r
+        // };
+        // }
+    }
 }
 //            double x2 = x*Math.cos(-Yaw)-y*Math.sin(-Yaw);
 //            double y2 = x*Math.sin(-Yaw)+y*Math.cos(-Yaw);
