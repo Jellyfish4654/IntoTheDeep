@@ -15,8 +15,8 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
-@TeleOp(name = "JeleTelly", group = "OpMode")
-public class JeleTelly extends BaseOpMode {
+@TeleOp(name = "JellyTele", group = "OpMode")
+public class JellyTele extends BaseOpMode {
     private final double ENDGAME_ALERT_TIME = 110.0;
     private final double DEADBAND_VALUE = 0.02;
     private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
