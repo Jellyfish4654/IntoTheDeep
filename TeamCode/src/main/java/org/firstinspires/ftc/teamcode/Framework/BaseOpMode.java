@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,6 +22,11 @@ public abstract class BaseOpMode extends LinearOpMode {
     protected Slides slides;
     protected CRServo outtakeCRServo;
     protected IMU imuSensor;
+    DcMotor frontLeftMotor;
+    DcMotor backLeftMotor;
+    DcMotor frontRightMotor;
+    DcMotor backRightMotor;
+    GamepadEx thegamepad;
 
     protected DistanceSensor distanceLeft;
 

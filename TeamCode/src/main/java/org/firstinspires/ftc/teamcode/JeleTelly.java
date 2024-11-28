@@ -6,7 +6,6 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Framework.SlewRateLimiter;
 import com.qualcomm.robotcore.hardware.IMU;
@@ -24,11 +23,6 @@ public class JeleTelly extends BaseOpMode {
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
     private MecanumDrive drive;
-    GamepadEx thegamepad;
-    DcMotor frontLeftMotor;
-    DcMotor backLeftMotor;
-    DcMotor frontRightMotor;
-    DcMotor backRightMotor;
     GamepadEx GamepadEx1 = new GamepadEx(gamepad1);
     GamepadEx GamepadEx2 = new GamepadEx(gamepad2);
     IMU imu;
