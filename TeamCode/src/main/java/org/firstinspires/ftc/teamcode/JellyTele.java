@@ -69,11 +69,11 @@ public class JellyTele extends BaseOpMode {
 
     private void controlIntake() {
         controlIntakeMotor();
-        if (gamepad2.y) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
             intakeActivePosition();
-        } else if (gamepad2.b) {
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
             outtakeActivePosition();
-        } else if (gamepad2.a) {
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             intakeOuttakeTransfer();
         }
     }
@@ -230,9 +230,9 @@ public class JellyTele extends BaseOpMode {
             slideMotorLeft.setPower(slidePower);
             slideMotorRight.setPower(slidePower);
         }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             slides.setTargetPosition(1000);
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
             slides.setTargetPosition(0);
         }
         slides.update();
