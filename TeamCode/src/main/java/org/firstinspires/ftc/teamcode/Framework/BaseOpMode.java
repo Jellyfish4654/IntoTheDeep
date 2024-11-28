@@ -14,19 +14,23 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public abstract class BaseOpMode extends LinearOpMode {
 
-    protected DcMotor[] driveMotors;
-    //protected Intake intakeSystem;
+    protected Drivetrain drivetrain;
+    //four drivetrain motors
     protected DcMotorEx slideMotorLeft;
     protected DcMotorEx slideMotorRight;
-    protected DcMotorEx armMotor;
     protected Slides slides;
-    protected CRServo outtakeCRServo;
-    protected IMU imuSensor;
-    DcMotor frontLeftMotor;
-    DcMotor backLeftMotor;
-    DcMotor frontRightMotor;
-    DcMotor backRightMotor;
-    GamepadEx thegamepad;
+    //two slide motors
+    protected IntakeRotatingArm armMotor;
+    //one intake rotating arm motor
+
+    //slides class
+    protected Claw intakeClaw;
+    protected Claw outtakeClaw;
+    //two claw servos
+    protected OuttakeRotatingArmServos outtakeRotatingArmServos;
+
+    //two outtake arm servos
+    protected IMU imu;
 
     protected DistanceSensor distanceLeft;
 
@@ -36,17 +40,15 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         // wheel motors
 
-        driveMotors = new DcMotor[]{
-                //control hub
-                hardwareMap.dcMotor.get("motorFL"),
+        DcMotor[] driveMotors = {hardwareMap.dcMotor.get("motorFL"),
                 hardwareMap.dcMotor.get("motorBL"),
                 hardwareMap.dcMotor.get("motorFR"),
-                hardwareMap.dcMotor.get("motorBR")
+                hardwareMap.dcMotor.get("motorBR")};
 
-        };
+        drivetrain = new Drivetrain(driveMotors);
 
 
-        setMotorDirections(new DcMotorSimple.Direction[]{
+        drivetrain.setMotorDirections(new DcMotorSimple.Direction[]{
                 DcMotorSimple.Direction.FORWARD, // motorFL
                 DcMotorSimple.Direction.FORWARD, // motorBL
                 DcMotorSimple.Direction.REVERSE, // motorFR
@@ -56,13 +58,13 @@ public abstract class BaseOpMode extends LinearOpMode {
         VoltageSensor voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
 
         //intake claw servo
-        Servo intakeServo = hardwareMap.get(Servo.class, "intakeServo");
-        intakeServo.setDirection(Servo.Direction.REVERSE);
+        intakeClaw = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
 
-        Servo outtakeServo = hardwareMap.get(Servo.class, "outtakeServo");
-        intakeServo.setDirection(Servo.Direction.REVERSE);
+        outtakeClaw = new Claw(hardwareMap.get(Servo.class, "outtakeServo"));
 
-        armMotor = hardwareMap.get(DcMotorEx.class, "armMotor");
+        armMotor = new IntakeRotatingArm(hardwareMap.get(DcMotorEx.class, "armMotor"), hardwareMap.get(VoltageSensor.class, "voltageSensor"));
+
+        outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"), hardwareMap.get(Servo.class, "outtakeArmServoRight"));
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
@@ -75,12 +77,7 @@ public abstract class BaseOpMode extends LinearOpMode {
 
     }
 
-    private void setMotorDirections(DcMotorSimple.Direction[] directions)
-    {
-        for (int i = 0; i < driveMotors.length; i++)
-        {
-            driveMotors[i].setDirection(directions[i]);
-        }
-    }
 
 }
+
+

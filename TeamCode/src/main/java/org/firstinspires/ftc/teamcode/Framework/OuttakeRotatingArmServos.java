@@ -15,7 +15,7 @@ public class OuttakeRotatingArmServos {
     double positionL = ARM_INTAKE;
     double positionR = ARM_INTAKE;
 
-    public OuttakeRotatingArmServos(Servo servo1, Servo servo2, Servo leftArm, Servo rightArm)
+    public OuttakeRotatingArmServos(Servo servo1, Servo servo2)
     {
         this.armLeftServo = servo1;
         this.armRightServo = servo2;

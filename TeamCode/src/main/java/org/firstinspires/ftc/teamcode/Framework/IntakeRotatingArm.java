@@ -1,9 +1,4 @@
 package org.firstinspires.ftc.teamcode.Framework;
-import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfile;
-import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionState;
-import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfileGenerator;
-
-import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -13,23 +8,16 @@ public class IntakeRotatingArm
 {
     private DcMotorEx armMotor;
     private VoltageSensor voltageSensor;
-    private PIDController controller;
-    private MotionProfile profile;
     private ElapsedTime timer;
-    private final double ticks_in_degrees = 537.7 / 360.0;
-    private double maxVelocity = 2000; // True max is ~2200
-    private double maxAcceleration = 29000; // True max is ~ 30000
-    private double kP = 0.01, kI = 0, kD = 0.0002, kF1 = 0.008, kF2 = 0.015, kF3 = 0.04;
+    private double kP = 0.01, kI = 0, kD = 0.0002;
     ;
     private double PIDOutput;
-    private int targetPosition;
+    private int targetAngle;
     private double voltageCompensation;
     
     private boolean initialized = false;
     public IntakeRotatingArm(DcMotorEx armMotor, VoltageSensor sensor) {
         this.armMotor = armMotor;
-
-        this.controller = new PIDController(kP, kI, kD);
 
         this.voltageSensor = sensor;
         this.timer = new ElapsedTime();
@@ -39,46 +27,26 @@ public class IntakeRotatingArm
     public void setTargetPosition(int TargetPosition) {
         double startVelocity = 0;
 
-        MotionState startState = new MotionState(armMotor.getCurrentPosition(), startVelocity);
-        MotionState endState = new MotionState(TargetPosition, 0);
-        this.profile = MotionProfileGenerator.generateSimpleMotionProfile(startState, endState, maxVelocity, maxAcceleration);
 
-        targetPosition=TargetPosition;
         timer.reset();
     }
 
     public void update() {
         double elapsedTime = timer.seconds();
 
-        MotionState state = profile.get(elapsedTime);
+
         control(state);
     }
 
-    private void control(MotionState targetState) {
-        double leftPower = calculateMotorPower(armMotor, targetState, controller);
+    private void control() {
+        double leftPower = calculateMotorPower(armMotor, targetAngle);
         PIDOutput=leftPower;
         armMotor.setPower(leftPower);
     }
 
 
-    private double calculateMotorPower(DcMotorEx motor, MotionState targetState, PIDController controller) {
-        int currentPosition = motor.getCurrentPosition();
-        double power = controller.calculate(currentPosition, targetState.getX());
+    private double calculateMotorPower() {
 
-
-        if (currentPosition > 900) {
-            double angle = (targetState.getX() - currentPosition) / ticks_in_degrees;
-            double ff = Math.cos(Math.toRadians(angle)) * kF1;
-            power += ff;
-        } else if (currentPosition > 300) {
-            double angle = (targetState.getX() - currentPosition) / ticks_in_degrees;
-            double ff = Math.cos(Math.toRadians(angle)) * kF2;
-            power += ff;
-        } else {
-            double angle = (targetState.getX() - currentPosition) / ticks_in_degrees;
-            double ff = Math.cos(Math.toRadians(angle)) * kF3;
-            power += ff;
-        }
         voltageCompensation = 13.2 / voltageSensor.getVoltage();
         power *= voltageCompensation;
 
@@ -92,7 +60,8 @@ public class IntakeRotatingArm
 
     public int getTargetPosition()
     {
-        return targetPosition;
+
+        return targetAngle;
     }
 }
 

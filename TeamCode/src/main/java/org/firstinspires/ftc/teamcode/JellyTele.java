@@ -27,7 +27,6 @@ public class JellyTele extends BaseOpMode {
     private MecanumDrive drive;
     GamepadEx GamepadEx1 = new GamepadEx(gamepad1);
     GamepadEx GamepadEx2 = new GamepadEx(gamepad2);
-    IMU imu;
 
     private enum DriveMode {
         MECANUM,
@@ -79,7 +78,7 @@ public class JellyTele extends BaseOpMode {
     }
     private void controlIntakeMotor() {
         double joystickValue = applyDeadband(-gamepad2.left_stick_y);
-        armMotor.setPower(joystickValue);
+        //armMotor.setPower(joystickValue);
     }
     private void intakeActivePosition() {
         //set intake to position (button y)
@@ -121,7 +120,7 @@ public class JellyTele extends BaseOpMode {
                 break;
             //  add dwfieldcentric later;
         }
-        setMotorSpeeds(precisionMultiplier, motorSpeeds);
+        drivetrain.setMotorSpeeds(precisionMultiplier, motorSpeeds);
     }
 
     private double[] MecanumDrive() {
@@ -145,7 +144,7 @@ public class JellyTele extends BaseOpMode {
         double y = -applyDeadband(gamepad1.left_stick_y);
         double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
         double r = applyDeadband(gamepad1.right_stick_x);
-        double Yaw = imuSensor.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - resetHeading;
+        double Yaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - resetHeading;
 
         double x2 = x * Math.cos(-Yaw) - y * Math.sin(-Yaw);
         double y2 = x * Math.sin(-Yaw) + y * Math.cos(-Yaw);
@@ -158,32 +157,9 @@ public class JellyTele extends BaseOpMode {
         };
     }
 
-    protected void setMotorSpeeds(double multiplier, double[] powers) {
-        applyPrecisionAndScale(multiplier, powers);
-        int averagePosition = (slideMotorLeft.getCurrentPosition() + slideMotorRight.getCurrentPosition() / 2);
-        double rate = 1.0;
-        if (averagePosition >= 2000) {
-            rate = 0.99 - ((double) (averagePosition - 2000) / 10) * 0.0005;
-            rate = Math.max(rate, 0);
-            applySlewRateLimit(powers, rate);
-        }
-        for (int i = 0; i < driveMotors.length; i++) {
-            driveMotors[i].setPower(powers[i]);
-        }
-    }
 
-    private void applyPrecisionAndScale(double multiplier, double[] powers) {
-        for (int i = 0; i < powers.length; i++) {
-            powers[i] *= multiplier;
-        }
 
-        double maxPower = findMaxPower(powers);
-        double scale = maxPower > MAX_SCALE ? MAX_SCALE / maxPower : 1.0;
 
-        for (int i = 0; i < powers.length; i++) {
-            powers[i] *= scale;
-        }
-    }
 
     private void applySlewRateLimit(double[] powers, double rate) {
         for (int i = 0; i < slewRateLimiters.length; i++) {
@@ -198,13 +174,7 @@ public class JellyTele extends BaseOpMode {
         }
     }
 
-    private double findMaxPower(double[] powers) {
-        double max = 0;
-        for (double power : powers) {
-            max = Math.max(max, Math.abs(power));
-        }
-        return max;
-    }
+
     private double calculatePrecisionMultiplier()
     {
         if (gamepad1.left_bumper)
