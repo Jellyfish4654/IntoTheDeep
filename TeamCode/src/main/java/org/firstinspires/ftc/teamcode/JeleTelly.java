@@ -65,7 +65,27 @@ public class JeleTelly extends BaseOpMode {
     }
 
     private void controlIntake() {
-
+        controlIntakeMotor();
+        if (gamepad2.y) {
+            intakeActivePosition();
+        } else if (gamepad2.b) {
+            outtakeActivePosition();
+        } else if (gamepad2.a) {
+            intakeOuttakeTransfer();
+        }
+    }
+    private void controlIntakeMotor() {
+        double joystickValue = applyDeadband(-gamepad2.left_stick_y);
+        armMotor.setPower(joystickValue);
+    }
+    private void intakeActivePosition() {
+        //set intake to position (button y)
+    }
+    private void outtakeActivePosition() {
+        //set outtake to position (button b)
+    }
+    private void intakeOuttakeTransfer() {
+        //move intake, outtake, and slides to the correct places (button a)
     }
 
     private void controlOuttake() {
@@ -181,16 +201,6 @@ public class JeleTelly extends BaseOpMode {
             max = Math.max(max, Math.abs(power));
         }
         return max;
-    }
-
-    private void controlIntakeMotor() {
-        double joystickValue = applyDeadband(-gamepad2.left_stick_y);
-        if (joystickValue > 0) {
-
-        } else if (joystickValue < 0) {
-
-        }
-        armMotor.setPower(joystickValue);
     }
 
     private void controlSlideMotors() {
