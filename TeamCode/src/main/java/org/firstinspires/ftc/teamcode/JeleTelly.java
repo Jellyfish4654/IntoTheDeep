@@ -108,14 +108,14 @@ public class JeleTelly extends BaseOpMode {
     }
 
     private double[] MecanumDrive() {
-        double pivot = applyDeadband(gamepad1.right_stick_x);
-        double strafe = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
-        double forward = -applyDeadband(gamepad1.left_stick_y);
+        double y = applyDeadband(gamepad1.right_stick_x);
+        double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
+        double r = -applyDeadband(gamepad1.left_stick_y);
         return new double[]{
-                forward + strafe + pivot,
-                forward - strafe + pivot,
-                forward - strafe - pivot,
-                forward + strafe - pivot
+                y + x + r,
+                y - x + r,
+                y - x - r,
+                y + x - r
         };
     }
 
