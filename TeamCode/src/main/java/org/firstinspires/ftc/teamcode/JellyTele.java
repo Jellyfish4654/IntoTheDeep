@@ -220,9 +220,9 @@ public class JellyTele extends BaseOpMode {
     private void controlSlideMotors() {
         double slidePower = 0;
         if (gamepad2.left_bumper) {
-            slidePower = 1;
+            slidePower = 0.75;
         } else if (gamepad2.right_bumper) {
-            slidePower = -1;
+            slidePower = -0.75;
         } else if (!gamepad2.left_bumper && !gamepad2.right_bumper) {
             slidePower = 0;
         }
