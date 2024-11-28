@@ -77,7 +77,7 @@ public class JellyTele extends BaseOpMode {
         }
     }
     private void controlIntakeMotor() {
-        double joystickValue = applyDeadband(-gamepad2.left_stick_y);
+        double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
         //armMotor.setPower(joystickValue);
     }
     private void intakeActivePosition() {
@@ -124,9 +124,9 @@ public class JellyTele extends BaseOpMode {
     }
 
     private double[] MecanumDrive() {
-        double y = applyDeadband(gamepad1.right_stick_x);
-        double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
-        double r = -applyDeadband(gamepad1.left_stick_y);
+        double r = applyDeadband(GamepadEx1.getRightX());
+        double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
+        double y = -applyDeadband(GamepadEx1.getLeftY());
         return new double[]{
                 y + x + r,
                 y - x + r,
@@ -141,9 +141,9 @@ public class JellyTele extends BaseOpMode {
     }
 
     private double[] FieldCentricDrive() {
-        double y = -applyDeadband(gamepad1.left_stick_y);
-        double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
-        double r = applyDeadband(gamepad1.right_stick_x);
+        double y = -applyDeadband(GamepadEx1.getLeftY());
+        double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
+        double r = applyDeadband(GamepadEx1.getRightX());
         double Yaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - resetHeading;
 
         double x2 = x * Math.cos(-Yaw) - y * Math.sin(-Yaw);
@@ -177,11 +177,11 @@ public class JellyTele extends BaseOpMode {
 
     private double calculatePrecisionMultiplier()
     {
-        if (gamepad1.left_bumper)
+        if (GamepadEx1.isDown(GamepadKeys.Button.LEFT_BUMPER))
         {
             return PRECISION_MULTIPLIER_LOW;
         }
-        else if (gamepad1.right_bumper)
+        else if (GamepadEx1.isDown(GamepadKeys.Button.RIGHT_BUMPER))
         {
             return PRECISION_MULTIPLIER_HIGH;
         }
@@ -189,11 +189,11 @@ public class JellyTele extends BaseOpMode {
     }
     private void controlSlideMotors() {
         double slidePower = 0;
-        if (gamepad2.left_bumper) {
+        if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
             slidePower = 0.75;
-        } else if (gamepad2.right_bumper) {
+        } else if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
             slidePower = -0.75;
-        } else if (!gamepad2.left_bumper && !gamepad2.right_bumper) {
+        } else if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
             slidePower = 0;
         }
         if (applyDeadband(slidePower) != 0) {
