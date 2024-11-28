@@ -193,7 +193,7 @@ public class JellyTele extends BaseOpMode {
             slidePower = 0.75;
         } else if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
             slidePower = -0.75;
-        } else if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+        } else if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER))) {
             slidePower = 0;
         }
         if (applyDeadband(slidePower) != 0) {
