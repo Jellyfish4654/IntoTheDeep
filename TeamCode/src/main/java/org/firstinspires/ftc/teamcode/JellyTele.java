@@ -230,6 +230,12 @@ public class JellyTele extends BaseOpMode {
             slideMotorLeft.setPower(slidePower);
             slideMotorRight.setPower(slidePower);
         }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+            slides.setTargetPosition(1000);
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
+            slides.setTargetPosition(0);
+        }
+        slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
