@@ -220,7 +220,7 @@ public class JellyTele extends BaseOpMode {
     private void controlSlideMotors() {
         double slidePower = 0;
         if (gamepad2.left_bumper) {
-           slidePower = 1;
+            slidePower = 1;
         } else if (gamepad2.right_bumper) {
             slidePower = -1;
         } else if (!gamepad2.left_bumper && !gamepad2.right_bumper) {
@@ -230,10 +230,11 @@ public class JellyTele extends BaseOpMode {
             slideMotorLeft.setPower(slidePower);
             slideMotorRight.setPower(slidePower);
         }
-        double leftpos = slideMotorLeft.getCurrentPosition();
-        double rightpos = slideMotorRight.getCurrentPosition();
-        telemetry.addData("Left",leftpos);
-        telemetry.addData("Right", rightpos);
+        double leftPosition = slideMotorLeft.getCurrentPosition();
+        double rightPosition = slideMotorRight.getCurrentPosition();
+        telemetry.addData("Left", leftPosition);
+        telemetry.addData("Right", rightPosition);
+    }
 
 
         //  private double[] DWFieldCentricDrive()
@@ -252,7 +253,6 @@ public class JellyTele extends BaseOpMode {
         //     y2 + x2 - r
         // };
         // }
-    }
 }
 //            double x2 = x*Math.cos(-Yaw)-y*Math.sin(-Yaw);
 //            double y2 = x*Math.sin(-Yaw)+y*Math.cos(-Yaw);
