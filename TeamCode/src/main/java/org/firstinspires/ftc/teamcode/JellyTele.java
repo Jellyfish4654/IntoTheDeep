@@ -215,9 +215,9 @@ public class JellyTele extends BaseOpMode {
 
         //  private double[] DWFieldCentricDrive()
         // {
-        //   double y = -applyDeadband(gamepad1.left_stick_y);
-        // double x = applyDeadband(gamepad1.left_stick_x) * STRAFE_ADJUSTMENT_FACTOR;
-        //double r = applyDeadband(gamepad1.right_stick_x);
+        //   double y = -applyDeadband(GamepadEx1.getLeftY());
+        // double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
+        //double r = applyDeadband(GamepadEx1.getRightX());
         // double botHeading = drive.pose.heading.toDouble();
 
         // double x2 = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
@@ -240,7 +240,7 @@ public class JellyTele extends BaseOpMode {
 //            if (GamepadEx1.wasJustPressed(GamepadKeys.Button.BACK)) {
 //                imu.resetYaw();
 //            }
-//            double y3 = -gamepad2.right_stick_y;
+//            double y3 = -GamepadEx2.getLeftY();
 //            slideMotorLeft.setPower(y3);
 //            slideMotorRight.setPower(y3);
 //            slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
