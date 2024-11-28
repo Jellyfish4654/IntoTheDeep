@@ -17,6 +17,8 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
+    private final double PRECISION_MULTIPLIER_LOW = 0.35;
+    private final double PRECISION_MULTIPLIER_HIGH = 0.7;
     private final double ENDGAME_ALERT_TIME = 110.0;
     private final double DEADBAND_VALUE = 0.02;
     private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
@@ -54,6 +56,7 @@ public class JellyTele extends BaseOpMode {
             controlIntake();
             controlSlideMotors();
             controlOuttake();
+            updateDriveMode(calculatePrecisionMultiplier());
             telemetry.update();
         }
     }
@@ -202,7 +205,18 @@ public class JellyTele extends BaseOpMode {
         }
         return max;
     }
-
+    private double calculatePrecisionMultiplier()
+    {
+        if (gamepad1.left_bumper)
+        {
+            return PRECISION_MULTIPLIER_LOW;
+        }
+        else if (gamepad1.right_bumper)
+        {
+            return PRECISION_MULTIPLIER_HIGH;
+        }
+        return MAX_SCALE;
+    }
     private void controlSlideMotors() {
         double slidePower = 0;
         if (gamepad2.left_bumper) {
