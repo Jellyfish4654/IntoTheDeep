@@ -9,10 +9,6 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfile;
-import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionProfileGenerator;
-import org.firstinspires.ftc.teamcode.Framework.Profiles.MotionState;
-
 public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
@@ -25,8 +21,6 @@ public class Slides {
     private double leftIntegralSum = 0, rightIntegralSum = 0;
     private double kG = 1;
     private final double ticks_in_degrees = 537.7 / 360.0;
-    private double rightPIDOutput;
-    private double leftPIDOutput;
     private int targetPosition;
     private double voltageCompensation;
 
@@ -58,7 +52,6 @@ public class Slides {
 
     private void rightControl() {
         double rightPower = calculateMotorPowerRight(slideMotorRight, targetPosition);
-        rightPIDOutput=rightPower;
         slideMotorRight.setPower(rightPower);
     }
 
@@ -69,6 +62,7 @@ public class Slides {
         double derivative = (error - lastLeftError) / timer.seconds();
         double integralSum = leftIntegralSum + (error * timer.seconds());
         double out = (kPLeft * error) + (kILeft * integralSum) + (kDLeft * derivative) * kG;
+        leftIntegralSum = integralSum;
         lastLeftError = error;
         return out;
     }
@@ -80,6 +74,7 @@ public class Slides {
         double integralSum = rightIntegralSum + (error * timer.seconds());
         double out = (kPRight * error) + (kIRight * integralSum) + (kDRight * derivative) * kG;
         lastRightError = error;
+        rightIntegralSum = integralSum;
         return out;
     }
     public int getTargetPosition()
