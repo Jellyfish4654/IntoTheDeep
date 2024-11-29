@@ -40,7 +40,8 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         // wheel motors
 
-        DcMotor[] driveMotors = {hardwareMap.dcMotor.get("motorFL"),
+        DcMotor[] driveMotors = {
+                hardwareMap.dcMotor.get("motorFL"),
                 hardwareMap.dcMotor.get("motorBL"),
                 hardwareMap.dcMotor.get("motorFR"),
                 hardwareMap.dcMotor.get("motorBR")};
