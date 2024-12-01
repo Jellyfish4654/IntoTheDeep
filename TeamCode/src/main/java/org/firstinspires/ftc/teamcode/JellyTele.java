@@ -80,6 +80,8 @@ public class JellyTele extends BaseOpMode {
     }
     private void controlIntakeMotor() {
         double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
+        int intakePosition = armMotor.getTargetPosition();
+        telemetry.addData("intake", intakePosition);
         //armMotor.setPower(joystickValue);
     }
     private void intakeActivePosition() {
