@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.Framework;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.hardware.Servo;
+import static java.lang.Math.*;
 
 public class Claw {
     private Servo clawServo;
@@ -14,10 +15,7 @@ public class Claw {
     }
 
     public void setClawPos(double stickVal){
-        if (stickVal < 0) {
-            stickVal*=-1;
-        }
-        double position = stickVal;
+        double position = Math.abs(stickVal);
         clawServo.setPosition(position);
     }
 
