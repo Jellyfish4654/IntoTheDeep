@@ -13,6 +13,11 @@ public class Claw {
         not sure if it needs to match something in the hardware */
     }
 
+    public void setClawPos(double stickVal){
+        double position = stickVal/2+0.5;
+        clawServo.setPosition(position);
+    }
+
     public void openClaw(){
         clawServo.setPosition(0.2);
         /* inside the parentheses should be the
