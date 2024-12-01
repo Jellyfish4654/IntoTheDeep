@@ -14,7 +14,10 @@ public class Claw {
     }
 
     public void setClawPos(double stickVal){
-        double position = stickVal/2+0.5;
+        if (stickVal < 0) {
+            stickVal*=-1;
+        }
+        double position = stickVal;
         clawServo.setPosition(position);
     }
 
