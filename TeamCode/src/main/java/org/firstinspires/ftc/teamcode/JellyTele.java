@@ -85,10 +85,10 @@ public class JellyTele extends BaseOpMode {
         //armMotor.setPower(joystickValue);
     }
     private void intakeActivePosition() {
-        //set intake to position (button y)
+        intakeClaw.closeClaw();
     }
     private void outtakeActivePosition() {
-        //set outtake to position (button b)
+        intakeClaw.openClaw();
     }
     private void intakeOuttakeTransfer() {
         //move intake, outtake, and slides to the correct places (button a)

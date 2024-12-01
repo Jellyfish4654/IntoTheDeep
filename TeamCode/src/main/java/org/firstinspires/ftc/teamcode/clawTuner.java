@@ -29,15 +29,15 @@ public class clawTuner extends BaseOpMode {
 
         GamepadEx1 = new GamepadEx(gamepad1);
         initHardware();
-        //initializeSlewRateLimiters();
-        imu = hardwareMap.get(IMU.class, "imu");
+//        //initializeSlewRateLimiters();
+//        imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         imu.initialize(parameters);
 
-        intakeClaw = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
+//        intakeClaw = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
 
         waitForStart();
         ElapsedTime timer = new ElapsedTime();
@@ -55,7 +55,7 @@ public class clawTuner extends BaseOpMode {
     private void controlClaw() {
         double y = -applyDeadband(GamepadEx1.getLeftY());
         intakeClaw.setClawPos(y);
-        intakeClaw.getClawPosition();
+        telemetry.addData("clawposition:", intakeClaw.getClawPosition());
 
 
     }

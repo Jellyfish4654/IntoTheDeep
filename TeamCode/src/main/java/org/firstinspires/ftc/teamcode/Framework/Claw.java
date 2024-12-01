@@ -34,8 +34,7 @@ public class Claw {
     }
 
     public double getClawPosition(){
-
-        telemetry.addData("claw position", clawServo.getPosition());
+//        telemetry.addData("claw position", hi);
         return clawServo.getPosition();
     }
 }
