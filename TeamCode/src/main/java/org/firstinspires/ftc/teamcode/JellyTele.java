@@ -25,8 +25,8 @@ public class JellyTele extends BaseOpMode {
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
     private MecanumDrive drive;
-    GamepadEx GamepadEx1 = new GamepadEx(gamepad1);
-    GamepadEx GamepadEx2 = new GamepadEx(gamepad2);
+    GamepadEx GamepadEx1;
+    GamepadEx GamepadEx2;
 
     private enum DriveMode {
         MECANUM,
@@ -41,6 +41,8 @@ public class JellyTele extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         initHardware();
         initializeSlewRateLimiters();
+        GamepadEx1= new GamepadEx(gamepad1);
+        GamepadEx2= new GamepadEx(gamepad2);
         imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
