@@ -87,10 +87,10 @@ public class JellyTele extends BaseOpMode {
         }
     }
     private double updateIntOutMode() {
-        double joystickValue = 0;
+        double intakeJoystickValue = 0;
         switch (intOutMode) {
             case MANUAL:
-                joystickValue = applyDeadband(-GamepadEx2.getLeftY());
+                intakeJoystickValue = applyDeadband(-GamepadEx2.getLeftY());
                 int intakePosition = armMotor.getTargetPosition();
                 telemetry.addData("intake", intakePosition);
                 break;
@@ -105,7 +105,7 @@ public class JellyTele extends BaseOpMode {
                 armMotor.setTargetPosition(0); // PLACEHOLDER
                 break;
         }
-        return joystickValue;
+        return intakeJoystickValue;
     }
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
