@@ -41,8 +41,8 @@ public class JellyTele extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         initHardware();
         initializeSlewRateLimiters();
-        GamepadEx1= new GamepadEx(gamepad1);
-        GamepadEx2= new GamepadEx(gamepad2);
+        GamepadEx1 = new GamepadEx(gamepad1);
+        GamepadEx2 = new GamepadEx(gamepad2);
         imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
@@ -55,7 +55,6 @@ public class JellyTele extends BaseOpMode {
         while (opModeIsActive()) {
             readGamepadInputs();
             controlSlideMotors();
-            controlOuttake();
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
             telemetry.update();
@@ -87,11 +86,11 @@ public class JellyTele extends BaseOpMode {
             intOutMode = IntOutMode.MANUAL;
         }
     }
-<<<<<<< HEAD
-    private void updateIntOutMode() {
+    private double updateIntOutMode() {
+        double joystickValue = 0;
         switch (intOutMode) {
             case MANUAL:
-                double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
+                joystickValue = applyDeadband(-GamepadEx2.getLeftY());
                 int intakePosition = armMotor.getTargetPosition();
                 telemetry.addData("intake", intakePosition);
                 break;
@@ -106,28 +105,8 @@ public class JellyTele extends BaseOpMode {
                 armMotor.setTargetPosition(0); // PLACEHOLDER
                 break;
         }
-=======
-    private void controlIntakeMotor() {
-        double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
-        int intakePosition = armMotor.getTargetPosition();
-        telemetry.addData("intake", intakePosition);
-        //armMotor.setPower(joystickValue);
+        return joystickValue;
     }
-    private void intakeActivePosition() {
-        intakeClaw.closeClaw();
-    }
-    private void outtakeActivePosition() {
-        intakeClaw.openClaw();
-    }
-    private void intakeOuttakeTransfer() {
-        //move intake, outtake, and slides to the correct places (button a)
->>>>>>> 90ebc66d5669e56d6f2bdac7c4bfc4b00fd99f98
-    }
-
-    private void controlOuttake() {
-
-    }
-
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.FIELDCENTRIC;
