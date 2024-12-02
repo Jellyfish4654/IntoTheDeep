@@ -34,7 +34,7 @@ public class JellyTele extends BaseOpMode {
         DWFIELDCENTRIC
     }
 
-    protected DriveMode driveMode = DriveMode.DWFIELDCENTRIC;
+    protected DriveMode driveMode = DriveMode.FIELDCENTRIC;
 
 
     @Override
@@ -54,10 +54,10 @@ public class JellyTele extends BaseOpMode {
         ElapsedTime timer = new ElapsedTime();
         while (opModeIsActive()) {
             readGamepadInputs();
-            controlIntake();
             controlSlideMotors();
             controlOuttake();
             updateDriveMode(calculatePrecisionMultiplier());
+            updateIntOutMode();
             telemetry.update();
         }
     }
@@ -66,32 +66,45 @@ public class JellyTele extends BaseOpMode {
         GamepadEx1.readButtons();
         GamepadEx2.readButtons();
         updateDriveModeFromGamepad();
+        updateIntOutModeFromGamepad();
     }
 
-    private void controlIntake() {
-        controlIntakeMotor();
+    private enum IntOutMode {
+        MANUAL,
+        ACTIVEINTAKE,
+        TRANSFER,
+        ACTIVEOUTTAKE
+    }
+    protected IntOutMode intOutMode = IntOutMode.MANUAL;
+    private void updateIntOutModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
-            intakeActivePosition();
+            intOutMode = IntOutMode.ACTIVEINTAKE;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
-            outtakeActivePosition();
+            intOutMode = IntOutMode.ACTIVEOUTTAKE;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
-            intakeOuttakeTransfer();
+            intOutMode = IntOutMode.TRANSFER;
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+            intOutMode = IntOutMode.MANUAL;
         }
     }
-    private void controlIntakeMotor() {
-        double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
-        int intakePosition = armMotor.getTargetPosition();
-        telemetry.addData("intake", intakePosition);
-        //armMotor.setPower(joystickValue);
-    }
-    private void intakeActivePosition() {
-        //set intake to position (button y)
-    }
-    private void outtakeActivePosition() {
-        //set outtake to position (button b)
-    }
-    private void intakeOuttakeTransfer() {
-        //move intake, outtake, and slides to the correct places (button a)
+    private void updateIntOutMode() {
+        switch (intOutMode) {
+            case MANUAL:
+                double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
+                int intakePosition = armMotor.getTargetPosition();
+                telemetry.addData("intake", intakePosition);
+                break;
+            case ACTIVEINTAKE:
+                armMotor.setTargetPosition(1000); //PLACEHOLDER
+                break;
+            case ACTIVEOUTTAKE:
+                outtakeRotatingArmServos.armOuttakeDeposit();
+                break;
+            case TRANSFER:
+                outtakeRotatingArmServos.armOuttakeIntake();
+                armMotor.setTargetPosition(0); // PLACEHOLDER
+                break;
+        }
     }
 
     private void controlOuttake() {
@@ -106,7 +119,6 @@ public class JellyTele extends BaseOpMode {
         } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
             driveMode = DriveMode.MECANUM;
         }
-        //resetIMU();
     }
 
     private void updateDriveMode(double precisionMultiplier) {
