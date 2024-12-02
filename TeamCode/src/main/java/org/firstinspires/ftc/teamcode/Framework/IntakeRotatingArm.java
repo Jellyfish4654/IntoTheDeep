@@ -53,7 +53,7 @@ public class IntakeRotatingArm {
         int error = targetPosition - currentPosition;
         double derivative = (error - lastError) / timer.seconds();
         double tempIntegralSum = integralSum + (error * timer.seconds());
-        double out = (kP * error) + (kI * integralSum) + (kD * derivative) * kG;
+        double out = (kP * error) + (kI * tempIntegralSum) + (kD * derivative) * kG;
         lastError = error;
         integralSum = tempIntegralSum;
         return out;

@@ -87,6 +87,7 @@ public class JellyTele extends BaseOpMode {
             intOutMode = IntOutMode.MANUAL;
         }
     }
+<<<<<<< HEAD
     private void updateIntOutMode() {
         switch (intOutMode) {
             case MANUAL:
@@ -105,6 +106,22 @@ public class JellyTele extends BaseOpMode {
                 armMotor.setTargetPosition(0); // PLACEHOLDER
                 break;
         }
+=======
+    private void controlIntakeMotor() {
+        double joystickValue = applyDeadband(-GamepadEx2.getLeftY());
+        int intakePosition = armMotor.getTargetPosition();
+        telemetry.addData("intake", intakePosition);
+        //armMotor.setPower(joystickValue);
+    }
+    private void intakeActivePosition() {
+        intakeClaw.closeClaw();
+    }
+    private void outtakeActivePosition() {
+        intakeClaw.openClaw();
+    }
+    private void intakeOuttakeTransfer() {
+        //move intake, outtake, and slides to the correct places (button a)
+>>>>>>> 90ebc66d5669e56d6f2bdac7c4bfc4b00fd99f98
     }
 
     private void controlOuttake() {

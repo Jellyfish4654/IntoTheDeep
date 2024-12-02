@@ -60,6 +60,7 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         //intake claw servo
         intakeClaw = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
+        imu = hardwareMap.get(IMU.class, "imu");
 
         outtakeClaw = new Claw(hardwareMap.get(Servo.class, "outtakeServo"));
 
