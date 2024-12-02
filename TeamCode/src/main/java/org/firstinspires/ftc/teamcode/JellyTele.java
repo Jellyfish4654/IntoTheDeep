@@ -54,9 +54,9 @@ public class JellyTele extends BaseOpMode {
         ElapsedTime timer = new ElapsedTime();
         while (opModeIsActive()) {
             readGamepadInputs();
-            controlSlideMotors();
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
+            updateSlideMode();
             telemetry.update();
         }
     }
@@ -66,6 +66,7 @@ public class JellyTele extends BaseOpMode {
         GamepadEx2.readButtons();
         updateDriveModeFromGamepad();
         updateIntOutModeFromGamepad();
+        updateSlideModeFromGamepad();
     }
 
     private enum IntOutMode {
@@ -74,7 +75,9 @@ public class JellyTele extends BaseOpMode {
         TRANSFER,
         ACTIVEOUTTAKE
     }
+
     protected IntOutMode intOutMode = IntOutMode.MANUAL;
+
     private void updateIntOutModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
             intOutMode = IntOutMode.ACTIVEINTAKE;
@@ -86,6 +89,7 @@ public class JellyTele extends BaseOpMode {
             intOutMode = IntOutMode.MANUAL;
         }
     }
+
     private double updateIntOutMode() {
         double intakeJoystickValue = 0;
         switch (intOutMode) {
@@ -107,6 +111,7 @@ public class JellyTele extends BaseOpMode {
         }
         return intakeJoystickValue;
     }
+
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.FIELDCENTRIC;
@@ -170,9 +175,6 @@ public class JellyTele extends BaseOpMode {
     }
 
 
-
-
-
     private void applySlewRateLimit(double[] powers, double rate) {
         for (int i = 0; i < slewRateLimiters.length; i++) {
             slewRateLimiters[i].setRate(rate);
@@ -187,42 +189,67 @@ public class JellyTele extends BaseOpMode {
     }
 
 
-    private double calculatePrecisionMultiplier()
-    {
-        if (GamepadEx1.isDown(GamepadKeys.Button.LEFT_BUMPER))
-        {
+    private double calculatePrecisionMultiplier() {
+        if (GamepadEx1.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
             return PRECISION_MULTIPLIER_LOW;
-        }
-        else if (GamepadEx1.isDown(GamepadKeys.Button.RIGHT_BUMPER))
-        {
+        } else if (GamepadEx1.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
             return PRECISION_MULTIPLIER_HIGH;
         }
         return MAX_SCALE;
     }
-    private void controlSlideMotors() {
-        double slidePower = 0;
-        if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-            slidePower = 0.75;
+
+    private enum SlideMode {
+        STATIONARY,
+        UP,
+        DOWN,
+        FULLEXTEND,
+        FULLRETRACT
+    }
+
+    protected SlideMode slideMode = SlideMode.STATIONARY;
+
+    private void updateSlideModeFromGamepad() {
+        if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER))) {
+            slideMode = SlideMode.STATIONARY;
+        } else if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
+            slideMode = SlideMode.UP;
         } else if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-            slidePower = -0.75;
-        } else if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER))) {
-            slidePower = 0;
-        }
-        if (applyDeadband(slidePower) != 0) {
-            slideMotorLeft.setPower(slidePower);
-            slideMotorRight.setPower(slidePower);
-        }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
-            slides.setTargetPosition(1000);
+            slideMode = SlideMode.DOWN;
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
+            slideMode = SlideMode.FULLEXTEND;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
-            slides.setTargetPosition(0);
+            slideMode = SlideMode.FULLRETRACT;
         }
+    }
+
+    private void updateSlideMode() {
+        double slidePower = 0;
+        switch (slideMode) {
+            case STATIONARY:
+                slidePower = 0;
+                break;
+            case UP:
+                slidePower = 0.75;
+                break;
+            case DOWN:
+                slidePower = -0.75;
+                break;
+            case FULLEXTEND:
+                slides.setTargetPosition(1000);
+                break;
+            case FULLRETRACT:
+                slides.setTargetPosition(0);
+                break;
+        }
+        slideMotorLeft.setPower(slidePower);
+        slideMotorRight.setPower(slidePower);
         slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
     }
+}
 
 
         //  private double[] DWFieldCentricDrive()
@@ -241,7 +268,6 @@ public class JellyTele extends BaseOpMode {
         //     y2 + x2 - r
         // };
         // }
-}
 //            double x2 = x*Math.cos(-Yaw)-y*Math.sin(-Yaw);
 //            double y2 = x*Math.sin(-Yaw)+y*Math.cos(-Yaw);
 //            double denominator = Math.max((Math.abs(y2)+Math.abs(x2)+Math.abs(r)),1);
