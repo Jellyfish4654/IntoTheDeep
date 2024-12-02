@@ -38,7 +38,7 @@ public class SingleServoTuner extends LinearOpMode
 
 			if (gamepad1.a)
 			{
-				position = 0.58;
+				position = 0.5;
 			}
 			else if (gamepad1.b)
 			{
