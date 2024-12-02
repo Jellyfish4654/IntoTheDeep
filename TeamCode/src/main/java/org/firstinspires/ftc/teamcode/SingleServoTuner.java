@@ -15,7 +15,7 @@ public class SingleServoTuner extends LinearOpMode
 		outtakeLeftServo = hardwareMap.get(Servo.class, "intakeServo");
 
 //        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
-		double position = 0.85; // Initialize to midpoint
+		double position = 0.79; // Initialize to midpoint
 
 		waitForStart();
 
@@ -29,20 +29,20 @@ public class SingleServoTuner extends LinearOpMode
 
 			if (gamepad1.dpad_left)
 			{
-				position -= 0.0001;
+				position -= 0.01;
 			}
 			if (gamepad1.dpad_right)
 			{
-				position += 0.0001;
+				position += 0.01;
 			}
 
 			if (gamepad1.a)
 			{
-				position = 0;
+				position = 0.58;
 			}
 			else if (gamepad1.b)
 			{
-				position = 0.85;
+				position = 0.79;
 			}
 		}
 	}
