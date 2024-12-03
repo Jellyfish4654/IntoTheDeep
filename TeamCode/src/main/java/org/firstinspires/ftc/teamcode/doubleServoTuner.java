@@ -23,11 +23,11 @@ public class doubleServoTuner extends LinearOpMode
 
         while (opModeIsActive())
         {
-            telemetry.addData("ServoR", position);
-            telemetry.addData("position", outtakeLeftServo.getPosition());
+            telemetry.addData("position: ", position);
             telemetry.update();
 
             outtakeLeftServo.setPosition(position);
+            outtakeRightServo.setPosition(position);
 
             if (gamepad1.dpad_left)
             {
@@ -44,7 +44,7 @@ public class doubleServoTuner extends LinearOpMode
             }
             else if (gamepad1.b)
             {
-                position = 0.8;
+                position = 1;
             }
         }
     }
