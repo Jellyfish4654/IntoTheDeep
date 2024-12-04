@@ -44,7 +44,7 @@ public class doubleServoTuner extends LinearOpMode
             }
             else if (gamepad1.b)
             {
-                position = 1;
+                position = -1;
             }
         }
     }

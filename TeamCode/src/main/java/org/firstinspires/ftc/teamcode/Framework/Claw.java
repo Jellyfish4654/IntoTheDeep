@@ -20,14 +20,14 @@ public class Claw {
     }
 
     public void openClaw(){
-        clawServo.setPosition(0.2);
+        clawServo.setPosition(0.79);
         /* inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is open */
 
     }
 
     public void closeClaw(){
-        clawServo.setPosition(0.4);
+        clawServo.setPosition(0.5);
         /*
         inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is closed */
