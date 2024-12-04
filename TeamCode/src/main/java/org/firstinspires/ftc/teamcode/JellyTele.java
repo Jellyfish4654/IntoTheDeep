@@ -14,7 +14,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
-import static java.lang.Math.*;
 
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
@@ -58,7 +57,6 @@ public class JellyTele extends BaseOpMode {
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
             updateSlideMode();
-            controlClaws();
             telemetry.update();
         }
     }
@@ -92,29 +90,28 @@ public class JellyTele extends BaseOpMode {
         }
     }
 
-    private void updateIntOutMode() {
+    private double updateIntOutMode() {
         double intakeJoystickValue = 0;
-        double outtakeJoystickValue = 0;
         switch (intOutMode) {
             case MANUAL:
                 intakeJoystickValue = applyDeadband(-GamepadEx2.getLeftY());
-                armMotor.manualIntake(intakeJoystickValue);
-                outtakeJoystickValue = applyDeadband(Math.abs(-GamepadEx2.getRightY()));
-                outtakeRotatingArmServos.setOutput(outtakeJoystickValue, outtakeJoystickValue);
+                armMotor.manualIntake(intakeJoystickValue/2);
                 int intakePosition = armMotor.getTargetPosition();
                 telemetry.addData("intake", intakePosition);
                 break;
             case ACTIVEINTAKE:
-                armMotor.setTargetPosition(30); //PLACEHOLDER
+                armMotor.setTargetPosition(-20); //PLACEHOLDER
                 break;
             case ACTIVEOUTTAKE:
-                outtakeRotatingArmServos.armOuttakeDeposit();
+                outtakeRotatingArmServos.setOutput(-1, -1);
                 break;
             case TRANSFER:
-                outtakeRotatingArmServos.armOuttakeIntake();
-                armMotor.setTargetPosition(0); // PLACEHOLDER
+                outtakeRotatingArmServos.setOutput(0.45,0.45);
+                armMotor.setTargetPosition(-5); // PLACEHOLDER
                 break;
         }
+        armMotor.update();
+        return intakeJoystickValue;
     }
 
     private void updateDriveModeFromGamepad() {
@@ -204,16 +201,22 @@ public class JellyTele extends BaseOpMode {
     }
 
     private enum SlideMode {
+        STATIONARY,
+        UP,
+        DOWN,
         FULLEXTEND,
-        FULLRETRACT,
-        MANUAL
+        FULLRETRACT
     }
 
-    protected SlideMode slideMode = SlideMode.MANUAL;
+    protected SlideMode slideMode = SlideMode.STATIONARY;
 
     private void updateSlideModeFromGamepad() {
-        if (GamepadEx2.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
-            slideMode = SlideMode.MANUAL;
+        if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER))) {
+            slideMode = SlideMode.STATIONARY;
+        } else if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
+            slideMode = SlideMode.UP;
+        } else if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+            slideMode = SlideMode.DOWN;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             slideMode = SlideMode.FULLEXTEND;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
@@ -224,18 +227,20 @@ public class JellyTele extends BaseOpMode {
     private void updateSlideMode() {
         double slidePower = 0;
         switch (slideMode) {
-            case MANUAL:
-                if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-                    slidePower = 1;
-                }
-                if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-                    slidePower = -1;
-                }
+            case STATIONARY:
+                slidePower = 0;
+                break;
+            case UP:
+                slidePower = 0.75;
+                break;
+            case DOWN:
+                slidePower = -0.75;
+                break;
             case FULLEXTEND:
-                slides.setTargetPosition(10);
+                slides.setTargetPosition(1000);
                 break;
             case FULLRETRACT:
-                slides.setTargetPosition(-10);
+                slides.setTargetPosition(0);
                 break;
         }
         slideMotorLeft.setPower(slidePower);
@@ -245,18 +250,6 @@ public class JellyTele extends BaseOpMode {
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
-    }
-    private void controlClaws() {
-        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) == 1) {
-            intakeServo.openClaw();
-        } else {
-            intakeServo.closeClaw();
-        }
-        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) == 1) {
-            outtakeServo.openClaw();
-        } else {
-            outtakeServo.closeClaw();
-        }
     }
 }
 
