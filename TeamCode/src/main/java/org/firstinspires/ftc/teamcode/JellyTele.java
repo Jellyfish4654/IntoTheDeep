@@ -98,7 +98,7 @@ public class JellyTele extends BaseOpMode {
         switch (intOutMode) {
             case MANUAL:
                 intakeJoystickValue = applyDeadband(-GamepadEx2.getLeftY());
-                armMotor.control(intakeJoystickValue);
+                armMotor.manualIntake(intakeJoystickValue);
                 outtakeJoystickValue = applyDeadband(Math.abs(-GamepadEx2.getRightY()));
                 outtakeRotatingArmServos.setOutput(outtakeJoystickValue, outtakeJoystickValue);
                 int intakePosition = armMotor.getTargetPosition();

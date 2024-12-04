@@ -38,13 +38,16 @@ public class IntakeRotatingArm {
     public void update() {
         double elapsedTime = timer.seconds();
 
-        control(0);
+        control();
     }
 
 
-    public void control(double rightPower) {
-        rightPower = calculateMotorPower(armMotor, targetPosition);
+    public void control() {
+        double rightPower = calculateMotorPower(armMotor, targetPosition);
         armMotor.setPower(rightPower);
+    }
+    public void manualIntake(double intakeJoystick) {
+        armMotor.setPower(intakeJoystick);
     }
 
     private double calculateMotorPower(DcMotorEx motor, int targetPosition) {
