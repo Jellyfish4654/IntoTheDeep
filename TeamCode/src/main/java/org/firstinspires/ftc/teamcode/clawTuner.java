@@ -54,8 +54,8 @@ public class clawTuner extends BaseOpMode {
 
     private void controlClaw() {
         double y = -applyDeadband(GamepadEx1.getLeftY());
-        intakeClaw.setClawPos(y);
-        telemetry.addData("clawposition:", intakeClaw.getClawPosition());
+        intakeServo.setClawPos(y);
+        telemetry.addData("clawposition:", intakeServo.getClawPosition());
 
 
     }

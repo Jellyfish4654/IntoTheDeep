@@ -24,7 +24,7 @@ public abstract class BaseOpMode extends LinearOpMode {
     //one intake rotating arm motor
 
     //slides class
-    protected Claw intakeClaw;
+    protected Claw intakeServo;
     protected Claw outtakeClaw;
     //two claw servos
     protected OuttakeRotatingArmServos outtakeRotatingArmServos;
@@ -59,7 +59,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         VoltageSensor voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
 
         //intake claw servo
-        intakeClaw = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
+        intakeServo = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
         imu = hardwareMap.get(IMU.class, "imu");
 
         outtakeClaw = new Claw(hardwareMap.get(Servo.class, "outtakeServo"));
