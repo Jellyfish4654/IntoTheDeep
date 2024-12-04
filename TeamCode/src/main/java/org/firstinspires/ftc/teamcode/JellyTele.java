@@ -70,13 +70,12 @@ public class JellyTele extends BaseOpMode {
     }
 
     private enum IntOutMode {
-        MANUAL,
         ACTIVEINTAKE,
         TRANSFER,
         ACTIVEOUTTAKE
     }
 
-    protected IntOutMode intOutMode = IntOutMode.MANUAL;
+    protected IntOutMode intOutMode = IntOutMode.ACTIVEINTAKE;
 
     private void updateIntOutModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -85,20 +84,12 @@ public class JellyTele extends BaseOpMode {
             intOutMode = IntOutMode.ACTIVEOUTTAKE;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             intOutMode = IntOutMode.TRANSFER;
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-            intOutMode = IntOutMode.MANUAL;
         }
     }
 
     private double updateIntOutMode() {
         double intakeJoystickValue = 0;
         switch (intOutMode) {
-            case MANUAL:
-                intakeJoystickValue = applyDeadband(-GamepadEx2.getLeftY());
-                armMotor.manualIntake(intakeJoystickValue/2);
-                int intakePosition = armMotor.getTargetPosition();
-                telemetry.addData("intake", intakePosition);
-                break;
             case ACTIVEINTAKE:
                 armMotor.setTargetPosition(-20); //PLACEHOLDER
                 break;
@@ -201,22 +192,16 @@ public class JellyTele extends BaseOpMode {
     }
 
     private enum SlideMode {
-        STATIONARY,
-        UP,
-        DOWN,
+        MANUAL,
         FULLEXTEND,
         FULLRETRACT
     }
 
-    protected SlideMode slideMode = SlideMode.STATIONARY;
+    protected SlideMode slideMode = SlideMode.MANUAL;
 
     private void updateSlideModeFromGamepad() {
-        if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER))) {
-            slideMode = SlideMode.STATIONARY;
-        } else if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-            slideMode = SlideMode.UP;
-        } else if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-            slideMode = SlideMode.DOWN;
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
+            slideMode = SlideMode.MANUAL;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             slideMode = SlideMode.FULLEXTEND;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
@@ -227,20 +212,18 @@ public class JellyTele extends BaseOpMode {
     private void updateSlideMode() {
         double slidePower = 0;
         switch (slideMode) {
-            case STATIONARY:
-                slidePower = 0;
-                break;
-            case UP:
-                slidePower = 0.75;
-                break;
-            case DOWN:
-                slidePower = -0.75;
-                break;
+            case MANUAL:
+                if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
+                    slidePower = 0.75;
+                }
+                if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+                    slidePower = -0.75;
+                }
             case FULLEXTEND:
-                slides.setTargetPosition(1000);
+                slides.setTargetPosition(20);
                 break;
             case FULLRETRACT:
-                slides.setTargetPosition(0);
+                slides.setTargetPosition(-10);
                 break;
         }
         slideMotorLeft.setPower(slidePower);
