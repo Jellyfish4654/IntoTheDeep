@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
+import static java.lang.Math.*;
 
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
@@ -57,6 +58,7 @@ public class JellyTele extends BaseOpMode {
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
             updateSlideMode();
+            controlClaws();
             telemetry.update();
         }
     }
@@ -90,11 +92,15 @@ public class JellyTele extends BaseOpMode {
         }
     }
 
-    private double updateIntOutMode() {
+    private void updateIntOutMode() {
         double intakeJoystickValue = 0;
+        double outtakeJoystickValue = 0;
         switch (intOutMode) {
             case MANUAL:
                 intakeJoystickValue = applyDeadband(-GamepadEx2.getLeftY());
+                armMotor.control(intakeJoystickValue);
+                outtakeJoystickValue = applyDeadband(Math.abs(-GamepadEx2.getRightY()));
+                outtakeRotatingArmServos.setOutput(outtakeJoystickValue, outtakeJoystickValue);
                 int intakePosition = armMotor.getTargetPosition();
                 telemetry.addData("intake", intakePosition);
                 break;
@@ -109,7 +115,6 @@ public class JellyTele extends BaseOpMode {
                 armMotor.setTargetPosition(0); // PLACEHOLDER
                 break;
         }
-        return intakeJoystickValue;
     }
 
     private void updateDriveModeFromGamepad() {
@@ -248,6 +253,18 @@ public class JellyTele extends BaseOpMode {
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
+    }
+    private void controlClaws() {
+        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) == 1) {
+            intakeServo.openClaw();
+        } else {
+            intakeServo.closeClaw();
+        }
+        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) == 1) {
+            outtakeServo.openClaw();
+        } else {
+            outtakeServo.closeClaw();
+        }
     }
 }
 

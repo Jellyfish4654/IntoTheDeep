@@ -38,12 +38,12 @@ public class IntakeRotatingArm {
     public void update() {
         double elapsedTime = timer.seconds();
 
-        control();
+        control(0.5);
     }
 
 
-    private void control() {
-        double rightPower = calculateMotorPower(armMotor, targetPosition);
+    public void control(double rightPower) {
+        rightPower = calculateMotorPower(armMotor, targetPosition);
         armMotor.setPower(rightPower);
     }
 
