@@ -81,5 +81,9 @@ public class Slides {
     {
         return targetPosition;
     }
+    public int getCurrentLeftPosition()
+    {
+        return slideMotorLeft.getCurrentPosition();
+    }
 
 }

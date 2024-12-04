@@ -63,4 +63,8 @@ public class IntakeRotatingArm {
         return targetPosition;
     }
 
+    public int getCurrentPosition(){
+        return armMotor.getCurrentPosition();
+    }
+
 }

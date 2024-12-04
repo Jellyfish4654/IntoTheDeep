@@ -43,4 +43,5 @@ public class OuttakeRotatingArmServos {
         armLeftServo.setPosition(positionL);
         armRightServo.setPosition(positionR);
     }
+
 }
