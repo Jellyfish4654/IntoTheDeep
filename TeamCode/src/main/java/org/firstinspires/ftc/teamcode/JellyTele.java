@@ -105,7 +105,7 @@ public class JellyTele extends BaseOpMode {
                 telemetry.addData("intake", intakePosition);
                 break;
             case ACTIVEINTAKE:
-                armMotor.setTargetPosition(1000); //PLACEHOLDER
+                armMotor.setTargetPosition(30); //PLACEHOLDER
                 break;
             case ACTIVEOUTTAKE:
                 outtakeRotatingArmServos.armOuttakeDeposit();
