@@ -242,22 +242,16 @@ public class JellySmelly extends BaseOpMode {
     }
 
     private enum SlideMode {
-        STATIONARY,
-        UP,
-        DOWN,
         FULLEXTEND,
-        FULLRETRACT
+        FULLRETRACT,
+        MANUAL
     }
 
-    protected JellySmelly.SlideMode slideMode = JellySmelly.SlideMode.STATIONARY;
+    protected JellySmelly.SlideMode slideMode = JellySmelly.SlideMode.MANUAL;
 
     private void updateSlideModeFromGamepad() {
-        if (!(GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) && !(GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER))) {
-            slideMode = JellySmelly.SlideMode.STATIONARY;
-        } else if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-            slideMode = JellySmelly.SlideMode.UP;
-        } else if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-            slideMode = JellySmelly.SlideMode.DOWN;
+        if (GamepadEx2.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
+            slideMode = JellySmelly.SlideMode.MANUAL;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             slideMode = JellySmelly.SlideMode.FULLEXTEND;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
@@ -268,15 +262,13 @@ public class JellySmelly extends BaseOpMode {
     private void updateSlideMode() {
         double slidePower = 0;
         switch (slideMode) {
-            case STATIONARY:
-                slidePower = 0;
-                break;
-            case UP:
-                slidePower = 0.75;
-                break;
-            case DOWN:
-                slidePower = -0.75;
-                break;
+            case MANUAL:
+                if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
+                    slidePower = 0.5;
+                }
+                if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+                    slidePower = -0.5;
+                }
             case FULLEXTEND:
                 slides.setTargetPosition(1000);
                 break;
