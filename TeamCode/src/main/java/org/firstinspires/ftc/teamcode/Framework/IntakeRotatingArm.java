@@ -38,7 +38,7 @@ public class IntakeRotatingArm {
     public void update() {
         double elapsedTime = timer.seconds();
 
-        control(0.5);
+        control(0);
     }
 
 

@@ -30,7 +30,6 @@ public class Slides {
 
         this.voltageSensor = sensor;
         this.timer = new ElapsedTime();
-        setTargetPosition(0);
     }
 
     public void setTargetPosition(int TargetPosition) {

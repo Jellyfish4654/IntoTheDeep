@@ -226,16 +226,16 @@ public class JellyTele extends BaseOpMode {
         switch (slideMode) {
             case MANUAL:
                 if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-                    slidePower = 0.5;
+                    slidePower = 1;
                 }
                 if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-                    slidePower = -0.5;
+                    slidePower = -1;
                 }
             case FULLEXTEND:
-                slides.setTargetPosition(1000);
+                slides.setTargetPosition(10);
                 break;
             case FULLRETRACT:
-                slides.setTargetPosition(0);
+                slides.setTargetPosition(-10);
                 break;
         }
         slideMotorLeft.setPower(slidePower);
