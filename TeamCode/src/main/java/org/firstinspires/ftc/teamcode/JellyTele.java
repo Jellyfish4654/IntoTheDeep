@@ -56,6 +56,7 @@ public class JellyTele extends BaseOpMode {
             readGamepadInputs();
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
+            updateClawsManual();
             updateSlideMode();
             telemetry.update();
         }
@@ -74,8 +75,16 @@ public class JellyTele extends BaseOpMode {
         TRANSFER,
         ACTIVEOUTTAKE
     }
-
     protected IntOutMode intOutMode = IntOutMode.ACTIVEINTAKE;
+
+    private void updateClawsManual() {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
+            outtakeServo.clawToggle();
+        }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
+            intakeServo.clawToggle();
+        }
+    }
 
     private void updateIntOutModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -98,7 +107,8 @@ public class JellyTele extends BaseOpMode {
                 break;
             case TRANSFER:
                 outtakeRotatingArmServos.setOutput(0.45,0.45);
-                armMotor.setTargetPosition(-5); // PLACEHOLDER
+                armMotor.setTargetPosition(-30); // PLACEHOLDER
+
                 break;
         }
         armMotor.update();
@@ -235,37 +245,3 @@ public class JellyTele extends BaseOpMode {
         telemetry.addData("Right", rightPosition);
     }
 }
-
-
-        //  private double[] DWFieldCentricDrive()
-        // {
-        //   double y = -applyDeadband(GamepadEx1.getLeftY());
-        // double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
-        //double r = applyDeadband(GamepadEx1.getRightX());
-        // double botHeading = drive.pose.heading.toDouble();
-
-        // double x2 = x * Math.cos(-botHeading) - y * Math.sin(-botHeading);
-        // double y2 = x * Math.sin(-botHeading) + y * Math.cos(-botHeading);
-        // return new double[]{
-        //     y2 + x2 + r,
-        //     y2 - x2 + r,
-        //     y2 - x2 - r,
-        //     y2 + x2 - r
-        // };
-        // }
-//            double x2 = x*Math.cos(-Yaw)-y*Math.sin(-Yaw);
-//            double y2 = x*Math.sin(-Yaw)+y*Math.cos(-Yaw);
-//            double denominator = Math.max((Math.abs(y2)+Math.abs(x2)+Math.abs(r)),1);
-//            frontLeftMotor.setPower((y2+x2+r)/denominator);
-//            backLeftMotor.setPower((y2-x2+r)/denominator);
-//            frontRightMotor.setPower((y2-x2-r)/denominator);
-//            backRightMotor.setPower((y2+x2-r)/denominator);
-//            if (GamepadEx1.wasJustPressed(GamepadKeys.Button.BACK)) {
-//                imu.resetYaw();
-//            }
-//            double y3 = -GamepadEx2.getLeftY();
-//            slideMotorLeft.setPower(y3);
-//            slideMotorRight.setPower(y3);
-//            slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
-//
-//            telemetry.update();

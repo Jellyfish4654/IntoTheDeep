@@ -28,8 +28,8 @@ public class JellySmelly extends BaseOpMode {
     private final int intakeArmSlightRaise = 50;
     private final int intakeArmHandOff = 170;
     private final int slidesDefault= 0;
-    private final int slidesSlightRaise = 500;
-    private final int slidesFullRaise = 1000;
+    private final int slidesSlightRaise = 0;
+    private final int slidesFullRaise = 50;
     //change these values
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
@@ -104,7 +104,7 @@ public class JellySmelly extends BaseOpMode {
                 break;
 
             case GRAB:
-                if ((Math.abs(armMotor.getCurrentPosition() - intakeArmSlightRaise)<10)&&(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y))) {
+                if ((Math.abs(armMotor.getCurrentPosition() - intakeArmSlightRaise)<10)||(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y))) {
                     armMotor.setTargetPosition(intakeArmHandOff);
                     slides.setTargetPosition(slidesSlightRaise);
                     outtakeRotatingArmServos.armOuttakeIntake();
@@ -113,7 +113,7 @@ public class JellySmelly extends BaseOpMode {
                 break;
 
             case HANDOFF:
-                if ((Math.abs(armMotor.getCurrentPosition()-intakeArmHandOff)<10)&&((Math.abs(slides.getCurrentLeftPosition() - slidesSlightRaise)<10)&&(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)))){
+                if (((Math.abs(armMotor.getCurrentPosition()-intakeArmHandOff)<10)&&((Math.abs(slides.getCurrentLeftPosition() - slidesSlightRaise)<10))||(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)))){
                     outtakeServo.closeClaw();
                     timer.reset();
                     liftState = LiftState.DUMP;
@@ -130,7 +130,7 @@ public class JellySmelly extends BaseOpMode {
                 break;
 
             case DUMP:
-                if (((Math.abs(slides.getCurrentLeftPosition() - slidesFullRaise)<10) && (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)))) {
+                if (((Math.abs(slides.getCurrentLeftPosition() - slidesFullRaise)<10) || (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)))) {
                     outtakeServo.openClaw();
                     timer.reset();
                     liftState = LiftState.RETRACT;
@@ -153,6 +153,9 @@ public class JellySmelly extends BaseOpMode {
         if ((GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) && (liftState != LiftState.START)) {
             liftState = LiftState.START;
         }
+        telemetry.addData("state", liftState.toString());
+
+
     }
 
     private void updateDriveModeFromGamepad() {

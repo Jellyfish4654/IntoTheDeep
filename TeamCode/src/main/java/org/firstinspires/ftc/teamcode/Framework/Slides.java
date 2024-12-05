@@ -13,13 +13,13 @@ public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
-    private double kPLeft = 0.01, kILeft = 0, kDLeft = 0.0002;
-    private double kPRight = 0.01, kIRight = 0, kDRight = 0.0002;
+    private double kPLeft = 0.05, kILeft = 0, kDLeft = 0.0002;
+    private double kPRight = 0.05, kIRight = 0, kDRight = 0.0002;
     //	private double kPLeft = 0.01, kILeft = 0, kDLeft = 0.0002, kFLeft = 0.01;
 //	private double kPRight = 0.01, kIRight = 0, kDRight = 0.0002, kFRight = 0.01;
     private double lastLeftError = 0, lastRightError = 0;
     private double leftIntegralSum = 0, rightIntegralSum = 0;
-    private double kG = 1;
+    private double kG = 1.5;
     private final double ticks_in_degrees = 537.7 / 360.0;
     private int targetPosition;
     private double voltageCompensation;

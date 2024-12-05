@@ -1,8 +1,6 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -24,8 +22,8 @@ public abstract class BaseOpMode extends LinearOpMode {
     //one intake rotating arm motor
 
     //slides class
-    protected Claw intakeServo;
-    protected Claw outtakeServo;
+    protected IntakeClaw intakeServo;
+    protected OuttakeClaw outtakeServo;
     //two claw servos
     protected OuttakeRotatingArmServos outtakeRotatingArmServos;
 
@@ -59,10 +57,10 @@ public abstract class BaseOpMode extends LinearOpMode {
         VoltageSensor voltageSensor = hardwareMap.get(VoltageSensor.class, "Control Hub");
 
         //intake claw servo
-        intakeServo = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
+        intakeServo = new IntakeClaw(hardwareMap.get(Servo.class, "intakeServo"));
         imu = hardwareMap.get(IMU.class, "imu");
 
-        outtakeServo = new Claw(hardwareMap.get(Servo.class, "outtakeServo"));
+        outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
 
         armMotor = new IntakeRotatingArm(hardwareMap.get(DcMotorEx.class, "armMotor"), hardwareMap.get(VoltageSensor.class, "Control Hub"));
 
