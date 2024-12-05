@@ -108,7 +108,6 @@ public class JellyTele extends BaseOpMode {
             case TRANSFER:
                 outtakeRotatingArmServos.setOutput(0.45,0.45);
                 armMotor.setTargetPosition(-30); // PLACEHOLDER
-
                 break;
         }
         armMotor.update();

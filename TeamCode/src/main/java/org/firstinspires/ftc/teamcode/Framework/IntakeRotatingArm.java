@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
+
 import androidx.annotation.NonNull;
 
 // import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
@@ -26,12 +28,20 @@ public class IntakeRotatingArm {
     //private double kG = 1.5;
     private double targetPosition;
     private double voltageCompensation;
+    private PIDController controller;
+    public static double p= 0, i = 0, d = 0;
+    public static double f = 0.1;
+    public static int target = -177;
+    private final double ticks_in_degree = 587.3/360;
+
+
+    double position = -177; // Initialize to midpoint
 
     public IntakeRotatingArm(DcMotorEx armMotor, VoltageSensor voltageSensor) {
         this.armMotor = armMotor;
         this.voltageSensor = voltageSensor;
         this.timer = new ElapsedTime();
-        setTargetPosition(0);
+        setTargetPosition(position);
     }
 
     public void setTargetPosition(double TargetPosition) {
@@ -41,7 +51,6 @@ public class IntakeRotatingArm {
 
     public void update() {
         double elapsedTime = timer.seconds();
-
         control();
     }
 
@@ -56,14 +65,13 @@ public class IntakeRotatingArm {
 
     private double calculateMotorPower(DcMotorEx motor, double targetPosition) {
         timer.reset();
-
-        int currentPosition = motor.getCurrentPosition();
-        double error = targetPosition - currentPosition;
-        double out = (kP * error);
-        return Math.cos(targetPosition) * kcos * out;
-
-
-
+        controller = new PIDController(p, i, d);
+        int armPos = armMotor.getCurrentPosition();
+        double pid = controller.calculate(armPos, target);
+        double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
+        double power = pid + ff;
+        armMotor.setPower(power);
+        return power;
     }
     public double getTargetPosition()
     {
