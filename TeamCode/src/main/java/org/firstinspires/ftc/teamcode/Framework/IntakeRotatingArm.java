@@ -34,7 +34,7 @@ public class IntakeRotatingArm {
     private PIDController intakeController;
 
 
-    double position = -177; // Initialize to midpoint
+    double position = 177; // Initialize to midpoint
 
     public IntakeRotatingArm(DcMotorEx armMotor, VoltageSensor voltageSensor) {
         this.armMotor = armMotor;
