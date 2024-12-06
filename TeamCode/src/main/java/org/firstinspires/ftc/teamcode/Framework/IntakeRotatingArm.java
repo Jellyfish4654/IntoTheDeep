@@ -34,9 +34,10 @@ public class IntakeRotatingArm {
     private PIDController intakeController;
 
 
-    double position = -177; // Initialize to midpoint
+    double position = 1; // Initialize to midpoint
 
     public IntakeRotatingArm(DcMotorEx armMotor, VoltageSensor voltageSensor) {
+        intakeController = new PIDController(p, i, d);
         this.armMotor = armMotor;
         this.voltageSensor = voltageSensor;
         this.timer = new ElapsedTime();
@@ -46,6 +47,14 @@ public class IntakeRotatingArm {
     public void setTargetPosition(double TargetPosition) {
         targetPosition=TargetPosition;
         timer.reset();
+    }
+
+    public void intakePos() {
+        setTargetPosition(244);
+    }
+
+    public void transferPos() {
+        setTargetPosition(48);
     }
 
     public void update() {
@@ -64,12 +73,12 @@ public class IntakeRotatingArm {
 
     private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController intakeController) {
         timer.reset();
-        intakeController = new PIDController(p, i, d);
-        int armPos = armMotor.getCurrentPosition();
-        double pid = intakeController.calculate(armPos, target);
+        int armPos = motor.getCurrentPosition();
+        double pid = intakeController.calculate(armPos, targetPosition);
         double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
         double power = pid + ff;
-        armMotor.setPower(power);
+        power *= 0.9;
+        motor.setPower(power);
         return power;
     }
     public double getTargetPosition()

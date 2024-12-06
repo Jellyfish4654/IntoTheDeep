@@ -13,19 +13,20 @@ public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
-    double kP = 0.03, kI = 0.0061, kD = 0.0004;
-    private PIDController slideController;
-    private double kPLeft = 0.01, kILeft = 0, kDLeft = 0.0002, kFLeft = 0.01;
-//	private double kPRight = 0.01, kIRight = 0, kDRight = 0.0002, kFRight = 0.01;
+    public static double pleft = 0.03, ileft = 0.0061, dleft = 0.0004;
+    public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
+    private PIDController lcontroller;
+    private PIDController rcontroller;
+
     public static double f = 0;
-    public static double leftTarget = 300;
-    public static double rightTarget = 300;
-    public final double high_set_left = 1480;
-    public final double high_set_right = 1480;
-    public final double transfer_set_left =-129;
-    public final double transfer_set_right = -129;
-    public final double low_set_left = -1350;
-    public final double low_set_right = -1350;
+    public static double leftTarget = -129;
+    public static double rightTarget = -129;
+    public final double high_set_left = 2693;
+    public final double high_set_right = 2486;
+    public final double transfer_set_left = 1170;
+    public final double transfer_set_right = 916;
+    public final double low_set_left = -93;
+    public final double low_set_right = -417;
     private final double ticks_in_degree = 587.3/360;
     private int targetPosition;
     private double voltageCompensation;
@@ -33,6 +34,8 @@ public class Slides {
     public Slides(DcMotorEx slideMotorLeft, DcMotorEx slideMotorRight, VoltageSensor sensor) {
         this.slideMotorLeft = slideMotorLeft;
         this.slideMotorRight = slideMotorRight;
+        lcontroller = new PIDController(pleft, ileft, dleft);
+        rcontroller = new PIDController(pleft, ileft, dleft);
 
         this.voltageSensor = sensor;
         this.timer = new ElapsedTime();
@@ -58,18 +61,18 @@ public class Slides {
 
     public void update() {
         double elapsedTime = timer.seconds();
-        control(slideMotorLeft, leftTarget);
-        control(slideMotorRight, rightTarget);
+        control(slideMotorLeft, leftTarget, lcontroller);
+        control(slideMotorRight, rightTarget, rcontroller);
     }
 
-    private void control(DcMotorEx motor, double target) {
+    private void control(DcMotorEx motor, double target, PIDController slideController) {
         double powerSlide = calculateMotorPower(motor, target, slideController);
         motor.setPower(powerSlide);
     }
 
 
     private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController slideController) {
-        int position = motor.getCurrentPosition();
+        double position = motor.getCurrentPosition();
         return slideController.calculate(position, targetPosition);
     }
     public int getTargetPosition()

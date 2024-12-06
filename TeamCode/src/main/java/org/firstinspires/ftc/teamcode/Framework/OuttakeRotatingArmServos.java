@@ -39,7 +39,7 @@ public class OuttakeRotatingArmServos {
         armRightServo.setPosition(positionR);
     }
 
-    public void setOutput(double positionL, double positionR)
+    public void setOutput()
     {
         armLeftServo.setPosition(positionL);
         armRightServo.setPosition(positionR);

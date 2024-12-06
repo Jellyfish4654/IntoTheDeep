@@ -16,7 +16,7 @@ public class intakeArmTuner extends LinearOpMode
     private PIDController controller;
     public static double p= 0.02, i = 0.06, d = 0.0013;
     public static double f = 0.0;
-    public static int target = -177;
+    public static int target = 1;
     private final double ticks_in_degree = 587.3/360;
 
 
