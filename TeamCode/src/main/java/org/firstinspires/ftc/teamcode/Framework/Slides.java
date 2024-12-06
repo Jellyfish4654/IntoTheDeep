@@ -13,7 +13,7 @@ public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
-    double kP = 0.06, kI = 0.0061, kD = 0.0002;
+    double kP = 0.03, kI = 0.0061, kD = 0.0004;
     private PIDController slideController;
     //	private double kPLeft = 0.01, kILeft = 0, kDLeft = 0.0002, kFLeft = 0.01;
 //	private double kPRight = 0.01, kIRight = 0, kDRight = 0.0002, kFRight = 0.01;
