@@ -16,8 +16,8 @@ public class slidesTuner extends LinearOpMode
 {
     private PIDController controller;
 
-    public static double p = 0.06, i = 0.0061, d = 0.0002;
-    public static int target = 300;
+    public static double p = 0.03, i = 0.0061, d = 0.0004;
+    public static int target = 300; //who the heck knows
     private DcMotorEx slideMotorLeft;
     private DcMotorEx slideMotorRight;
 
@@ -26,8 +26,8 @@ public class slidesTuner extends LinearOpMode
     {
         controller = new PIDController(p, i, d);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
-        slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
+        slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
+        slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
         slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //slideMotorLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         //slideMotorLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
