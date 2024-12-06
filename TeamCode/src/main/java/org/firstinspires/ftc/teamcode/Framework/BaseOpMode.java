@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -29,10 +28,6 @@ public abstract class BaseOpMode extends LinearOpMode {
 
     //two outtake arm servos
     protected IMU imu;
-
-    protected DistanceSensor distanceLeft;
-
-    protected DistanceSensor distanceRight;
 
     protected void initHardware() {
 
@@ -72,8 +67,6 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         slides = new Slides(slideMotorLeft, slideMotorRight, voltageSensor);
 
-        distanceLeft = hardwareMap.get(DistanceSensor.class, "distanceLeft");
-        distanceRight = hardwareMap.get(DistanceSensor.class, "distanceRight");
 
     }
 
