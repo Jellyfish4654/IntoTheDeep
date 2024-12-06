@@ -123,7 +123,6 @@ public class JellyTele extends BaseOpMode {
         telemetry.addData("intake pos:", armMotor.getCurrentPosition());
         return intakeJoystickValue;
     }
-
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.FIELDCENTRIC;
