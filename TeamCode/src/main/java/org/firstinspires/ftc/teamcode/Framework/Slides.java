@@ -13,13 +13,12 @@ public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
-    private double kPLeft = 0.05, kILeft = 0, kDLeft = 0.0002;
-    private double kPRight = 0.05, kIRight = 0, kDRight = 0.0002;
+    double kP = 0.06, kI = 0.0061, kD = 0.0002;
+    private PIDController slideController;
     //	private double kPLeft = 0.01, kILeft = 0, kDLeft = 0.0002, kFLeft = 0.01;
 //	private double kPRight = 0.01, kIRight = 0, kDRight = 0.0002, kFRight = 0.01;
-    private PIDController controller;
-    public static double f = 0.1;
-    public static int target = -177;
+    public static double f = 0;
+    public static int target = 300;
     private final double ticks_in_degree = 587.3/360;
     private int targetPosition;
     private double voltageCompensation;
@@ -39,38 +38,20 @@ public class Slides {
 
     public void update() {
         double elapsedTime = timer.seconds();
-
-        leftControl();
-        rightControl();
+        control(slideMotorLeft);
+        control(slideMotorRight);
     }
 
-    private void leftControl() {
-        double leftPower = calculateMotorPowerLeft(slideMotorLeft, targetPosition);
-        slideMotorLeft.setPower(leftPower);
+    private void control(DcMotorEx motor) {
+        double powerSlide = calculateMotorPower(motor, targetPosition, slideController);
+        motor.setPower(powerSlide);
     }
 
-    private void rightControl() {
-        double rightPower = calculateMotorPowerRight(slideMotorRight, targetPosition);
-        slideMotorRight.setPower(rightPower);
-    }
 
-    private double calculateMotorPowerLeft(DcMotorEx motor, double targetPosition) {
-        timer.reset();
-        controller = new PIDController(kPLeft, kILeft, kDLeft);
-        int leftPos = slideMotorLeft.getCurrentPosition();
-        double pid = controller.calculate(leftPos, target);
-        double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
-        double power = pid + ff;
-        return power;
-    }
-    private double calculateMotorPowerRight(DcMotorEx motor, int targetPosition) {
-        timer.reset();
-        controller = new PIDController(kPRight, kIRight, kDRight);
-        int rightPos = slideMotorLeft.getCurrentPosition();
-        double pid = controller.calculate(rightPos, target);
-        double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
-        double power = pid + ff;
-        return power;
+    private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController slideController) {
+        slideController.setPID(kP, kI, kD);
+        int position = motor.getCurrentPosition();
+        return slideController.calculate(position, target);
     }
     public int getTargetPosition()
     {

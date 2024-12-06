@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -25,6 +26,8 @@ public abstract class BaseOpMode extends LinearOpMode {
     protected OuttakeClaw outtakeServo;
     //two claw servos
     protected OuttakeRotatingArmServos outtakeRotatingArmServos;
+    protected Slides slideController;
+    private double p = 0, i = 0, d = 0;
 
     //two outtake arm servos
     protected IMU imu;
@@ -66,7 +69,6 @@ public abstract class BaseOpMode extends LinearOpMode {
         slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
         slides = new Slides(slideMotorLeft, slideMotorRight, voltageSensor);
-
 
     }
 

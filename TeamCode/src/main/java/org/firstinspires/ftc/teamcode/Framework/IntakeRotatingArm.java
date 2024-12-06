@@ -28,11 +28,11 @@ public class IntakeRotatingArm {
     //private double kG = 1.5;
     private double targetPosition;
     private double voltageCompensation;
-    private PIDController controller;
-    public static double p= 0, i = 0, d = 0;
-    public static double f = 0.1;
+    public static double p= 0.02, i = 0.06, d = 0.0013;
+    public static double f = 0.0;
     public static int target = -177;
     private final double ticks_in_degree = 587.3/360;
+    private PIDController intakeController;
 
 
     double position = -177; // Initialize to midpoint
@@ -56,18 +56,18 @@ public class IntakeRotatingArm {
 
 
     public void control() {
-        double rightPower = calculateMotorPower(armMotor, targetPosition);
+        double rightPower = calculateMotorPower(armMotor, targetPosition, intakeController);
         armMotor.setPower(rightPower);
     }
     public void manualIntake(double intakeJoystick) {
         armMotor.setPower(intakeJoystick);
     }
 
-    private double calculateMotorPower(DcMotorEx motor, double targetPosition) {
+    private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController intakeController) {
         timer.reset();
-        controller = new PIDController(p, i, d);
+        intakeController.setPID(p, i, d);
         int armPos = armMotor.getCurrentPosition();
-        double pid = controller.calculate(armPos, target);
+        double pid = intakeController.calculate(armPos, target);
         double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
         double power = pid + ff;
         armMotor.setPower(power);

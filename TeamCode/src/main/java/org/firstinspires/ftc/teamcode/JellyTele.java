@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
+import com.arcrobotics.ftclib.controller.PIDController;
 
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
@@ -100,17 +101,19 @@ public class JellyTele extends BaseOpMode {
         double intakeJoystickValue = 0;
         switch (intOutMode) {
             case ACTIVEINTAKE:
-                armMotor.setTargetPosition(1); //PLACEHOLDER
+                armMotor.setTargetPosition(1); //OR 255
                 break;
             case ACTIVEOUTTAKE:
                 outtakeRotatingArmServos.setOutput(-1, -1);
                 break;
             case TRANSFER:
+                armMotor.setTargetPosition(-177); //OR 82
+                slides.setTargetPosition(300);
                 outtakeRotatingArmServos.setOutput(0.45,0.45);
-                armMotor.setTargetPosition(-177); // PLACEHOLDER
                 break;
         }
         armMotor.update();
+        slides.update();
         return intakeJoystickValue;
     }
 
@@ -228,15 +231,15 @@ public class JellyTele extends BaseOpMode {
                 if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
                     slidePower = -1;
                 }
+                slideMotorLeft.setPower(slidePower);
+                slideMotorRight.setPower(slidePower);
             case FULLEXTEND:
-                slides.setTargetPosition(20);
+                slides.setTargetPosition(600);
                 break;
             case FULLRETRACT:
-                slides.setTargetPosition(-10);
+                slides.setTargetPosition(0);
                 break;
         }
-        slideMotorLeft.setPower(slidePower);
-        slideMotorRight.setPower(slidePower);
         slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
