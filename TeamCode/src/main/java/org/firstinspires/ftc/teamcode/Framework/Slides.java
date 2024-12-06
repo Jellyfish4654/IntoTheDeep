@@ -80,5 +80,9 @@ public class Slides {
     {
         return slideMotorLeft.getCurrentPosition();
     }
+    public int getCurrentRightPosition()
+    {
+        return slideMotorRight.getCurrentPosition();
+    }
 
 }
