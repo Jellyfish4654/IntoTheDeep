@@ -18,7 +18,6 @@ public class IntakeRotatingArm {
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
     private double kcos = 0.25;
-    private double kP = 0.005;
     private final double ticks_in_degrees = 537.7 / 360.0;
     //private double kP = 0.00, kI = 0, kD = 0;
     //	private double kPLeft = 0.01, kILeft = 0, kDLeft = 0.0002, kFLeft = 0.01;
@@ -65,7 +64,7 @@ public class IntakeRotatingArm {
 
     private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController intakeController) {
         timer.reset();
-        intakeController.setPID(p, i, d);
+        intakeController = new PIDController(p, i, d);
         int armPos = armMotor.getCurrentPosition();
         double pid = intakeController.calculate(armPos, target);
         double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;

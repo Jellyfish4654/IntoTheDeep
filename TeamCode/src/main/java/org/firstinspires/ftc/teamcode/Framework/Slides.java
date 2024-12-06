@@ -49,7 +49,7 @@ public class Slides {
 
 
     private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController slideController) {
-        slideController.setPID(kP, kI, kD);
+        slideController = new PIDController(kP, kI, kD);
         int position = motor.getCurrentPosition();
         return slideController.calculate(position, target);
     }
