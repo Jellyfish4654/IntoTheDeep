@@ -58,7 +58,7 @@ public class JellyTele extends BaseOpMode {
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
             updateClawsManual();
-            updateSlideMode();
+            //updateSlideMode();
             telemetry.update();
         }
     }
@@ -68,7 +68,7 @@ public class JellyTele extends BaseOpMode {
         GamepadEx2.readButtons();
         updateDriveModeFromGamepad();
         updateIntOutModeFromGamepad();
-        updateSlideModeFromGamepad();
+        //updateSlideModeFromGamepad();
     }
 
     private enum IntOutMode {
@@ -101,22 +101,28 @@ public class JellyTele extends BaseOpMode {
         double intakeJoystickValue = 0;
         switch (intOutMode) {
             case ACTIVEINTAKE:
-                armMotor.setTargetPosition(1); //OR 255
+                armMotor.intakePos(); //OR 255
+                outtakeRotatingArmServos.armOuttakeIntake();
+                slides.setTransfer();
                 break;
             case ACTIVEOUTTAKE:
-                outtakeRotatingArmServos.setOutput(-1, -1);
+                outtakeRotatingArmServos.armOuttakeDeposit();
+                slides.setHigh();
                 break;
             case TRANSFER:
-                armMotor.setTargetPosition(-177); //OR 82
+                armMotor.transferPos(); //OR 82
                 slides.setTransfer();
-                outtakeRotatingArmServos.setOutput(0.45,0.45);
+                outtakeRotatingArmServos.armOuttakeIntake();
                 break;
         }
         armMotor.update();
         slides.update();
+        outtakeRotatingArmServos.setOutput();
+        telemetry.addData("state:", intOutMode.toString());
+        telemetry.addData("slides pos:", slides.getCurrentLeftPosition());
+        telemetry.addData("intake pos:", armMotor.getCurrentPosition());
         return intakeJoystickValue;
     }
-
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.FIELDCENTRIC;
@@ -143,6 +149,7 @@ public class JellyTele extends BaseOpMode {
             //  add dwfieldcentric later;
         }
         drivetrain.setMotorSpeeds(precisionMultiplier, motorSpeeds);
+
     }
 
     private double[] MecanumDrive() {
@@ -211,7 +218,7 @@ public class JellyTele extends BaseOpMode {
 
     protected SlideMode slideMode = SlideMode.MANUAL;
 
-    private void updateSlideModeFromGamepad() {
+    /*private void updateSlideModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
             slideMode = SlideMode.MANUAL;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
@@ -245,5 +252,5 @@ public class JellyTele extends BaseOpMode {
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
-    }
+    }*/
 }
