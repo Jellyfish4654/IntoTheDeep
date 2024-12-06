@@ -73,8 +73,8 @@ public class JellyTele extends BaseOpMode {
 
     private enum IntOutMode {
         ACTIVEINTAKE,
-        TRANSFER,
-        ACTIVEOUTTAKE
+        ACTIVEOUTTAKE,
+        TRANSFER
     }
     protected IntOutMode intOutMode = IntOutMode.ACTIVEINTAKE;
 
