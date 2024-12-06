@@ -100,14 +100,14 @@ public class JellyTele extends BaseOpMode {
         double intakeJoystickValue = 0;
         switch (intOutMode) {
             case ACTIVEINTAKE:
-                armMotor.setTargetPosition(-20); //PLACEHOLDER
+                armMotor.setTargetPosition(1); //PLACEHOLDER
                 break;
             case ACTIVEOUTTAKE:
                 outtakeRotatingArmServos.setOutput(-1, -1);
                 break;
             case TRANSFER:
                 outtakeRotatingArmServos.setOutput(0.45,0.45);
-                armMotor.setTargetPosition(-30); // PLACEHOLDER
+                armMotor.setTargetPosition(-177); // PLACEHOLDER
                 break;
         }
         armMotor.update();

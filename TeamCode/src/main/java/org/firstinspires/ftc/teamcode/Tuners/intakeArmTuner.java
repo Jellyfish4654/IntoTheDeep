@@ -14,9 +14,9 @@ public class intakeArmTuner extends LinearOpMode
     //IntakeRotatingArm armMotor;
     DcMotorEx armMotor;
     private PIDController controller;
-    public static double p= 0, i = 0, d = 0;
-    public static double f = 0.1;
-    public static int target = 700;
+    public static double p= 0.02, i = 0.06, d = 0.0013;
+    public static double f = 0.0;
+    public static int target = -177;
     private final double ticks_in_degree = 587.3/360;
 
 
@@ -40,8 +40,8 @@ public class intakeArmTuner extends LinearOpMode
             double pid = controller.calculate(armPos, target);
             double ff = Math.cos(Math.toRadians(target/ticks_in_degree)) * f;
             double power = pid + ff;
+            power *= 0.9;
             armMotor.setPower(power);
-
             telemetry.addData("pos", armPos);
             telemetry.addData("target", target);
             telemetry.update();
