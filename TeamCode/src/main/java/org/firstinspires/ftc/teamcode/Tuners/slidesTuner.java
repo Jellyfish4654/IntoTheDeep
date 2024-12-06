@@ -14,20 +14,24 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 @TeleOp
 public class slidesTuner extends LinearOpMode
 {
-    private PIDController controller;
+    private PIDController lcontroller;
+    private PIDController rcontroller;
 
-    public static double p = 0.03, i = 0.0061, d = 0.0004;
-    public static int target = 300; //who the heck knows
+    public static double pleft = 0.03, ileft = 0.0061, dleft = 0.0004;
+    public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
+    public static int leftTarget = 300; //who the heck knows
+    public static int rightTarget = 300;
     private DcMotorEx slideMotorLeft;
     private DcMotorEx slideMotorRight;
 
     @Override
     public void runOpMode()
     {
-        controller = new PIDController(p, i, d);
+        lcontroller = new PIDController(pleft, ileft, dleft);
+        rcontroller = new PIDController(pleft, ileft, dleft);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
-        slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
+        slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
+        slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
         //slideMotorLeft.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         //slideMotorLeft.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -36,13 +40,19 @@ public class slidesTuner extends LinearOpMode
 
         while (opModeIsActive())
         {
-            controller.setPID(p, i, d);
-            int position = slideMotorLeft.getCurrentPosition();
-            double power = controller.calculate(position, target);
-            slideMotorLeft.setPower(power);
-            slideMotorRight.setPower(power);
-            telemetry.addData("pos ", position);
-            telemetry.addData("target ", target);
+            lcontroller.setPID(pleft, ileft, dleft);
+            rcontroller.setPID(pright, iright, dright);
+            int Lposition = slideMotorLeft.getCurrentPosition();
+            int Rposition = slideMotorRight.getCurrentPosition();
+            double lpower = lcontroller.calculate(Lposition, leftTarget);
+            double rpower = rcontroller.calculate(Rposition, rightTarget);
+
+            slideMotorLeft.setPower(lpower);
+            slideMotorRight.setPower(rpower);
+            telemetry.addData("left pos ", Lposition);
+            telemetry.addData("right pos ", Rposition);
+            telemetry.addData("left target ", leftTarget);
+            telemetry.addData("right target ", rightTarget);
             telemetry.update();
         }
     }

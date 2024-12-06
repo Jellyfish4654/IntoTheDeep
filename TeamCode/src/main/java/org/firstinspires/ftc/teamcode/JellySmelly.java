@@ -106,7 +106,7 @@ public class JellySmelly extends BaseOpMode {
             case GRAB:
                 if ((Math.abs(armMotor.getCurrentPosition() - intakeArmSlightRaise)<10)||(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y))) {
                     armMotor.setTargetPosition(intakeArmHandOff);
-                    slides.setTargetPosition(slidesSlightRaise);
+                    slides.setTransfer();
                     outtakeRotatingArmServos.armOuttakeIntake();
                     liftState = LiftState.HANDOFF;
                 }
@@ -123,7 +123,7 @@ public class JellySmelly extends BaseOpMode {
             case RAISE:
                 if (timer.seconds() > 0.5) {
                     intakeServo.openClaw();
-                    slides.setTargetPosition(slidesFullRaise);
+                    slides.setHigh();
                     outtakeRotatingArmServos.armOuttakeDeposit();
                     liftState=LiftState.DUMP;
                 }
@@ -141,7 +141,7 @@ public class JellySmelly extends BaseOpMode {
             case RETRACT:
                 if (timer.seconds() > 0.5) {
                     armMotor.setTargetPosition(intakeArmDefault);
-                    slides.setTargetPosition(slidesDefault);
+                    slides.setLow();
                     outtakeRotatingArmServos.armOuttakeIntake();
                     liftState = LiftState.START;
                 }
@@ -273,10 +273,10 @@ public class JellySmelly extends BaseOpMode {
                     slidePower = -0.5;
                 }
             case FULLEXTEND:
-                slides.setTargetPosition(1000);
+                slides.setHigh();
                 break;
             case FULLRETRACT:
-                slides.setTargetPosition(0);
+                slides.setLow();
                 break;
         }
         slideMotorLeft.setPower(slidePower);

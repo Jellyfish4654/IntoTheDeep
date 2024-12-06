@@ -108,7 +108,7 @@ public class JellyTele extends BaseOpMode {
                 break;
             case TRANSFER:
                 armMotor.setTargetPosition(-177); //OR 82
-                slides.setTargetPosition(300);
+                slides.setTransfer();
                 outtakeRotatingArmServos.setOutput(0.45,0.45);
                 break;
         }
@@ -234,10 +234,10 @@ public class JellyTele extends BaseOpMode {
                 slideMotorLeft.setPower(slidePower);
                 slideMotorRight.setPower(slidePower);
             case FULLEXTEND:
-                slides.setTargetPosition(600);
+                slides.setHigh();
                 break;
             case FULLRETRACT:
-                slides.setTargetPosition(0);
+                slides.setLow();
                 break;
         }
         slides.update();
