@@ -97,15 +97,14 @@ public class JellySmelly extends BaseOpMode {
             case START:
                 if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
                     intakeServo.closeClaw();
-                    armMotor.setTargetPosition(intakeArmSlightRaise);
                     //slight rotate? have to test
                     liftState = LiftState.GRAB;
                 }
                 break;
 
             case GRAB:
-                if ((Math.abs(armMotor.getCurrentPosition() - intakeArmSlightRaise)<10)||(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y))) {
-                    armMotor.setTargetPosition(intakeArmHandOff);
+                if ((GamepadEx2.wasJustPressed(GamepadKeys.Button.Y))) {
+
                     slides.setTransfer();
                     outtakeRotatingArmServos.armOuttakeIntake();
                     liftState = LiftState.HANDOFF;
@@ -113,7 +112,7 @@ public class JellySmelly extends BaseOpMode {
                 break;
 
             case HANDOFF:
-                if (((Math.abs(armMotor.getCurrentPosition()-intakeArmHandOff)<10)&&((Math.abs(slides.getCurrentLeftPosition() - slidesSlightRaise)<10))||(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)))){
+                if ((Math.abs(slides.getCurrentLeftPosition() - slidesSlightRaise)<10)||(GamepadEx2.wasJustPressed(GamepadKeys.Button.Y))){
                     outtakeServo.closeClaw();
                     timer.reset();
                     liftState = LiftState.DUMP;
@@ -140,7 +139,6 @@ public class JellySmelly extends BaseOpMode {
 
             case RETRACT:
                 if (timer.seconds() > 0.5) {
-                    armMotor.setTargetPosition(intakeArmDefault);
                     slides.setLow();
                     outtakeRotatingArmServos.armOuttakeIntake();
                     liftState = LiftState.START;

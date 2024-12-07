@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArmServos {
-    private static final double ARM_INTAKE = 0.5;
+    private static final double ARM_INTAKE = 0.4;
     private static final double ARM_DEPOSIT = 1;
     //replace values after testing
     private final Servo armLeftServo;

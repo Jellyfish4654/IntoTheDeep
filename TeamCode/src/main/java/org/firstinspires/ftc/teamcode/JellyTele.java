@@ -74,7 +74,8 @@ public class JellyTele extends BaseOpMode {
     private enum IntOutMode {
         ACTIVEINTAKE,
         ACTIVEOUTTAKE,
-        TRANSFER
+        TRANSFER,
+        MANUAL
     }
     protected IntOutMode intOutMode = IntOutMode.ACTIVEINTAKE;
 
@@ -94,6 +95,8 @@ public class JellyTele extends BaseOpMode {
             intOutMode = IntOutMode.ACTIVEOUTTAKE;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             intOutMode = IntOutMode.TRANSFER;
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+            intOutMode = IntOutMode.MANUAL;
         }
     }
 
@@ -114,13 +117,16 @@ public class JellyTele extends BaseOpMode {
                 slides.setTransfer();
                 outtakeRotatingArmServos.armOuttakeIntake();
                 break;
+            case MANUAL:
+                updateSlideModeFromGamepad();
         }
-        updateSlideModeFromGamepad();
         slides.update();
         outtakeRotatingArmServos.setOutput();
         telemetry.addData("state:", intOutMode.toString());
         telemetry.addData("slides right pos:", slides.getCurrentRightPosition());
         telemetry.addData("slides left pos:", slides.getCurrentLeftPosition());
+        telemetry.addData("intakeArm Left pos:", intakeRotatingArmServos.getPositionLeft());
+        telemetry.addData("intakeArm Right pos:", intakeRotatingArmServos.getPositionRight());
     }
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {

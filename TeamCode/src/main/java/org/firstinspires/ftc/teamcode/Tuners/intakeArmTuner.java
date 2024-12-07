@@ -7,9 +7,11 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
+
 @Config
 @TeleOp(name = "ArmMotorTuner", group = "Test")
-public class intakeArmTuner extends LinearOpMode
+public class intakeArmTuner extends BaseOpMode
 {
     //IntakeRotatingArm armMotor;
     DcMotorEx armMotor;

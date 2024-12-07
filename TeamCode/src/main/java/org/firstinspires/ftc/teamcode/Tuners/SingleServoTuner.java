@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode.Tuners;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.acmerobotics.dashboard.FtcDashboard;
+
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.Servo;
 
-
+@Config
 @TeleOp(name = "Single Servo Test", group = "Test")
 public class SingleServoTuner extends LinearOpMode
 {
@@ -12,15 +16,18 @@ public class SingleServoTuner extends LinearOpMode
 	public void runOpMode() throws InterruptedException
 	{
 		final Servo outtakeLeftServo;
-		outtakeLeftServo = hardwareMap.get(Servo.class, "a");
+		telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+		outtakeLeftServo = hardwareMap.get(Servo.class, "intakeArmServoLeft");
 
 //        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
-		double position = 0; // Initialize to midpoint
+		double position = outtakeLeftServo.getPosition();
+		// Initialize to midpoint
 
 		waitForStart();
 
 		while (opModeIsActive())
 		{
+
 			telemetry.addData("ServoR", position);
 			telemetry.addData("position", outtakeLeftServo.getPosition());
 			telemetry.update();
