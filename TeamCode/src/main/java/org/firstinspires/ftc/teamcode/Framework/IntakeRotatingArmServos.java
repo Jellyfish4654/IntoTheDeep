@@ -10,37 +10,31 @@ public class IntakeRotatingArmServos {
     //replace values after testing
     private final Servo armLeftServo;
     private final Servo armRightServo;
-    double positionL = ARM_INTAKE;
-    double positionR = ARM_INTAKE;
 
     public IntakeRotatingArmServos(Servo servo1, Servo servo2)
     {
         this.armLeftServo = servo1;
         this.armRightServo = servo2;
-        armLeftServo.setPosition(positionL);
-        armRightServo.setPosition(positionR);
+        armLeftServo.setPosition(ARM_INTAKE);
+        armRightServo.setPosition(ARM_DEPOSIT);
         armRightServo.setDirection(Servo.Direction.REVERSE);
     }
 
     public void armOuttakeIntake()
     {
-        positionL = ARM_INTAKE;
-        positionR = ARM_INTAKE;
-        armLeftServo.setPosition(positionL);
-        armRightServo.setPosition(positionR);
+        armLeftServo.setPosition(ARM_INTAKE);
+        armRightServo.setPosition(ARM_DEPOSIT);
     }
     public void armIntakeDeposit()
     {
-        positionL = ARM_DEPOSIT;
-        positionR = ARM_DEPOSIT;
-        armLeftServo.setPosition(positionL);
-        armRightServo.setPosition(positionR);
+        armLeftServo.setPosition(ARM_INTAKE);
+        armRightServo.setPosition(ARM_DEPOSIT);
     }
 
     public void setOutput()
     {
-        armLeftServo.setPosition(positionL);
-        armRightServo.setPosition(positionR);
+        armLeftServo.setPosition(ARM_INTAKE);
+        armRightServo.setPosition(ARM_DEPOSIT);
     }
 
 }
