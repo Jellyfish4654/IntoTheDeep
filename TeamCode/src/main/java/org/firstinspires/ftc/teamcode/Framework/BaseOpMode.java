@@ -26,9 +26,8 @@ public abstract class BaseOpMode extends LinearOpMode {
     protected OuttakeClaw outtakeServo;
     //two claw servos
     protected OuttakeRotatingArmServos outtakeRotatingArmServos;
+    protected IntakeRotatingArmServos intakeRotatingArmServos;
     protected Slides slideController;
-    private double p = 0, i = 0, d = 0;
-
     //two outtake arm servos
     protected IMU imu;
 
@@ -63,6 +62,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         armMotor = new IntakeRotatingArm(hardwareMap.get(DcMotorEx.class, "armMotor"), hardwareMap.get(VoltageSensor.class, "Control Hub"));
 
         outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"), hardwareMap.get(Servo.class, "outtakeArmServoRight"));
+        intakeRotatingArmServos = new IntakeRotatingArmServos(hardwareMap.get(Servo.class, "intakeArmServoLeft"), hardwareMap.get(Servo.class, "outtakeArmServoRight"));
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
