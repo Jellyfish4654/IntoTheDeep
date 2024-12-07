@@ -118,7 +118,6 @@ public class JellyTele extends BaseOpMode {
         //armMotor.update();
         slides.update();
         outtakeRotatingArmServos.setOutput();
-        intakeRotatingArmServos.setOutput();
         telemetry.addData("state:", intOutMode.toString());
         telemetry.addData("slides right pos:", slides.getCurrentRightPosition());
         telemetry.addData("slides left pos:", slides.getCurrentLeftPosition());
