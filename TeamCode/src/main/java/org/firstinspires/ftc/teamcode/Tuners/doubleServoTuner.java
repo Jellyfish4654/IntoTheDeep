@@ -11,10 +11,11 @@ public class doubleServoTuner extends LinearOpMode
     @Override
     public void runOpMode() throws InterruptedException
     {
-        final Servo outtakeLeftServo;
-        final Servo outtakeRightServo;
-        outtakeLeftServo = hardwareMap.get(Servo.class, "outtakeArmServoLeft");
-        outtakeRightServo = hardwareMap.get(Servo.class, "outtakeArmServoRight");
+        final Servo intakeLeftServo;
+        final Servo intakeRightServo;
+        intakeLeftServo = hardwareMap.get(Servo.class, "intakeArmServoLeft");
+        intakeRightServo = hardwareMap.get(Servo.class, "intakeArmServoLeft");
+        intakeRightServo.setDirection(Servo.Direction.REVERSE);
 
 //        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
         double position = 0; // Initialize to midpoint
@@ -26,8 +27,8 @@ public class doubleServoTuner extends LinearOpMode
             telemetry.addData("position: ", position);
             telemetry.update();
 
-            outtakeLeftServo.setPosition(position);
-            outtakeRightServo.setPosition(position);
+            intakeLeftServo.setPosition(position);
+            intakeRightServo.setPosition(position);
 
             if (gamepad1.dpad_left)
             {
