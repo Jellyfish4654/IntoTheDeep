@@ -20,21 +20,21 @@ public class IntakeRotatingArmServos {
         armRightServo.setDirection(Servo.Direction.REVERSE);
     }
 
-    public void armOuttakeIntake()
+    public void armIntakePosition()
     {
         armLeftServo.setPosition(ARM_INTAKE);
-        armRightServo.setPosition(ARM_DEPOSIT);
+        armRightServo.setPosition(ARM_INTAKE);
     }
     public void armIntakeDeposit()
     {
-        armLeftServo.setPosition(ARM_INTAKE);
+        armLeftServo.setPosition(ARM_DEPOSIT);
         armRightServo.setPosition(ARM_DEPOSIT);
     }
 
     public void setOutput()
     {
-        armLeftServo.setPosition(ARM_INTAKE);
-        armRightServo.setPosition(ARM_DEPOSIT);
+        //armLeftServo.setPosition(ARM_INTAKE); not sure what to set these to
+        //armRightServo.setPosition(ARM_INTAKE);
     }
 
 }

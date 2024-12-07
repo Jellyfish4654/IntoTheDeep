@@ -101,7 +101,7 @@ public class JellyTele extends BaseOpMode {
         switch (intOutMode) {
             case ACTIVEINTAKE:
                 //armMotor.intakePos(); //OR 255
-                intakeRotatingArmServos.armOuttakeIntake();
+                intakeRotatingArmServos.armIntakePosition();
                 slides.setTransfer();
                 break;
             case ACTIVEOUTTAKE:
