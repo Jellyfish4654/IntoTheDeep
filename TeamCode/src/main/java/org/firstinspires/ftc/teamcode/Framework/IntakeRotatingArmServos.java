@@ -5,7 +5,7 @@ package org.firstinspires.ftc.teamcode.Framework;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeRotatingArmServos {
-    private static final double ARM_INTAKE = 0.9;
+    private static final double ARM_INTAKE = 1;
     private static final double ARM_DEPOSIT = 0.6;
     //replace values after testing
     private final Servo armLeftServo;
