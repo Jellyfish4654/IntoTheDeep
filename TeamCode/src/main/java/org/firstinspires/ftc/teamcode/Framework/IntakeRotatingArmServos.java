@@ -31,10 +31,10 @@ public class IntakeRotatingArmServos {
         armRightServo.setPosition(ARM_DEPOSIT);
     }
 
-    public void setOutput()
+    public void setOutput(int position)
     {
-        //armLeftServo.setPosition(ARM_INTAKE); not sure what to set these to
-        //armRightServo.setPosition(ARM_INTAKE);
+        armLeftServo.setPosition(position);
+        armRightServo.setPosition(position);
     }
 
 }
