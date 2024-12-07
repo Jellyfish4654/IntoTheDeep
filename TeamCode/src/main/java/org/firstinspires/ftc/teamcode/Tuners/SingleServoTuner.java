@@ -12,10 +12,10 @@ public class SingleServoTuner extends LinearOpMode
 	public void runOpMode() throws InterruptedException
 	{
 		final Servo outtakeLeftServo;
-		outtakeLeftServo = hardwareMap.get(Servo.class, "intakeServo");
+		outtakeLeftServo = hardwareMap.get(Servo.class, "a");
 
 //        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
-		double position = 0.79; // Initialize to midpoint
+		double position = 0; // Initialize to midpoint
 
 		waitForStart();
 

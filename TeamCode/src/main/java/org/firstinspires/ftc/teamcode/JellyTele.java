@@ -115,7 +115,7 @@ public class JellyTele extends BaseOpMode {
                 outtakeRotatingArmServos.armOuttakeIntake();
                 break;
         }
-        //armMotor.update();
+        updateSlideModeFromGamepad();
         slides.update();
         outtakeRotatingArmServos.setOutput();
         intakeRotatingArmServos.setOutput();
@@ -218,16 +218,18 @@ public class JellyTele extends BaseOpMode {
 
     protected SlideMode slideMode = SlideMode.MANUAL;
 
-    /*private void updateSlideModeFromGamepad() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
-            slideMode = SlideMode.MANUAL;
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
-            slideMode = SlideMode.FULLEXTEND;
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
-            slideMode = SlideMode.FULLRETRACT;
+    private void updateSlideModeFromGamepad() {
+        double slidePower = 0;
+        if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
+            slidePower = 1;
         }
+        if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
+            slidePower = -1;
+        }
+        slideMotorLeft.setPower(slidePower);
+        slideMotorRight.setPower(slidePower);
     }
-
+/*
     private void updateSlideMode() {
         double slidePower = 0;
         switch (slideMode) {
