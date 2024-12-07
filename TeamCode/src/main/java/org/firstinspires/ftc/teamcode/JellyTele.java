@@ -25,6 +25,7 @@ public class JellyTele extends BaseOpMode {
     private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
+    private double slideThing = 0;
     private MecanumDrive drive;
     GamepadEx GamepadEx1;
     GamepadEx GamepadEx2;
@@ -35,7 +36,7 @@ public class JellyTele extends BaseOpMode {
         DWFIELDCENTRIC
     }
 
-    protected DriveMode driveMode = DriveMode.FIELDCENTRIC;
+    protected DriveMode driveMode = DriveMode.MECANUM;
 
 
     @Override
@@ -80,13 +81,37 @@ public class JellyTele extends BaseOpMode {
     protected IntOutMode intOutMode = IntOutMode.ACTIVEINTAKE;
 
     private void updateClawsManual() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
-            outtakeServo.clawToggle();
-        }
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
-            intakeServo.clawToggle();
+            outtakeServo.closeClaw();
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
+            outtakeServo.openClaw();
         }
     }
+    /*
+    private enum ClawMode {
+        OPEN,
+        CLOSE
+    }
+    protected ClawMode clawMode = ClawMode.OPEN;
+    private void updateClawMode() {
+        switch (clawMode) {
+            case OPEN:
+                outtakeServo.openClaw();
+                break;
+            case CLOSE:
+                outtakeServo.closeClaw();
+                break;
+        }
+    }
+    private void updateClawModeFromGamepad() {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
+            if (clawMode == ClawMode.OPEN) {
+                clawMode = ClawMode.CLOSE;
+            } else if (clawMode == ClawMode.CLOSE) {
+                clawMode = ClawMode.OPEN;
+            }
+        }
+    }*/
 
     private void updateIntOutModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
@@ -127,7 +152,7 @@ public class JellyTele extends BaseOpMode {
     }
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
-            driveMode = DriveMode.FIELDCENTRIC;
+            driveMode = DriveMode.MECANUM;
         } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
             driveMode = DriveMode.DWFIELDCENTRIC;
         } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
@@ -142,7 +167,7 @@ public class JellyTele extends BaseOpMode {
                 motorSpeeds = MecanumDrive();
                 break;
             case FIELDCENTRIC:
-                motorSpeeds = FieldCentricDrive();
+                motorSpeeds = MecanumDrive();
                 break;
             //case DWFIELDCENTRIC:
             default:
@@ -159,10 +184,10 @@ public class JellyTele extends BaseOpMode {
         double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
         double y = -applyDeadband(GamepadEx1.getLeftY());
         return new double[]{
-                y + x + r,
-                y - x + r,
-                y - x - r,
-                y + x - r
+                0.6*(y + x + r),
+                0.6*(y - x + r),
+                0.6*(y - x - r),
+                0.6*(y + x - r)
         };
     }
 
@@ -174,7 +199,7 @@ public class JellyTele extends BaseOpMode {
     private double[] FieldCentricDrive() {
         double y = -applyDeadband(GamepadEx1.getLeftY());
         double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
-        double r = applyDeadband(GamepadEx1.getRightX());
+        double r = -applyDeadband(GamepadEx1.getRightX());
         double Yaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - resetHeading;
 
         double x2 = x * Math.cos(-Yaw) - y * Math.sin(-Yaw);
@@ -233,7 +258,7 @@ public class JellyTele extends BaseOpMode {
     }
 
     private void updateSlideMode() {
-        double slidePower = 0;
+       double slidePower = slideThing;
         switch (slideMode) {
             case MANUAL:
                 if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
@@ -242,23 +267,26 @@ public class JellyTele extends BaseOpMode {
                 if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
                     slidePower = -1;
                 }
+                if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+                    slideThing = -1;
+                }
                 slideMotorLeft.setPower(slidePower);
                 slideMotorRight.setPower(slidePower);
             case FULLEXTEND:
-                slides.setHigh();
+                //slides.setHigh();
                 break;
             case FULLRETRACT:
-                slides.setLow();
+                //slides.setLow();
                 break;
         }
-        slides.update();
+        //slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
     }
     private void controlIntake() {
-        double intakeJoystickValue = -(applyDeadband(GamepadEx2.getLeftY()));
-        intakeRotatingArmServos.setOutput(intakeJoystickValue);
+        double intakeJoystickValue = Math.abs((applyDeadband(GamepadEx2.getLeftY())));
+        intakeRotatingArmServos.setOutput(intakeJoystickValue/2+0.4);
     }
 }

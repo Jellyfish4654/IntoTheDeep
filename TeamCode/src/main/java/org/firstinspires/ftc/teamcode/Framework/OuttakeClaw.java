@@ -17,24 +17,17 @@ public class OuttakeClaw {
     }
 
     public void openClaw(){
-        clawServo.setPosition(0.45);
+        clawServo.setPosition(0.7);
         /* inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is open */
 
     }
 
     public void closeClaw(){
-        clawServo.setPosition(0.15);
+        clawServo.setPosition(0.4);
         /*
         inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is closed */
-    }
-    public void clawToggle() {
-        if (clawServo.getPosition() == 0.15) {
-            openClaw();
-        } else {
-            closeClaw();
-        }
     }
 
     public double getClawPosition(){
