@@ -58,7 +58,8 @@ public class JellyTele extends BaseOpMode {
             updateDriveMode(calculatePrecisionMultiplier());
             updateIntOutMode();
             updateClawsManual();
-            //updateSlideMode();
+            updateSlideMode();
+            controlIntake();
             telemetry.update();
         }
     }
@@ -68,14 +69,13 @@ public class JellyTele extends BaseOpMode {
         GamepadEx2.readButtons();
         updateDriveModeFromGamepad();
         updateIntOutModeFromGamepad();
-        //updateSlideModeFromGamepad();
+        updateSlideModeFromGamepad();
     }
 
     private enum IntOutMode {
         ACTIVEINTAKE,
         ACTIVEOUTTAKE,
-        TRANSFER,
-        MANUAL
+        TRANSFER
     }
     protected IntOutMode intOutMode = IntOutMode.ACTIVEINTAKE;
 
@@ -95,32 +95,29 @@ public class JellyTele extends BaseOpMode {
             intOutMode = IntOutMode.ACTIVEOUTTAKE;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             intOutMode = IntOutMode.TRANSFER;
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-            intOutMode = IntOutMode.MANUAL;
         }
     }
 
     private void updateIntOutMode() {
+        double intakeJoystickValue = 0;
         switch (intOutMode) {
             case ACTIVEINTAKE:
                 //armMotor.intakePos(); //OR 255
-                intakeRotatingArmServos.armIntakePosition();
-                slides.setTransfer();
+                //intakeRotatingArmServos.armIntakePosition();
+                //slides.setTransfer();
                 break;
             case ACTIVEOUTTAKE:
                 outtakeRotatingArmServos.armOuttakeDeposit();
-                slides.setHigh();
+                //slides.setHigh();
                 break;
             case TRANSFER:
                 //armMotor.transferPos(); //OR 82
-                intakeRotatingArmServos.armIntakeDeposit();
-                slides.setTransfer();
+                //intakeRotatingArmServos.armIntakeDeposit();
+                //slides.setTransfer();
                 outtakeRotatingArmServos.armOuttakeIntake();
                 break;
-            case MANUAL:
-                updateSlideModeFromGamepad();
         }
-        slides.update();
+        //slides.update();
         outtakeRotatingArmServos.setOutput();
         telemetry.addData("state:", intOutMode.toString());
         telemetry.addData("slides right pos:", slides.getCurrentRightPosition());
@@ -234,7 +231,7 @@ public class JellyTele extends BaseOpMode {
         slideMotorLeft.setPower(slidePower);
         slideMotorRight.setPower(slidePower);
     }
-/*
+
     private void updateSlideMode() {
         double slidePower = 0;
         switch (slideMode) {
@@ -259,5 +256,9 @@ public class JellyTele extends BaseOpMode {
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
-    }*/
+    }
+    private void controlIntake() {
+        double intakeJoystickValue = -(applyDeadband(GamepadEx2.getLeftY()));
+        intakeRotatingArmServos.setOutput(intakeJoystickValue);
+    }
 }
