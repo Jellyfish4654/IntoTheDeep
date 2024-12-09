@@ -129,20 +129,21 @@ public class JellyTele extends BaseOpMode {
             case ACTIVEINTAKE:
                 //armMotor.intakePos(); //OR 255
                 //intakeRotatingArmServos.armIntakePosition();
-                //slides.setTransfer();
+                slides.setTransfer();
                 break;
             case ACTIVEOUTTAKE:
                 outtakeRotatingArmServos.armOuttakeDeposit();
-                //slides.setHigh();
+                slides.setHigh();
                 break;
             case TRANSFER:
                 //armMotor.transferPos(); //OR 82
                 //intakeRotatingArmServos.armIntakeDeposit();
-                //slides.setTransfer();
+                slides.setTransfer();
                 outtakeRotatingArmServos.armOuttakeIntake();
                 break;
         }
-        //slides.update();
+        slides.enablePID();
+        slides.update();
         outtakeRotatingArmServos.setOutput();
         telemetry.addData("state:", intOutMode.toString());
         telemetry.addData("slides right pos:", slides.getCurrentRightPosition());
