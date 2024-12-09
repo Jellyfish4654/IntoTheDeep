@@ -25,7 +25,7 @@ public class JellyTele extends BaseOpMode {
     private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
-    private double slideThing = 0;
+    private double defaultSlidePower = 0;
     private MecanumDrive drive;
     GamepadEx GamepadEx1;
     GamepadEx GamepadEx2;
@@ -243,24 +243,25 @@ public class JellyTele extends BaseOpMode {
         FULLRETRACT
     }
 
-    protected SlideMode slideMode = SlideMode.MANUAL;
+    protected SlideMode slideMode = SlideMode.FULLRETRACT;
 
     private void updateSlideModeFromGamepad() {
-        double slidePower = 0;
-        if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
-            slidePower = 1;
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+            slideMode = SlideMode.FULLRETRACT;
         }
-        if (GamepadEx2.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
-            slidePower = -1;
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
+            slideMode = SlideMode.FULLEXTEND;
         }
-        slideMotorLeft.setPower(slidePower);
-        slideMotorRight.setPower(slidePower);
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
+            slideMode = SlideMode.MANUAL;
+        }
     }
 
     private void updateSlideMode() {
-       double slidePower = slideThing;
+       double slidePower = defaultSlidePower;
         switch (slideMode) {
             case MANUAL:
+                slides.disablePID();
                 if (GamepadEx2.isDown(GamepadKeys.Button.LEFT_BUMPER)) {
                     slidePower = 1;
                 }
@@ -268,18 +269,20 @@ public class JellyTele extends BaseOpMode {
                     slidePower = -1;
                 }
                 if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-                    slideThing = -1;
+                    defaultSlidePower = -1;
                 }
                 slideMotorLeft.setPower(slidePower);
                 slideMotorRight.setPower(slidePower);
             case FULLEXTEND:
-                //slides.setHigh();
+                slides.enablePID();
+                slides.setHigh();
                 break;
             case FULLRETRACT:
-                //slides.setLow();
+                slides.enablePID();
+                slides.setLow();
                 break;
         }
-        //slides.update();
+        slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);

@@ -13,6 +13,7 @@ public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
+    public final double defaultp = 0.03, defaulti = 0.0061, defaultd = 0.004;
     public static double pleft = 0.03, ileft = 0.0061, dleft = 0.0004;
     public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
     private PIDController lcontroller;
@@ -74,6 +75,16 @@ public class Slides {
     private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController slideController) {
         double position = motor.getCurrentPosition();
         return slideController.calculate(position, targetPosition);
+    }
+    public void enablePID() {
+        pleft = defaultp;
+        ileft = defaulti;
+        dleft = defaultd;
+    }
+    public void disablePID() {
+        pleft = 0;
+        ileft = 0;
+        dleft = 0;
     }
     public int getTargetPosition()
     {
