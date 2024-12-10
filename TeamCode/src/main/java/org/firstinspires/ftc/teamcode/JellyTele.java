@@ -148,8 +148,8 @@ public class JellyTele extends BaseOpMode {
         telemetry.addData("state:", intOutMode.toString());
         telemetry.addData("slides right pos:", slides.getCurrentRightPosition());
         telemetry.addData("slides left pos:", slides.getCurrentLeftPosition());
-        telemetry.addData("intakeArm Left pos:", intakeRotatingArmServos.getPositionLeft());
-        telemetry.addData("intakeArm Right pos:", intakeRotatingArmServos.getPositionRight());
+        telemetry.addData("intakeArm left pos:", intakeRotatingArmServos.getPositionLeft());
+        telemetry.addData("intakeArm right pos:", intakeRotatingArmServos.getPositionRight());
     }
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
