@@ -16,6 +16,8 @@ public abstract class BaseOpMode extends LinearOpMode {
     //four drivetrain motors
     protected DcMotorEx slideMotorLeft;
     protected DcMotorEx slideMotorRight;
+    protected DcMotorEx Extendo;
+    protected Extendo extendo;
     protected Slides slides;
     //two slide motors
     //one intake rotating arm motor
@@ -26,7 +28,7 @@ public abstract class BaseOpMode extends LinearOpMode {
     //two claw servos
     protected OuttakeRotatingArmServos outtakeRotatingArmServos;
     protected IntakeRotatingArmServos intakeRotatingArmServos;
-    protected Slides slideController;
+
     //two outtake arm servos
     protected IMU imu;
 
@@ -67,6 +69,9 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         slides = new Slides(slideMotorLeft, slideMotorRight, voltageSensor);
 
+        Extendo = hardwareMap.get(DcMotorEx.class, "Extendo");
+
+        extendo = new Extendo(Extendo, voltageSensor);
     }
 
 

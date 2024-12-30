@@ -29,7 +29,13 @@ public class OuttakeClaw {
         inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is closed */
     }
-
+    public void clawToggle() {
+        if (clawServo.getPosition() == 0.4) {
+            openClaw();
+        } else {
+            closeClaw();
+        }
+    }
     public double getClawPosition(){
 //        telemetry.addData("claw position", hi);
         return clawServo.getPosition();
