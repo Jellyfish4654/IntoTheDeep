@@ -80,7 +80,7 @@ public class JellyTele extends BaseOpMode {
     protected OuttakeMode outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
 
     private void updateClawsManual() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
             outtakeServo.clawToggle();
             intakeServo.clawToggle();
         }
