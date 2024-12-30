@@ -82,35 +82,9 @@ public class JellyTele extends BaseOpMode {
     private void updateClawsManual() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
             outtakeServo.clawToggle();
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
             intakeServo.clawToggle();
         }
     }
-    /*
-    private enum ClawMode {
-        OPEN,
-        CLOSE
-    }
-    protected ClawMode clawMode = ClawMode.OPEN;
-    private void updateClawMode() {
-        switch (clawMode) {
-            case OPEN:
-                outtakeServo.openClaw();
-                break;
-            case CLOSE:
-                outtakeServo.closeClaw();
-                break;
-        }
-    }
-    private void updateClawModeFromGamepad() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
-            if (clawMode == ClawMode.OPEN) {
-                clawMode = ClawMode.CLOSE;
-            } else if (clawMode == ClawMode.CLOSE) {
-                clawMode = ClawMode.OPEN;
-            }
-        }
-    }*/
 
     private void updateOuttakeModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {

@@ -60,6 +60,9 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
 
+        intakeServo.openClaw();
+        outtakeServo.closeClaw();
+
         outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"), hardwareMap.get(Servo.class, "outtakeArmServoRight"));
         intakeRotatingArmServos = new IntakeRotatingArmServos(hardwareMap.get(Servo.class, "intakeArmServoLeft"), hardwareMap.get(Servo.class, "intakeArmServoRight"));
 
