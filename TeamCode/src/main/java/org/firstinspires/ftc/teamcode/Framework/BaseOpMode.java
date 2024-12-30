@@ -25,7 +25,10 @@ public abstract class BaseOpMode extends LinearOpMode {
     //slides class
     protected IntakeClaw intakeServo;
     protected OuttakeClaw outtakeServo;
+
     //two claw servos
+
+    protected Wrist wrist;
     protected OuttakeRotatingArmServos outtakeRotatingArmServos;
     protected IntakeRotatingArmServos intakeRotatingArmServos;
 
@@ -59,6 +62,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         imu = hardwareMap.get(IMU.class, "imu");
 
         outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
+        wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
 
         intakeServo.openClaw();
         outtakeServo.closeClaw();

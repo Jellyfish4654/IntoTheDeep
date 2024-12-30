@@ -59,6 +59,7 @@ public class JellyTele extends BaseOpMode {
             updateDriveMode(calculatePrecisionMultiplier());
             updateOuttakeMode();
             updateClawsManual();
+            updateWrist();
             updateSlideMode();
             controlExtendo();
             telemetry.update();
@@ -83,6 +84,14 @@ public class JellyTele extends BaseOpMode {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
             outtakeServo.clawToggle();
             intakeServo.clawToggle();
+        }
+    }
+
+    private void updateWrist() {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+            wrist.setPosDown();
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
+            wrist.setPosUp();
         }
     }
 
