@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.RoadRunner.Autonomous;
+package org.firstinspires.ftc.teamcode.Autonomous;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -15,9 +15,8 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.SequentialAction;
-
 @Config
-@Autonomous(name = "JellyBotR", group = "Autonomous")
-public class JellyBotR {
+@Autonomous(name = "JellyBotL", group = "Autonomous")
+public class JellyBotL {
 
 }
