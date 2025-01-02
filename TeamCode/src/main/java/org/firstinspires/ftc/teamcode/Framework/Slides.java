@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 // import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 // import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -97,6 +99,63 @@ public class Slides {
     public int getCurrentRightPosition()
     {
         return slideMotorRight.getCurrentPosition();
+    }
+
+    public class SlidesUp implements Action {
+        private boolean initialized = false;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (!initialized) {
+                slideMotorLeft.setPower(0.8);
+                slideMotorRight.setPower(0.8);
+                initialized = true;
+            }
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+
+            if (posLeft < 3000 && posRight < 3000) {
+                return true;
+            } else {
+                slideMotorLeft.setPower(0);
+                slideMotorRight.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    public Action slidesUp() {
+        return new SlidesUp();
+    }
+    public class SlidesDown implements Action {
+        private boolean initialized = false;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if (!initialized) {
+                slideMotorLeft.setPower(-0.8);
+                slideMotorRight.setPower(-0.8);
+                initialized = true;
+            }
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+
+            if (posLeft > 100 && posRight > 100) {
+                return true;
+            } else {
+                slideMotorLeft.setPower(0);
+                slideMotorRight.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    public Action slidesDown() {
+        return new SlidesDown();
     }
 
 }
