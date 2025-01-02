@@ -81,7 +81,7 @@ public class JellyTele extends BaseOpMode {
     protected OuttakeMode outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
 
     private void updateClawsManual() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_STICK_BUTTON)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
             outtakeServo.clawToggle();
             intakeServo.clawToggle();
         }
@@ -236,7 +236,7 @@ public class JellyTele extends BaseOpMode {
             case MANUAL:
                 slides.disablePID();
                 slidePower = -applyDeadband(GamepadEx2.getRightY());
-                if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_STICK_BUTTON)) {
+                if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
                     defaultSlidePower = -1;
                 }
                 slideMotorLeft.setPower(slidePower);
