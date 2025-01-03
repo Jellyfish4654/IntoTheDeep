@@ -8,6 +8,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.ParallelAction;
@@ -28,6 +29,13 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class JellyBotTest extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-
+        public void runOpMode() {
+            // instantiate your MecanumDrive at a particular pose.
+            Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
+            MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+            int visionOutputPosition = 1;
+            TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
+                    .waitSeconds(3);
+        }
     }
 }
