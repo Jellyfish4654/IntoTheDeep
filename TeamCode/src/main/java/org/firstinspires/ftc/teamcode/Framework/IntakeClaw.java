@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeClaw {
@@ -40,5 +44,25 @@ public class IntakeClaw {
     public double getClawPosition(){
 //        telemetry.addData("claw position", hi);
         return clawServo.getPosition();
+    }
+    public class ClawOpen implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            clawServo.setPosition(0.79);
+            return false;
+        }
+    }
+    public Action clawOpen () {
+        return new IntakeClaw.ClawOpen();
+    }
+    public class ClawClose implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            clawServo.setPosition(0.5);;
+            return false;
+        }
+    }
+    public Action clawClose() {
+        return new IntakeClaw.ClawClose();
     }
 }

@@ -82,6 +82,8 @@ public class JellyBotTest extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         slides.slidesUp(),
+                        intakeServo.clawOpen(),
+                        outtakeServo.clawClose(),
                         trajectoryActionCloseOut
                 )
         );
