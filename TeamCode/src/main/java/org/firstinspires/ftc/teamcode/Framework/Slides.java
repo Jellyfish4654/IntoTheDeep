@@ -143,7 +143,7 @@ public class Slides {
             telemetryPacket.put("left slide pos", posLeft);
             telemetryPacket.put("right slide pos", posRight);
 
-
+ 
             if (posLeft > 100 && posRight > 100) {
                 return true;
             } else {
