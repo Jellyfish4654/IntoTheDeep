@@ -27,7 +27,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 @Config
 @Autonomous(name = "TestAuto", group = "Autonomous")
 public class JellyBotTest extends BaseOpMode {
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
         // instantiate your MecanumDrive at a particular pose.
         Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
