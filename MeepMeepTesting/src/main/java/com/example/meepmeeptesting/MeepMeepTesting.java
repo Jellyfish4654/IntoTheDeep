@@ -25,7 +25,21 @@ public class MeepMeepTesting {
                 .setColorScheme(new ColorSchemeRedDark())
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive -> drive.trajectorySequenceBuilder(new Pose2d(23.5, 62, Math.toRadians(270)))
-                        .waitSeconds(3)
+                        .forward(20)
+                        .turn(Math.toRadians(-90))
+                        .forward(18.5)
+                        .turn(Math.toRadians(-90))
+                        .forward(-6.7)
+                        .waitSeconds(3) //hang specimen
+                        .forward(10)
+                        .turn(Math.toRadians(-90))
+                        .forward(43.2)
+                        .turn(Math.toRadians(-90))
+                        .waitSeconds(2) //grab sample
+                        .forward(-4.3)
+                        .turn(Math.toRadians(-45))
+                        .forward(-5)
+                        .waitSeconds(3) // basket
                         .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTOTHEDEEP_JUICE_DARK)
