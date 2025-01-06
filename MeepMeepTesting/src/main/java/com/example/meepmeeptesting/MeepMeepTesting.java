@@ -40,6 +40,20 @@ public class MeepMeepTesting {
                         .turn(Math.toRadians(-45))
                         .forward(-5)
                         .waitSeconds(3) // basket
+                        .forward(5)
+                        .turn(Math.toRadians(45))
+                        .forward(4.3)
+                        .turn(Math.toRadians(90))
+                        .forward(10)
+                        .turn(Math.toRadians(-90))
+                        .waitSeconds(2) //grab sample
+                        .turn(Math.toRadians(-90))
+                        .forward(10)
+                        .turn(Math.toRadians(-90))
+                        .forward(4.3)
+                        .turn(Math.toRadians(135))
+                        .forward(-5)
+                        .waitSeconds(3) // basket
                         .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTOTHEDEEP_JUICE_DARK)
