@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode.Framework;
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class Wrist {
@@ -26,6 +30,26 @@ public class Wrist {
 
     public double getCurrentPosition() {
         return position;
+    }
+    public class WristUp implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            servo.setPosition(0.7);
+            return false;
+        }
+    }
+    public Action wristUp() {
+        return new WristUp();
+    }
+    public class WristDown implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            servo.setPosition(0.4);;
+            return false;
+        }
+    }
+    public Action wristDown() {
+        return new WristDown();
     }
 
 

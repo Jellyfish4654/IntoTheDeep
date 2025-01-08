@@ -84,6 +84,8 @@ public class JellyBotTest extends BaseOpMode {
                         slides.slidesUp(),
                         intakeServo.clawOpen(),
                         outtakeServo.clawClose(),
+                        extendo.extendoExtend(),
+                        wrist.wristUp(),
                         trajectoryActionCloseOut
                 )
         );

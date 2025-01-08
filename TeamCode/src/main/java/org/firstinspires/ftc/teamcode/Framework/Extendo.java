@@ -1,4 +1,8 @@
 package org.firstinspires.ftc.teamcode.Framework;
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
@@ -72,6 +76,28 @@ public class Extendo {
     public int getCurrentPosition()
     {
         return Extendo.getCurrentPosition();
+    }
+    public class ExtendoExtend implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            Extendo.setTargetPosition(1000);
+            control(Extendo, target, controller);
+            return false;
+        }
+    }
+    public Action extendoExtend() {
+        return new ExtendoExtend();
+    }
+    public class ExtendoRetract implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            Extendo.setTargetPosition(0);
+            control(Extendo, target, controller);
+            return false;
+        }
+    }
+    public Action extendoRetract() {
+        return new ExtendoRetract();
     }
 
 }
