@@ -30,21 +30,31 @@ public class JellyBotTest extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(-23.5, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         int visionOutputPosition = 1;
         Actions.runBlocking(slides.slidesDown());
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(33, Math.toRadians(0))
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(90))
-                .lineToY(48)
+                .lineToY(42)
                 .setTangent(Math.toRadians(0))
-                .lineToX(32)
-                .strafeTo(new Vector2d(44.5, 30))
-                .turn(Math.toRadians(180))
-                .lineToX(47.5)
-                .waitSeconds(3);
+                .lineToX(-5)
+                .setTangent(Math.toRadians(90))
+                .lineToY(35.3)
+                .waitSeconds(3) // hang specimen
+                .lineToY(45.3)
+                .setTangent(Math.toRadians(180))
+                .lineToX(-48.2)
+                .setTangent(Math.toRadians(270))
+                .waitSeconds(2) // grab sample
+                .lineToY(55.3)
+                .waitSeconds(2) // drop sample
+                .lineToY(45.3)
+                .setTangent(Math.toRadians(180))
+                .lineToX(-58.2)
+                .setTangent(Math.toRadians(270))
+                .waitSeconds(2) // grab sample
+                .lineToY(61.3)
+                .waitSeconds(2); // park
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
                 .lineToY(37)
                 .setTangent(Math.toRadians(0))
