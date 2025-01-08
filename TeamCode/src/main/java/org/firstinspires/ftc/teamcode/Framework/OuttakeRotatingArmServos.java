@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 // import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 // import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArmServos {
@@ -43,6 +45,28 @@ public class OuttakeRotatingArmServos {
     {
         armLeftServo.setPosition(positionL);
         armRightServo.setPosition(positionR);
+    }
+    public class OuttakeDeposit implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            armLeftServo.setPosition(0.7);
+            armRightServo.setPosition(0.7);
+            return false;
+        }
+    }
+    public Action outtakeDeposit() {
+        return new OuttakeDeposit();
+    }
+    public class OuttakeTransfer implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            armLeftServo.setPosition(0.4);
+            armRightServo.setPosition(0.4);
+            return false;
+        }
+    }
+    public Action outtakeTransfer() {
+        return new OuttakeTransfer();
     }
 
 }
