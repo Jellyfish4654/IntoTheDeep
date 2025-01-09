@@ -55,7 +55,7 @@ public class JellyBotL extends BaseOpMode {
 
         Pose2d fourthPose = new Pose2d(51.8, 53.2, Math.toRadians(225));
         TrajectoryActionBuilder toSecondSample = drive.actionBuilder(fourthPose)
-                .waitSeconds(3)
+                .waitSeconds(3) // basket
                 .setTangent(Math.toRadians(180))
                 .lineToX(48.2)
                 .setTangent(Math.toRadians(270))
@@ -64,13 +64,28 @@ public class JellyBotL extends BaseOpMode {
                 .lineToX(58.2)
                 .setTangent(Math.toRadians(270));
 
+        Pose2d fifthPose = new Pose2d(58.2, 45.3, Math.toRadians(270));
+        TrajectoryActionBuilder toSecondBasket = drive.actionBuilder(fifthPose)
+                .waitSeconds(2) // grab sample
+                .setTangent(Math.toRadians(180))
+                .lineToX(51.8)
+                .setTangent(Math.toRadians(90))
+                .lineToY(53.2)
+                .setTangent(Math.toRadians(225));
+
 
         waitForStart();
         if (isStopRequested()) return;
+        Action action1 = toSubmersible.build();
+        Action action2 = toSample.build();
+        Action action3 = toBasket.build();
+        Action action4 = toSecondSample.build();
+        Action action5 = toSecondBasket.build();
 
         Actions.runBlocking(
                 new SequentialAction(
-
+                        action1,
+                        outtakeRotatingArmServos.outtakeDeposit()
                 )
         );
     }

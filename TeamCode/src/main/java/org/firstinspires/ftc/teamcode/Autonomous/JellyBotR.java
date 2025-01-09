@@ -76,6 +76,7 @@ public class JellyBotR extends BaseOpMode {
                 new SequentialAction(
                         action1,
                         outtakeRotatingArmServos.outtakeDeposit(),
+                        outtakeServo.clawOpen(),
                         action2,
                         intakeServo.clawOpen(),
                         extendo.extendoExtend(),
