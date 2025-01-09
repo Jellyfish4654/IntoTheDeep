@@ -101,7 +101,6 @@ public class JellyBotR extends BaseOpMode {
                         intakeServo.clawOpen(),
                         wrist.wristDown(),
                         action5
-
                 )
         );
     }
