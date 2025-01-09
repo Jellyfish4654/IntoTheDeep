@@ -85,7 +85,32 @@ public class JellyBotL extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         action1,
-                        outtakeRotatingArmServos.outtakeDeposit()
+                        outtakeRotatingArmServos.outtakeDeposit(),
+                        outtakeServo.clawClose(),
+                        action2,
+                        extendo.extendoExtend(),
+                        intakeServo.clawClose(),
+                        extendo.extendoRetract(),
+                        wrist.wristUp(),
+                        outtakeRotatingArmServos.outtakeTransfer(),
+                        outtakeServo.clawClose(),
+                        intakeServo.clawOpen(),
+                        action3,
+                        slides.slidesUp(),
+                        outtakeRotatingArmServos.outtakeDeposit(),
+                        outtakeServo.clawOpen(),
+                        outtakeRotatingArmServos.outtakeTransfer(),
+                        action4,
+                        wrist.wristDown(),
+                        extendo.extendoExtend(),
+                        intakeServo.clawClose(),
+                        wrist.wristUp(),
+                        extendo.extendoRetract(),
+                        outtakeServo.clawClose(),
+                        intakeServo.clawOpen(),
+                        action5,
+                        outtakeRotatingArmServos.outtakeDeposit(),
+                        outtakeServo.clawOpen()
                 )
         );
     }
