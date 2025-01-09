@@ -28,6 +28,8 @@ public class OuttakeRotatingArmServos {
 
     public void armOuttakeIntake()
     {
+        armLeftServo.setDirection(Servo.Direction.FORWARD);
+        armRightServo.setDirection(Servo.Direction.FORWARD);
         positionL = ARM_INTAKE;
         positionR = ARM_INTAKE;
         armLeftServo.setPosition(positionL);
@@ -35,6 +37,8 @@ public class OuttakeRotatingArmServos {
     }
     public void armOuttakeDeposit()
     {
+        armLeftServo.setDirection(Servo.Direction.REVERSE);
+        armRightServo.setDirection(Servo.Direction.REVERSE);
         positionL = ARM_DEPOSIT;
         positionR = ARM_DEPOSIT;
         armLeftServo.setPosition(positionL);
@@ -46,6 +50,7 @@ public class OuttakeRotatingArmServos {
         armLeftServo.setPosition(positionL);
         armRightServo.setPosition(positionR);
     }
+
     public class OuttakeDeposit implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
