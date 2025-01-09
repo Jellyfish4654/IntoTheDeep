@@ -29,6 +29,7 @@ public class JellyBotR extends BaseOpMode {
         Pose2d initialPose = new Pose2d(-23.5, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Actions.runBlocking(slides.slidesDown());
+        Actions.runBlocking(outtakeServo.clawClose());
 
         TrajectoryActionBuilder toSubmersible = drive.actionBuilder(initialPose)
                 .lineToY(42)
