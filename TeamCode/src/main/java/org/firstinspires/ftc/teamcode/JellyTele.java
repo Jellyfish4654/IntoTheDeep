@@ -152,11 +152,15 @@ public class JellyTele extends BaseOpMode {
         double r = applyDeadband(GamepadEx1.getRightX());
         double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
         double y = -applyDeadband(GamepadEx1.getLeftY());
+
+        double sum = ((Math.abs(y))+(Math.abs(x))+(Math.abs(r)));
+        double denominator = Math.max(sum, 1);
+
         return new double[]{
-                0.6*(y + x + r),
-                0.6*(y - x + r),
-                0.6*(y - x - r),
-                0.6*(y + x - r)
+                0.6*(y + x + r)/denominator,
+                0.6*(y - x + r)/denominator,
+                0.6*(y - x - r)/denominator,
+                0.6*(y + x - r)/denominator
         };
     }
 
