@@ -25,7 +25,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class JellyBotR extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // instantiate your MecanumDrive at a particular pose.
         Pose2d initialPose = new Pose2d(-23.5, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Actions.runBlocking(slides.slidesDown());

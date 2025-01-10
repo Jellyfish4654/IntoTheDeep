@@ -25,7 +25,6 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class JellyBotL extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        // instantiate your MecanumDrive at a particular pose.
         Pose2d initialPose = new Pose2d(23.5, 62, Math.toRadians(270));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Actions.runBlocking(slides.slidesDown());
@@ -47,6 +46,8 @@ public class JellyBotL extends BaseOpMode {
                 .setTangent(Math.toRadians(270));
 
         Pose2d thirdPose = new Pose2d(48.2, 45.3, Math.toRadians(270));
+        TrajectoryActionBuilder waitForExtendo = drive.actionBuilder(thirdPose)
+                .waitSeconds(1);
         TrajectoryActionBuilder toBasket = drive.actionBuilder(thirdPose)
                 .waitSeconds(2) // grab sample
                 .lineToY(53.2)
