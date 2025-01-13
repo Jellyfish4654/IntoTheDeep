@@ -71,7 +71,13 @@ public class OuttakeRotatingArmServos {
             armRightServo.setDirection(Servo.Direction.FORWARD);
             armLeftServo.setPosition(0.4);
             armRightServo.setPosition(0.4);
-            return false;
+            double leftPos = armLeftServo.getPosition();
+            double rightPos = armLeftServo.getPosition();
+            if (leftPos == 0.4 && rightPos == 0.4) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
     public Action outtakeTransfer() {
