@@ -38,9 +38,6 @@ public class JellyBotL extends BaseOpMode {
                 .lineToY(35.3);
 
         Pose2d secondPose = new Pose2d(5, 35.3, Math.toRadians(90));
-        TrajectoryActionBuilder waitForOuttake= drive.actionBuilder(secondPose)
-                .waitSeconds(0.5);
-
         TrajectoryActionBuilder toSample = drive.actionBuilder(secondPose)
                 .lineToY(45.3)
                 .setTangent(Math.toRadians(0))
@@ -81,7 +78,6 @@ public class JellyBotL extends BaseOpMode {
         waitForStart();
         if (isStopRequested()) return;
         Action action1 = toSubmersible.build();
-        Action action1_1 = waitForOuttake.build();
         Action action2 = toSample.build();
         Action action3 = toBasket.build();
         Action action4 = toSecondSample.build();
@@ -92,7 +88,6 @@ public class JellyBotL extends BaseOpMode {
                         action1,
                         slides.slidesUp(),
                         outtakeRotatingArmServos.outtakeDeposit(),
-                        action1_1,
                         outtakeServo.clawOpen(),
                         action2,
                         extendo.extendoExtend(),
