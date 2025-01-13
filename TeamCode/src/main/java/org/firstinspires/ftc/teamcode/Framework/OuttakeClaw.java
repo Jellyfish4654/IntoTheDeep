@@ -8,6 +8,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeClaw {
     private Servo clawServo;
+    private static final double CLAW_OPEN = 0.4;
+    private static final double CLAW_CLOSE = 0.7;
+    //subject to change
 
     public OuttakeClaw(Servo servo){
         this.clawServo = servo;
@@ -21,20 +24,20 @@ public class OuttakeClaw {
     }
 
     public void openClaw(){
-        clawServo.setPosition(0.7);
+        clawServo.setPosition(CLAW_CLOSE);
         /* inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is open */
 
     }
 
     public void closeClaw(){
-        clawServo.setPosition(0.4);
+        clawServo.setPosition(CLAW_OPEN);
         /*
         inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is closed */
     }
     public void clawToggle() {
-        if (clawServo.getPosition() == 0.4) {
+        if (clawServo.getPosition() == CLAW_OPEN) {
             openClaw();
         } else {
             closeClaw();
@@ -47,8 +50,8 @@ public class OuttakeClaw {
     public class ClawOpen implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            clawServo.setPosition(0.7);
-            return false;
+            clawServo.setPosition(CLAW_OPEN);
+            return clawServo.getPosition() != CLAW_OPEN;
         }
     }
     public Action clawOpen() {
@@ -57,8 +60,8 @@ public class OuttakeClaw {
     public class ClawClose implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            clawServo.setPosition(0.4);;
-            return false;
+            clawServo.setPosition(CLAW_CLOSE);;
+            return clawServo.getPosition() != CLAW_CLOSE;
         }
     }
     public Action clawClose() {

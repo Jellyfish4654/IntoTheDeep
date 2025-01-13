@@ -34,8 +34,8 @@ public class Wrist {
     public class WristUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            servo.setPosition(0.7);
-            return false;
+            servo.setPosition(taka);
+            return servo.getPosition() != taka;
         }
     }
     public Action wristUp() {
@@ -44,8 +44,8 @@ public class Wrist {
     public class WristDown implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            servo.setPosition(0.4);;
-            return false;
+            servo.setPosition(matt);
+            return servo.getPosition() != matt;
         }
     }
     public Action wristDown() {

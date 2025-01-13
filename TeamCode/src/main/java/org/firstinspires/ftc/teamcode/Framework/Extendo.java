@@ -93,7 +93,11 @@ public class Extendo {
         public boolean run(@NonNull TelemetryPacket packet) {
             Extendo.setTargetPosition(0);
             control(Extendo, target, controller);
-            return false;
+            if (Extendo.getCurrentPosition() == target) {
+                return false;
+            } else {
+                return true;
+            }
         }
     }
     public Action extendoRetract() {
