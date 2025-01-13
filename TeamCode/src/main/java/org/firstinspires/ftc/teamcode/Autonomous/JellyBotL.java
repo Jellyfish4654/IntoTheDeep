@@ -45,8 +45,6 @@ public class JellyBotL extends BaseOpMode {
                 .setTangent(Math.toRadians(270));
 
         Pose2d thirdPose = new Pose2d(48.2, 45.3, Math.toRadians(270));
-        TrajectoryActionBuilder waitForExtendo = drive.actionBuilder(thirdPose)
-                .waitSeconds(1);
         TrajectoryActionBuilder toBasket = drive.actionBuilder(thirdPose)
                 .waitSeconds(2) // grab sample
                 .lineToY(53.2)
