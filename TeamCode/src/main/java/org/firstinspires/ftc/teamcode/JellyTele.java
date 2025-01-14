@@ -62,6 +62,7 @@ public class JellyTele extends BaseOpMode {
             updateWrist();
             updateSlideMode();
             controlExtendo();
+            updateSlidesPID();
             telemetry.update();
         }
     }
@@ -211,7 +212,6 @@ public class JellyTele extends BaseOpMode {
     }
 
     private enum SlideMode {
-        MANUAL,
         HIGH,
         LOW,
         TRANSFER
@@ -229,39 +229,37 @@ public class JellyTele extends BaseOpMode {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             slideMode = SlideMode.TRANSFER;
         }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-            slideMode = SlideMode.MANUAL;
-        }
     }
 
     private void updateSlideMode() {
        double slidePower = defaultSlidePower;
         switch (slideMode) {
-            case MANUAL:
-                slides.disablePID();
-                slidePower = -applyDeadband(GamepadEx2.getRightY());
-                if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
-                    defaultSlidePower = -1;
-                }
-                slideMotorLeft.setPower(slidePower);
-                slideMotorRight.setPower(slidePower);
             case HIGH:
-                slides.enablePID();
                 slides.setHigh();
                 break;
             case LOW:
-                slides.enablePID();
                 slides.setLow();
                 break;
             case TRANSFER:
-                slides.enablePID();
                 slides.setTransfer();
         }
+        slidePower = -applyDeadband(GamepadEx2.getRightY());
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
+            defaultSlidePower = -1;
+        }
+        slideMotorLeft.setPower(slidePower*0.75);
+        slideMotorRight.setPower(slidePower*0.75);
         slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
+    }
+
+    private void updateSlidesPID() {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+            slides.togglePID();
+        }
     }
 
     private void controlExtendo() {

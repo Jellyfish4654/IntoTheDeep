@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Slides {
+    boolean pidenable = true;
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
@@ -79,14 +80,23 @@ public class Slides {
         return slideController.calculate(position, targetPosition);
     }
     public void enablePID() {
+        pidenable = true;
         pleft = defaultp;
         ileft = defaulti;
         dleft = defaultd;
     }
     public void disablePID() {
+        pidenable = false;
         pleft = 0;
         ileft = 0;
         dleft = 0;
+    }
+    public void togglePID() {
+        if (pidenable) {
+            pidenable = false;
+        } else if (!pidenable) {
+            pidenable = true;
+        }
     }
     public int getTargetPosition()
     {
