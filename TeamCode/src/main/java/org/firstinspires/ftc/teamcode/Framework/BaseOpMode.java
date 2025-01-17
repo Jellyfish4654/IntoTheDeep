@@ -67,8 +67,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         intakeServo.openClaw();
         outtakeServo.closeClaw();
 
-        outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"), hardwareMap.get(Servo.class, "outtakeArmServoRight"));
-        intakeRotatingArmServos = new IntakeRotatingArmServos(hardwareMap.get(Servo.class, "intakeArmServoLeft"), hardwareMap.get(Servo.class, "intakeArmServoRight"));
+        outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
@@ -76,7 +75,7 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         slides = new Slides(slideMotorLeft, slideMotorRight, voltageSensor);
 
-        Extendo = hardwareMap.get(DcMotorEx.class, "Extendo");
+        Extendo = hardwareMap.get(DcMotorEx.class, "extendo");
 
         extendo = new Extendo(Extendo, voltageSensor);
     }
