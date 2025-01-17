@@ -29,6 +29,7 @@ public class JellyBotR extends BaseOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Actions.runBlocking(slides.slidesDown());
         Actions.runBlocking(outtakeServo.clawClose());
+        Actions.runBlocking(wrist.wristDown());
 
         TrajectoryActionBuilder toSubmersible = drive.actionBuilder(initialPose)
                 .lineToY(42)
@@ -75,16 +76,17 @@ public class JellyBotR extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         action1,
+                        slides.slidesUp(),
                         outtakeRotatingArmServos.outtakeDeposit(),
                         outtakeServo.clawOpen(),
                         action2,
+                        slides.slidesDown(),
                         intakeServo.clawOpen(),
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
-                        wrist.wristUp(),
                         extendo.extendoRetract(),
-                        outtakeServo.clawOpen(),
                         outtakeRotatingArmServos.outtakeTransfer(),
+                        wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         wrist.wristDown(),
@@ -94,10 +96,9 @@ public class JellyBotR extends BaseOpMode {
                         action4,
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
-                        wrist.wristUp(),
                         extendo.extendoRetract(),
-                        outtakeServo.clawOpen(),
                         outtakeRotatingArmServos.outtakeTransfer(),
+                        wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         wrist.wristDown(),

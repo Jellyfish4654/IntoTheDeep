@@ -29,6 +29,7 @@ public class JellyBotL extends BaseOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         Actions.runBlocking(slides.slidesDown());
         Actions.runBlocking(outtakeServo.clawClose());
+        Actions.runBlocking(wrist.wristDown());
 
         TrajectoryActionBuilder toSubmersible = drive.actionBuilder(initialPose)
                 .lineToY(42)
@@ -88,11 +89,12 @@ public class JellyBotL extends BaseOpMode {
                         outtakeRotatingArmServos.outtakeDeposit(),
                         outtakeServo.clawOpen(),
                         action2,
+                        slides.slidesDown(),
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
                         extendo.extendoRetract(),
-                        wrist.wristUp(),
                         outtakeRotatingArmServos.outtakeTransfer(),
+                        wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         action3,
@@ -100,17 +102,20 @@ public class JellyBotL extends BaseOpMode {
                         outtakeRotatingArmServos.outtakeDeposit(),
                         outtakeServo.clawOpen(),
                         outtakeRotatingArmServos.outtakeTransfer(),
+                        slides.slidesDown(),
                         action4,
                         wrist.wristDown(),
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
-                        wrist.wristUp(),
                         extendo.extendoRetract(),
+                        wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         action5,
+                        slides.slidesUp(),
                         outtakeRotatingArmServos.outtakeDeposit(),
-                        outtakeServo.clawOpen()
+                        outtakeServo.clawOpen(),
+                        slides.slidesDown()
                 )
         );
     }
