@@ -17,7 +17,7 @@ public class SingleServoTuner extends LinearOpMode
 	{
 		final Servo outtakeLeftServo;
 		telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-		outtakeLeftServo = hardwareMap.get(Servo.class, "intakeArmServoLeft");
+		outtakeLeftServo = hardwareMap.get(Servo.class, "outtakeArmServoLeft");
 
 //        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
 		double position = outtakeLeftServo.getPosition();
@@ -28,7 +28,7 @@ public class SingleServoTuner extends LinearOpMode
 		while (opModeIsActive())
 		{
 
-			telemetry.addData("ServoR", position);
+			telemetry.addData("target position", position);
 			telemetry.addData("position", outtakeLeftServo.getPosition());
 			telemetry.update();
 
