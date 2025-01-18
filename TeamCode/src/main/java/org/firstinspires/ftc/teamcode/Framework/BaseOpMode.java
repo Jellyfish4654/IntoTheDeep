@@ -71,7 +71,7 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
-        slideMotorRight.setDirection(DcMotorSimple.Direction.REVERSE);
+        slideMotorRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         slides = new Slides(slideMotorLeft, slideMotorRight, voltageSensor);
 

@@ -241,9 +241,11 @@ public class JellyTele extends BaseOpMode {
         switch (slideMode) {
             case HIGH:
                 slides.setHigh();
+
                 break;
             case LOW:
                 slides.setLow();
+                //left = -27, right = -5
                 break;
             case TRANSFER:
                 slides.setTransfer();
