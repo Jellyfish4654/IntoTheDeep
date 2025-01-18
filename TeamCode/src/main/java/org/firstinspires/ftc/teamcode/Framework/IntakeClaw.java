@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class IntakeClaw {
     private Servo clawServo;
 
-    private static final double CLAW_OPEN = 0.4;
-    private static final double CLAW_CLOSE = 0.7;
+    private static final double CLAW_OPEN = 0.98;
+    private static final double CLAW_CLOSE = 0.85;
     public IntakeClaw(Servo servo){
         this.clawServo = servo;
         /* might have to change the "clawServo" in the above line to something else,
