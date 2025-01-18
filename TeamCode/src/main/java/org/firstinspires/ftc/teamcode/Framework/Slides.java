@@ -70,7 +70,7 @@ public class Slides {
             control(slideMotorRight, rightTarget, rcontroller);
         } else {
             controlNoPID(slideMotorLeft, joyStickValue);
-            controlNoPID(slideMotorRight, joyStickValue);
+            controlNoPID(slideMotorRight, joyStickValue*0.7);
         }
     }
 
