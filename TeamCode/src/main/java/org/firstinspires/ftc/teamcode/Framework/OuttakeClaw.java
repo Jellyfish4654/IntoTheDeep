@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeClaw {
     private Servo clawServo;
+    boolean clawOpen;
     private static final double CLAW_OPEN = 0.3;
     private static final double CLAW_CLOSE = 0.1;
     //subject to change
@@ -24,20 +25,22 @@ public class OuttakeClaw {
     }
 
     public void openClaw(){
-        clawServo.setPosition(CLAW_CLOSE);
+        clawOpen = true;
+        clawServo.setPosition(CLAW_OPEN);
         /* inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is open */
 
     }
 
     public void closeClaw(){
-        clawServo.setPosition(CLAW_OPEN);
+        clawOpen = false;
+        clawServo.setPosition(CLAW_CLOSE);
         /*
         inside the parentheses should be the
         number 0.0 --> 1.0 which is the position of the servo when claw is closed */
     }
     public void clawToggle() {
-        if (Math.abs(clawServo.getPosition()-CLAW_OPEN) <= 0.05) {
+        if (!clawOpen) {
             openClaw();
         } else {
             closeClaw();
