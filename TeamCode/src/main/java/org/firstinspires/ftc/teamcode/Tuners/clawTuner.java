@@ -52,8 +52,8 @@ public class clawTuner extends BaseOpMode {
         {
             y += 0.01;
         }
-        outtakeServo.setClawPos(y);
-        telemetry.addData("clawposition:", outtakeServo.getClawPosition());
+        intakeServo.setClawPos(y);
+        telemetry.addData("clawposition:", intakeServo.getClawPosition());
 
     }
 

@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Framework.SlewRateLimiter;
 import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
@@ -18,6 +19,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
+    private VoltageSensor voltageSensor;
     private final double PRECISION_MULTIPLIER_LOW = 0.35;
     private final double PRECISION_MULTIPLIER_HIGH = 0.7;
     private final double ENDGAME_ALERT_TIME = 110.0;
@@ -42,8 +44,6 @@ public class JellyTele extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         initHardware();
-        intakeServo.openClaw();
-        outtakeServo.closeClaw();
         initializeSlewRateLimiters();
         GamepadEx1 = new GamepadEx(gamepad1);
         GamepadEx2 = new GamepadEx(gamepad2);
@@ -142,6 +142,7 @@ public class JellyTele extends BaseOpMode {
         switch (driveMode) {
             case MECANUM:
                 motorSpeeds = MecanumDrive();
+
                 break;
             case FIELDCENTRIC:
                 motorSpeeds = MecanumDrive();

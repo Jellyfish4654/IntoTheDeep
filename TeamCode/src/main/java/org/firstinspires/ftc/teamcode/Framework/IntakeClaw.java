@@ -10,8 +10,8 @@ public class IntakeClaw {
     private Servo clawServo;
     boolean clawOpen = true;
 
-    private static final double CLAW_OPEN = 0.1;
-    private static final double CLAW_CLOSE = 0.85;
+    private static final double CLAW_OPEN = 0.98;
+    private static final double CLAW_CLOSE = 0;
     public IntakeClaw(Servo servo){
         this.clawServo = servo;
         /* might have to change the "clawServo" in the above line to something else,

@@ -35,7 +35,7 @@ public abstract class BaseOpMode extends LinearOpMode {
     //two outtake arm servos
     protected IMU imu;
 
-    protected void initHardware() {
+    public void initHardware() {
 
         // wheel motors
 
@@ -62,6 +62,8 @@ public abstract class BaseOpMode extends LinearOpMode {
         imu = hardwareMap.get(IMU.class, "imu");
 
         outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
+        intakeServo.openClaw();
+        outtakeServo.closeClaw();
         wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
 
         outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));

@@ -4,10 +4,12 @@ import static android.icu.util.UniversalTimeScale.MAX_SCALE;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 public class Drivetrain {
 
     DcMotor[] driveMotors;
+    private VoltageSensor voltageSensor;
 
     public Drivetrain(DcMotor[] dcMotors) {
         this.driveMotors = dcMotors;
@@ -41,10 +43,15 @@ public class Drivetrain {
 
     public void setMotorSpeeds(double multiplier, double[] powers) {
         applyPrecisionAndScale(multiplier, powers);
-
         for (int i = 0; i < driveMotors.length; i++) {
+            applyVoltageCompensation(driveMotors[i], powers[i]);
             driveMotors[i].setPower(powers[i]);
         }
+    }
+    public double applyVoltageCompensation(DcMotor motor, double power) {
+        double voltageCompensation = 13.2/voltageSensor.getVoltage();
+        power *= voltageCompensation;
+        return power;
     }
 
 }
