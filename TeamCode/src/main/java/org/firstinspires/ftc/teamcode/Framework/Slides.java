@@ -12,27 +12,27 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Slides {
-    boolean pidenable = true;
+    boolean pidenable;
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
-    public final double defaultp = 0.03, defaulti = 0.0061, defaultd = 0.004;
-    public static double pleft = 0.03, ileft = 0.0061, dleft = 0.0004;
+    public final double defaultp = 0.03, defaulti = 0.0061, defaultd = 0.0004;
+    public static double pleft = 0, ileft = 0, dleft = 0;
     public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
+    int targetPosition;
     private PIDController lcontroller;
     private PIDController rcontroller;
 
     public static double f = 0;
-    public static double leftTarget = -129;
-    public static double rightTarget = -129;
-    public final double high_set_left = -5000;
-    public final double high_set_right = -4000;
-    public final double transfer_set_left = -27;
-    public final double transfer_set_right = -5;
-    public final double low_set_left = -27;
-    public final double low_set_right = 225;
+    public static double leftTarget = 0;
+    public static double rightTarget = 0;
+    public final double high_set_left = 0;
+    public final double high_set_right = 0;
+    public final double transfer_set_left = 0;
+    public final double transfer_set_right = 0;
+    public final double low_set_left = 0;
+    public final double low_set_right = 0;
     private final double ticks_in_degree = 587.3/360;
-    private int targetPosition;
     private double voltageCompensation;
 
     public Slides(DcMotorEx slideMotorLeft, DcMotorEx slideMotorRight, VoltageSensor sensor) {
@@ -63,19 +63,28 @@ public class Slides {
         setTargetPositions(high_set_left, high_set_right);
     }
 
-    public void update() {
+    public void update(boolean PID, double joyStickValue) {
         double elapsedTime = timer.seconds();
-        control(slideMotorLeft, leftTarget, lcontroller);
-        control(slideMotorRight, rightTarget, rcontroller);
+        if (PID) {
+            control(slideMotorLeft, leftTarget, lcontroller);
+            control(slideMotorRight, rightTarget, rcontroller);
+        } else {
+            controlNoPID(slideMotorLeft, joyStickValue);
+            controlNoPID(slideMotorRight, joyStickValue);
+        }
     }
 
     private void control(DcMotorEx motor, double target, PIDController slideController) {
-        double powerSlide = calculateMotorPower(motor, target, slideController);
+        double powerSlide;
+        powerSlide = calculateMotorPowerWithPID(motor, target, slideController);
         motor.setPower(powerSlide);
+    }
+    private void controlNoPID(DcMotorEx motor, double power) {
+        motor.setPower(power);
     }
 
 
-    private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController slideController) {
+    private double calculateMotorPowerWithPID(DcMotorEx motor, double targetPosition, PIDController slideController) {
         double position = motor.getCurrentPosition();
         return slideController.calculate(position, targetPosition);
     }
@@ -94,10 +103,14 @@ public class Slides {
     public void togglePID() {
         if (pidenable) {
             pidenable = false;
+            disablePID();
         } else if (!pidenable) {
             pidenable = true;
+            enablePID();
         }
     }
+
+
     public int getTargetPosition()
     {
         return targetPosition;

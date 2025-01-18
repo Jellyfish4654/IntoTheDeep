@@ -50,7 +50,7 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         drivetrain.setMotorDirections(new DcMotorSimple.Direction[]{
                 DcMotorSimple.Direction.FORWARD, // motorFL
-                DcMotorSimple.Direction.FORWARD, // motorBL
+                DcMotorSimple.Direction.REVERSE, // motorBL
                 DcMotorSimple.Direction.REVERSE, // motorFR
                 DcMotorSimple.Direction.REVERSE  // motorBR
         });
@@ -63,9 +63,6 @@ public abstract class BaseOpMode extends LinearOpMode {
 
         outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
         wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
-
-        intakeServo.openClaw();
-        outtakeServo.closeClaw();
 
         outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
 

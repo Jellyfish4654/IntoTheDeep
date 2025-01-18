@@ -42,6 +42,8 @@ public class JellyTele extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         initHardware();
+        intakeServo.openClaw();
+        outtakeServo.closeClaw();
         initializeSlewRateLimiters();
         GamepadEx1 = new GamepadEx(gamepad1);
         GamepadEx2 = new GamepadEx(gamepad2);
@@ -157,7 +159,7 @@ public class JellyTele extends BaseOpMode {
     private double[] MecanumDrive() {
         double r = applyDeadband(GamepadEx1.getRightX());
         double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
-        double y = -applyDeadband(GamepadEx1.getLeftY());
+        double y = applyDeadband(GamepadEx1.getLeftY());
 
         double sum = ((Math.abs(y))+(Math.abs(x))+(Math.abs(r)));
         double denominator = Math.max(sum, 1);
@@ -219,10 +221,11 @@ public class JellyTele extends BaseOpMode {
     private enum SlideMode {
         HIGH,
         LOW,
-        TRANSFER
+        TRANSFER,
+        MANUAL
     }
 
-    protected SlideMode slideMode = SlideMode.LOW;
+    protected SlideMode slideMode = SlideMode.MANUAL;
 
     private void updateSlideModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
@@ -234,6 +237,9 @@ public class JellyTele extends BaseOpMode {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
             slideMode = SlideMode.TRANSFER;
         }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+            slideMode = SlideMode.MANUAL;
+        }
     }
 
     private void updateSlideMode() {
@@ -241,22 +247,23 @@ public class JellyTele extends BaseOpMode {
         switch (slideMode) {
             case HIGH:
                 slides.setHigh();
-
+                slides.update(true, 0);
                 break;
             case LOW:
                 slides.setLow();
                 //left = -27, right = -5
+                slides.update(true, 0);
                 break;
             case TRANSFER:
                 slides.setTransfer();
+                slides.update(true, 0);
+            case MANUAL:
+                slidePower = -applyDeadband(GamepadEx2.getRightY());
+                if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
+                    defaultSlidePower = -1;
+                }
+                slides.update(false, slidePower*0.75);
         }
-        slidePower = -applyDeadband(GamepadEx2.getRightY());
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
-            defaultSlidePower = -1;
-        }
-        slideMotorLeft.setPower(slidePower*0.75);
-        slideMotorRight.setPower(slidePower*0.75);
-        slides.update();
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
