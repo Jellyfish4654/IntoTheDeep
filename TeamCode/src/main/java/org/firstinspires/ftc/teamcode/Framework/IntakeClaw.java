@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class IntakeClaw {
     private Servo clawServo;
-    boolean clawOpen;
+    boolean clawOpen = true;
 
     private static final double CLAW_OPEN = 0.1;
     private static final double CLAW_CLOSE = 0.85;
