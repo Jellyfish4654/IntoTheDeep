@@ -45,11 +45,11 @@ public class wristTuner extends LinearOpMode
 
             if (gamepad1.a)
             {
-                position = 0.5;
+                position = 0.33;
             }
             else if (gamepad1.x)
             {
-                position = 0.79;
+                position = 1;
             }
         }
     }

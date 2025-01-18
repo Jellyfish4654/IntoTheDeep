@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.Tuners;
 
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -18,7 +20,8 @@ public class SingleServoTuner extends LinearOpMode
 		final Servo outtakeLeftServo;
 		telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 		outtakeLeftServo = hardwareMap.get(Servo.class, "outtakeArmServoLeft");
-
+		GamepadEx GamepadEx1;
+		GamepadEx1 = new GamepadEx(gamepad1);
 //        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
 		double position = outtakeLeftServo.getPosition();
 		// Initialize to midpoint
@@ -27,18 +30,18 @@ public class SingleServoTuner extends LinearOpMode
 
 		while (opModeIsActive())
 		{
-
+			GamepadEx1.readButtons();
 			telemetry.addData("target position", position);
 			telemetry.addData("position", outtakeLeftServo.getPosition());
 			telemetry.update();
-
+			outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
 			outtakeLeftServo.setPosition(position);
 
-			if (gamepad1.dpad_left)
+			if (GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_LEFT))
 			{
 				position -= 0.01;
 			}
-			if (gamepad1.dpad_right)
+			if (GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT))
 			{
 				position += 0.01;
 			}

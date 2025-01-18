@@ -9,27 +9,35 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArmServos {
-    private static final double ARM_INTAKE = 0.4;
-    private static final double ARM_DEPOSIT = 1;
+    private static final double ARM_INTAKE = 0.25;
+    private static final double ARM_DEPOSIT = 0;
     //replace values after testing
     private final Servo armLeftServo;
     double positionL = ARM_INTAKE;
 
+    public double getCurrentPosition() {
+        return armLeftServo.getPosition();
+    }
     public OuttakeRotatingArmServos(Servo servo1)
     {
         this.armLeftServo = servo1;
         armLeftServo.setPosition(positionL);
     }
-
+    public void addServoPos() {
+        positionL += 0.01;
+    }
+    public void subtractServoPos() {
+        positionL -= 0.01;
+    }
     public void armOuttakeIntake()
     {
-        armLeftServo.setDirection(Servo.Direction.REVERSE);
+        armLeftServo.setDirection(Servo.Direction.FORWARD);
         positionL = ARM_INTAKE;
         armLeftServo.setPosition(positionL);
     }
     public void armOuttakeDeposit()
     {
-        armLeftServo.setDirection(Servo.Direction.FORWARD);
+        armLeftServo.setDirection(Servo.Direction.REVERSE);
         positionL = ARM_DEPOSIT;
         armLeftServo.setPosition(positionL);
     }

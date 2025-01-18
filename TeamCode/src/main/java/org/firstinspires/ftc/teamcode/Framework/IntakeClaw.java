@@ -36,7 +36,7 @@ public class IntakeClaw {
         number 0.0 --> 1.0 which is the position of the servo when claw is closed */
     }
     public void clawToggle() {
-        if (clawServo.getPosition() == CLAW_CLOSE) {
+        if (Math.abs(clawServo.getPosition()-CLAW_CLOSE) <= 0.05) {
             openClaw();
         } else {
             closeClaw();
