@@ -31,26 +31,26 @@ public class wristTuner extends LinearOpMode
             telemetry.addData("target position", position);
             telemetry.addData("position", wristServo.getPosition());
             telemetry.update();
-
-            wristServo.setPosition(position);
-
-            if (gamepad1.dpad_left)
-            {
-                position -= 0.01;
-            }
-            if (gamepad1.dpad_right)
-            {
-                position += 0.01;
-            }
-
-            if (gamepad1.a)
-            {
-                position = 0.5;
-            }
-            else if (gamepad1.x)
-            {
-                position = 0.79;
-            }
+//
+//            wristServo.setPosition(position);
+//
+//            if (gamepad1.dpad_left)
+//            {
+//                position -= 0.01;
+//            }
+//            if (gamepad1.dpad_right)
+//            {
+//                position += 0.01;
+//            }
+//
+//            if (gamepad1.a)
+//            {
+//                position = 0.5;
+//            }
+//            else if (gamepad1.x)
+//            {
+//                position = 0.79;
+//            }
         }
     }
 }
