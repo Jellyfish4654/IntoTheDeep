@@ -9,7 +9,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Config
-@TeleOp(name = "Single Servo Test", group = "Test")
+@TeleOp(name = "wrist tunnn", group = "Test")
 public class wristTuner extends LinearOpMode
 {
     @Override
@@ -47,7 +47,7 @@ public class wristTuner extends LinearOpMode
             {
                 position = 0.5;
             }
-            else if (gamepad1.b)
+            else if (gamepad1.x)
             {
                 position = 0.79;
             }
