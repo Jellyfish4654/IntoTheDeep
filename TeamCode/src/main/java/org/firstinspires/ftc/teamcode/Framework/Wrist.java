@@ -9,7 +9,7 @@ public class Wrist {
     private final Servo servo;
     private final double taka = 1;
     // these are going to change depending on what position the irl servo is set to... let's change later
-    private final double matt = 0.32;
+    private final double matt = 0.4;
     private int position;
 
     public Wrist(Servo servo){

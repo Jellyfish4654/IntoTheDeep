@@ -44,14 +44,14 @@ public class Drivetrain {
     public void setMotorSpeeds(double multiplier, double[] powers) {
         applyPrecisionAndScale(multiplier, powers);
         for (int i = 0; i < driveMotors.length; i++) {
-            applyVoltageCompensation(driveMotors[i], powers[i]);
+            //applyVoltageCompensation(driveMotors[i], powers[i]);
             driveMotors[i].setPower(powers[i]);
         }
     }
-    public double applyVoltageCompensation(DcMotor motor, double power) {
-        double voltageCompensation = 13.2/voltageSensor.getVoltage();
-        power *= voltageCompensation;
-        return power;
-    }
+//    public double applyVoltageCompensation(DcMotor motor, double power) {
+//        double voltageCompensation = 13.2/voltageSensor.getVoltage();
+//        power *= voltageCompensation;
+//        return power;
+//    }
 
 }
