@@ -15,8 +15,8 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 public class extendoTuner extends LinearOpMode
 {
     private PIDController controller;
-    public static double p = 0.03, i = 0.0061, d = 0.0004;
-    public static int target = 300; //who the heck knows
+    public static double p = 0.02, i = 0, d = 0;
+    public static int target = 1500; //who the heck knows
     private DcMotorEx extendo;
 
     @Override

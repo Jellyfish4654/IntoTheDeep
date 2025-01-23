@@ -20,6 +20,7 @@ import com.arcrobotics.ftclib.controller.PIDController;
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
     private VoltageSensor voltageSensor;
+    boolean hangTrigger = false;
     private final double PRECISION_MULTIPLIER_LOW = 0.35;
     private final double PRECISION_MULTIPLIER_HIGH = 0.7;
     private final double ENDGAME_ALERT_TIME = 110.0;
@@ -261,9 +262,13 @@ public class JellyTele extends BaseOpMode {
             case MANUAL:
                 slidePower = -applyDeadband(GamepadEx2.getRightY());
                 if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
-                    defaultSlidePower = -1;
+                    hangTrigger = true;
                 }
-                slides.update(false, slidePower * 0.75);
+                if (hangTrigger) {
+                    defaultSlidePower = -1;
+                    slidePower = -1;
+                }
+                slides.update(false, slidePower);
         }
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
@@ -278,7 +283,7 @@ public class JellyTele extends BaseOpMode {
     }
 
     private void controlExtendo() {
-        double extendoJoystickValue = (applyDeadband(GamepadEx2.getLeftY()));
+        double extendoJoystickValue = -(applyDeadband(GamepadEx2.getLeftY()));
         Extendo.setPower(extendoJoystickValue);
     }
 

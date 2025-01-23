@@ -47,7 +47,6 @@ public class JellyBotL extends BaseOpMode {
 
         Pose2d thirdPose = new Pose2d(48.2, 45.3, Math.toRadians(270));
         TrajectoryActionBuilder toBasket = drive.actionBuilder(thirdPose)
-                .waitSeconds(2) // grab sample
                 .lineToY(53.2)
                 .setTangent(Math.toRadians(180))
                 .lineToX(51.8)
@@ -55,7 +54,6 @@ public class JellyBotL extends BaseOpMode {
 
         Pose2d fourthPose = new Pose2d(51.8, 53.2, Math.toRadians(225));
         TrajectoryActionBuilder toSecondSample = drive.actionBuilder(fourthPose)
-                .waitSeconds(3) // basket
                 .setTangent(Math.toRadians(180))
                 .lineToX(48.2)
                 .setTangent(Math.toRadians(270))
@@ -66,7 +64,6 @@ public class JellyBotL extends BaseOpMode {
 
         Pose2d fifthPose = new Pose2d(58.2, 45.3, Math.toRadians(270));
         TrajectoryActionBuilder toSecondBasket = drive.actionBuilder(fifthPose)
-                .waitSeconds(2) // grab sample
                 .setTangent(Math.toRadians(180))
                 .lineToX(51.8)
                 .setTangent(Math.toRadians(90))

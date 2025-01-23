@@ -40,7 +40,6 @@ public class JellyBotR extends BaseOpMode {
 
         Pose2d secondPose = new Pose2d(-5, 35.3, Math.toRadians(90));
         TrajectoryActionBuilder toSample = drive.actionBuilder(secondPose)
-                .waitSeconds(3) // hang specimen
                 .lineToY(45.3)
                 .setTangent(Math.toRadians(180))
                 .lineToX(-48.2)
@@ -48,12 +47,10 @@ public class JellyBotR extends BaseOpMode {
 
         Pose2d thirdPose = new Pose2d(-48.2, 45.3, Math.toRadians(270));
         TrajectoryActionBuilder toObservationZone = drive.actionBuilder(thirdPose)
-                .waitSeconds(2) // grab sample
                 .lineToY(55.3);
 
         Pose2d fourthPose = new Pose2d(-48.2, 55.3, Math.toRadians(270));
         TrajectoryActionBuilder toSample2 = drive.actionBuilder(fourthPose)
-                .waitSeconds(2) // drop sample
                 .lineToY(45.3)
                 .setTangent(Math.toRadians(180))
                 .lineToX(-58.2)
@@ -61,7 +58,6 @@ public class JellyBotR extends BaseOpMode {
 
         Pose2d fifthPose = new Pose2d(-58.2, 45.3, Math.toRadians(270));
         TrajectoryActionBuilder toPark = drive.actionBuilder(fifthPose)
-                .waitSeconds(2) // grab sample
                 .lineToY(61.3)
                 .waitSeconds(2); // park
 

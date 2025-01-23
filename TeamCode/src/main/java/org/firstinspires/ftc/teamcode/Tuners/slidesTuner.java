@@ -17,10 +17,10 @@ public class slidesTuner extends LinearOpMode
     private PIDController lcontroller;
     private PIDController rcontroller;
 
-    public static double pleft = 0.03, ileft = 0.0061, dleft = 0.0004;
-    public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
-    public static int leftTarget = -300; //who the heck knows
-    public static int rightTarget = 300;
+    public static double pleft = 0, ileft = 0, dleft = 0;
+    public static double pright = 0, iright = 0, dright = 0;
+    public static int leftTarget = -1852; //who the heck knows
+    public static int rightTarget = 0;
     private DcMotorEx slideMotorLeft;
     private DcMotorEx slideMotorRight;
 

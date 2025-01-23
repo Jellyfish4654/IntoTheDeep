@@ -67,10 +67,10 @@ public class Slides {
         double elapsedTime = timer.seconds();
         if (PID) {
             control(slideMotorLeft, leftTarget, lcontroller);
-            control(slideMotorRight, rightTarget, rcontroller);
+            //control(slideMotorRight, rightTarget, rcontroller);
         } else {
             controlNoPID(slideMotorLeft, joyStickValue);
-            controlNoPID(slideMotorRight, joyStickValue);
+            //controlNoPID(slideMotorRight, joyStickValue);
         }
     }
 
