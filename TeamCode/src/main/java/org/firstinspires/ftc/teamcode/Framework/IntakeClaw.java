@@ -23,6 +23,10 @@ public class IntakeClaw {
         clawServo.setPosition(position);
     }
 
+    public void setClawPosDouble(double d){
+        clawServo.setPosition(d);
+    }
+
     public void openClaw(){
         clawOpen = true;
         clawServo.setPosition(CLAW_OPEN);

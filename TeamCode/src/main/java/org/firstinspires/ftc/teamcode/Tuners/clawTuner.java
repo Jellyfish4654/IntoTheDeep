@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 @TeleOp(name = "ClawTuner", group = "OpMode")
 public class clawTuner extends BaseOpMode {
     GamepadEx GamepadEx1;
+    double y = 0;
     private final double DEADBAND_VALUE = 0.02;
 
     @Override
@@ -43,16 +44,15 @@ public class clawTuner extends BaseOpMode {
     }
 
     private void controlClaw() {
-        double y = -applyDeadband(GamepadEx1.getLeftY());
         if (gamepad1.dpad_left)
         {
-            y -= 0.01;
+            y -= 0.005;
         }
         if (gamepad1.dpad_right)
         {
-            y += 0.01;
+            y += 0.005;
         }
-        intakeServo.setClawPos(y);
+        intakeServo.setClawPosDouble(y);
         telemetry.addData("clawposition:", intakeServo.getClawPosition());
 
     }
