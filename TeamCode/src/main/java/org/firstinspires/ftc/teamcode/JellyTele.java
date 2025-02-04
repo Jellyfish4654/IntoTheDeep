@@ -20,7 +20,6 @@ import com.arcrobotics.ftclib.controller.PIDController;
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
     private VoltageSensor voltageSensor;
-    boolean hangTrigger = false;
     private final double PRECISION_MULTIPLIER_LOW = 0.35;
     private final double PRECISION_MULTIPLIER_HIGH = 0.7;
     private final double ENDGAME_ALERT_TIME = 110.0;
@@ -65,7 +64,6 @@ public class JellyTele extends BaseOpMode {
             updateWrist();
             updateSlideMode();
             controlExtendo();
-            updateSlidesPID();
             telemetry.update();
         }
     }
@@ -85,10 +83,8 @@ public class JellyTele extends BaseOpMode {
     protected OuttakeMode outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
 
     private void updateClawsManual() {
-        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) == 1) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
             intakeServo.clawToggle();
-        }
-        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) == 1) {
             outtakeServo.clawToggle();
         }
 
@@ -229,7 +225,9 @@ public class JellyTele extends BaseOpMode {
         HIGH,
         LOW,
         TRANSFER,
-        MANUAL
+        MANUAL,
+        HANGPREP,
+        HANG
     }
 
     protected SlideMode slideMode = SlideMode.MANUAL;
@@ -247,6 +245,13 @@ public class JellyTele extends BaseOpMode {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
             slideMode = SlideMode.MANUAL;
         }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
+            if (slideMode == SlideMode.HANGPREP) {
+                slideMode = SlideMode.HANG;
+            } else {
+                slideMode = SlideMode.HANGPREP;
+            }
+        }
     }
 
     private void updateSlideMode() {
@@ -254,37 +259,30 @@ public class JellyTele extends BaseOpMode {
         switch (slideMode) {
             case HIGH:
                 slides.setHigh();
-                slides.update(true, 0);
+                slides.update(true, false,0);
                 break;
             case LOW:
                 slides.setLow();
                 //left = -27, right = -5
-                slides.update(true, 0);
+                slides.update(true, false,0);
                 break;
             case TRANSFER:
                 slides.setTransfer();
-                slides.update(true, 0);
+                slides.update(true, false,0);
             case MANUAL:
                 slidePower = -applyDeadband(GamepadEx2.getRightY()/2);
-                if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
-                    hangTrigger = true;
-                }
-                if (hangTrigger) {
-                    defaultSlidePower = -1;
-                    slidePower = -1;
-                }
-                slides.update(false, slidePower);
+                slides.update(false, false, slidePower);
+            case HANGPREP:
+                slidePower = -applyDeadband(GamepadEx2.getRightY()/2);
+                slides.update(false, true, slidePower);
+            case HANG:
+                slidePower = -1;
+                slides.update(false, true, slidePower);
         }
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
-    }
-
-    private void updateSlidesPID() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-            slides.togglePID();
-        }
     }
 
     private void controlExtendo() {

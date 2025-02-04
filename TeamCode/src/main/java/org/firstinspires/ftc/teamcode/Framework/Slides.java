@@ -63,14 +63,18 @@ public class Slides {
         setTargetPositions(high_set_left, high_set_right);
     }
 
-    public void update(boolean PID, double joyStickValue) {
+    public void update(boolean PID, boolean rightSlide, double joyStickValue) {
         double elapsedTime = timer.seconds();
         if (PID) {
             control(slideMotorLeft, leftTarget, lcontroller);
-            control(slideMotorRight, rightTarget, rcontroller);
+            if (rightSlide) {
+                control(slideMotorRight, rightTarget, rcontroller);
+            }
         } else {
             controlNoPID(slideMotorLeft, joyStickValue);
-            controlNoPID(slideMotorRight, joyStickValue);
+            if (rightSlide) {
+                controlNoPID(slideMotorRight, joyStickValue);
+            }
         }
     }
 
