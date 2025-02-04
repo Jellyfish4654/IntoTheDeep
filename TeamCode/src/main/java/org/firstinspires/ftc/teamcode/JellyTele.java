@@ -27,7 +27,6 @@ public class JellyTele extends BaseOpMode {
     private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
     private double resetHeading = 0;
     private final SlewRateLimiter[] slewRateLimiters = new SlewRateLimiter[4];
-    private double defaultSlidePower = 0;
     private MecanumDrive drive;
     GamepadEx GamepadEx1;
     GamepadEx GamepadEx2;
@@ -255,7 +254,7 @@ public class JellyTele extends BaseOpMode {
     }
 
     private void updateSlideMode() {
-       double slidePower = defaultSlidePower;
+       double slidePower = 0;
         switch (slideMode) {
             case HIGH:
                 slides.setHigh();
