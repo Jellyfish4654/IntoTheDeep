@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class OuttakeClaw {
     private Servo clawServo;
     boolean clawOpen = false;
-    private static final double CLAW_OPEN = 1;
-    private static final double CLAW_CLOSE = 0.65;
+    private static final double CLAW_OPEN = 0.4;
+    private static final double CLAW_CLOSE = 0.13;
     //subject to change
 
     public OuttakeClaw(Servo servo){
