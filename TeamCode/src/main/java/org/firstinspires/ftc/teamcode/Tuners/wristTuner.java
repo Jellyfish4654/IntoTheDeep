@@ -19,9 +19,7 @@ public class wristTuner extends LinearOpMode
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         wristServo = hardwareMap.get(Servo.class, "wristServo");
 
-//        outtakeLeftServo.setDirection(Servo.Direction.REVERSE);
         double position = wristServo.getPosition();
-        // Initialize to midpoint
 
         waitForStart();
 
@@ -45,11 +43,11 @@ public class wristTuner extends LinearOpMode
 
             if (gamepad1.a)
             {
-                position = 0.33;
+                position = 0;
             }
             else if (gamepad1.x)
             {
-                position = 1;
+                position = 0.7;
             }
         }
     }

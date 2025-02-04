@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class OuttakeClaw {
     private Servo clawServo;
     boolean clawOpen = false;
-    private static final double CLAW_OPEN = 0.3;
-    private static final double CLAW_CLOSE = 0.1;
+    private static final double CLAW_OPEN = 1;
+    private static final double CLAW_CLOSE = 0.65;
     //subject to change
 
     public OuttakeClaw(Servo servo){
@@ -19,7 +19,7 @@ public class OuttakeClaw {
         not sure if it needs to match something in the hardware */
     }
 
-    public void setClawPos(double stickVal){
+    public void setClawPosDouble(double stickVal){
         double position = Math.abs(stickVal);
         clawServo.setPosition(position);
     }

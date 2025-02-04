@@ -12,53 +12,65 @@ import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 @TeleOp(name = "ClawTuner", group = "OpMode")
 public class clawTuner extends BaseOpMode {
     GamepadEx GamepadEx1;
-    double y = 0;
-    private final double DEADBAND_VALUE = 0.02;
+    GamepadEx GamepadEx2;
+    double y1 = 0;
+    double y2 = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
 
         GamepadEx1 = new GamepadEx(gamepad1);
+        GamepadEx2 = new GamepadEx(gamepad2);
         initHardware();
-//        //initializeSlewRateLimiters();
-//        imu = hardwareMap.get(IMU.class, "imu");
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
                 RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
         imu.initialize(parameters);
 
-//        intakeClaw = new Claw(hardwareMap.get(Servo.class, "intakeServo"));
 
         waitForStart();
         ElapsedTime timer = new ElapsedTime();
         while (opModeIsActive()) {
             readGamepadInputs();
-            controlClaw();
+            controlClawLeft();
+            controlClawRight();
             telemetry.update();
         }
     }
 
     private void readGamepadInputs() {
         GamepadEx1.readButtons();
+        GamepadEx2.readButtons();
+
     }
 
-    private void controlClaw() {
+    private void controlClawLeft() {
         if (gamepad1.dpad_left)
         {
-            y -= 0.005;
+            y1 -= 0.0005;
         }
         if (gamepad1.dpad_right)
         {
-            y += 0.005;
+            y1 += 0.0005;
         }
-        intakeServo.setClawPosDouble(y);
-        telemetry.addData("clawposition:", intakeServo.getClawPosition());
+        intakeServo.setClawPosDouble(y1);
+        telemetry.addData("intake clawposition:", intakeServo.getClawPosition());
 
     }
 
-    private double applyDeadband(double joystickValue) {
-        double sign = Math.signum(joystickValue);
-        return joystickValue + (-sign * DEADBAND_VALUE);
+    private void controlClawRight() {
+        if (gamepad2.dpad_left)
+        {
+            y2 -= 0.0005;
+        }
+        if (gamepad2.dpad_right)
+        {
+            y2 += 0.0005;
+        }
+        outtakeServo.setClawPosDouble(y2);
+        telemetry.addData("outtake clawposition:", outtakeServo.getClawPosition());
+        telemetry.addData("outtake clawposition:", outtakeServo.getClawPosition());
+
     }
 }

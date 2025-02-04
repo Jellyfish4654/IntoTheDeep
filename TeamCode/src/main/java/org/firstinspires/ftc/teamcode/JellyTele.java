@@ -85,14 +85,19 @@ public class JellyTele extends BaseOpMode {
     protected OuttakeMode outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
 
     private void updateClawsManual() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
-            outtakeServo.clawToggle();
+        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) == 1) {
             intakeServo.clawToggle();
         }
+        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) == 1) {
+            outtakeServo.clawToggle();
+        }
+
+        telemetry.addData("claw intake pos:", intakeServo.getClawPosition());
+        telemetry.addData("claw outtake pos:", outtakeServo.getClawPosition());
     }
 
     private void updateWrist() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN) ) {
             wrist.setPosDown();
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             wrist.setPosUp();
@@ -260,7 +265,7 @@ public class JellyTele extends BaseOpMode {
                 slides.setTransfer();
                 slides.update(true, 0);
             case MANUAL:
-                slidePower = -applyDeadband(GamepadEx2.getRightY());
+                slidePower = -applyDeadband(GamepadEx2.getRightY()/2);
                 if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
                     hangTrigger = true;
                 }

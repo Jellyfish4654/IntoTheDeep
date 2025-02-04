@@ -62,12 +62,12 @@ public class slidesManualTuner extends BaseOpMode
         if (gamepad1.dpad_left)
         {
 
-            slideMotorRight.setPower(1);
+            slideMotorRight.setPower(0.2);
         }
         if (gamepad1.dpad_right)
         {
 
-            slideMotorRight.setPower(-1);
+            slideMotorRight.setPower(-0.2);
         }
         telemetry.addData("slide left :", slideMotorRight.getCurrentPosition());
 
@@ -78,12 +78,12 @@ public class slidesManualTuner extends BaseOpMode
         if (gamepad2.dpad_left)
         {
 
-            slideMotorLeft.setPower(1);
+            slideMotorLeft.setPower(0.2);
         }
         if (gamepad2.dpad_right)
         {
 
-            slideMotorLeft.setPower(-1);
+            slideMotorLeft.setPower(-0.2);
         }
         telemetry.addData("slide right :", slideMotorLeft.getCurrentPosition());
 
