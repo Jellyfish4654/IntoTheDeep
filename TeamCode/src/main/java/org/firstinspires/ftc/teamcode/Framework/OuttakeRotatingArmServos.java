@@ -9,8 +9,8 @@ import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArmServos {
-    private static final double ARM_INTAKE = 0.50;
-    private static final double ARM_DEPOSIT = 0.04;
+    private static final double ARM_INTAKE = 1;
+    private static final double ARM_DEPOSIT = 0.67;
     //replace values after testing
     private final Servo armLeftServo;
     double positionL = ARM_INTAKE;

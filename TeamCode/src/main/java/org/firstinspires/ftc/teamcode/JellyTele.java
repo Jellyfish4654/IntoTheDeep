@@ -104,7 +104,7 @@ public class JellyTele extends BaseOpMode {
     }
 
     private void updateOuttakeModeFromGamepad() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y) || GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
             outtakeMode = OuttakeMode.TRANSFER;
@@ -262,17 +262,16 @@ public class JellyTele extends BaseOpMode {
                 break;
             case LOW:
                 slides.setLow();
-                //left = -27, right = -5
                 slides.update(true, false,0);
                 break;
             case TRANSFER:
                 slides.setTransfer();
                 slides.update(true, false,0);
             case MANUAL:
-                slidePower = -applyDeadband(GamepadEx2.getRightY()/2);
+                slidePower = -applyDeadband(GamepadEx2.getRightY()) * 30;
                 slides.update(false, false, slidePower);
             case HANGPREP:
-                slidePower = -applyDeadband(GamepadEx2.getRightY()/2);
+                slidePower = -applyDeadband(GamepadEx2.getRightY());
                 slides.update(false, true, slidePower);
             case HANG:
                 slidePower = -1;
@@ -282,6 +281,8 @@ public class JellyTele extends BaseOpMode {
         double rightPosition = slideMotorRight.getCurrentPosition();
         telemetry.addData("Left", leftPosition);
         telemetry.addData("Right", rightPosition);
+        telemetry.addData("slides state:", slideMode);
+        telemetry.addData("slides power:", slidePower);
     }
 
     private void controlExtendo() {
