@@ -20,6 +20,8 @@ import com.arcrobotics.ftclib.controller.PIDController;
 @TeleOp(name = "JellyTele", group = "OpMode")
 public class JellyTele extends BaseOpMode {
     private VoltageSensor voltageSensor;
+    boolean leftTrigger = false;
+    boolean rightTrigger = false;
     private final double PRECISION_MULTIPLIER_LOW = 0.35;
     private final double PRECISION_MULTIPLIER_HIGH = 0.7;
     private final double ENDGAME_ALERT_TIME = 110.0;
@@ -84,6 +86,8 @@ public class JellyTele extends BaseOpMode {
     private void updateClawsManual() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
             intakeServo.clawToggle();
+        }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
             outtakeServo.clawToggle();
         }
 
@@ -241,15 +245,11 @@ public class JellyTele extends BaseOpMode {
 //        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
 //            slideMode = SlideMode.TRANSFER;
 //        }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-            slideMode = SlideMode.MANUAL;
+        if (leftTriggerPressed()) {
+            slideMode = SlideMode.HANGPREP;
         }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.RIGHT_BUMPER)) {
-            if (slideMode == SlideMode.HANGPREP) {
-                slideMode = SlideMode.HANG;
-            } else {
-                slideMode = SlideMode.HANGPREP;
-            }
+        if (rightTriggerPressed()) {
+            slideMode = SlideMode.HANG;
         }
     }
 
@@ -287,6 +287,37 @@ public class JellyTele extends BaseOpMode {
     private void controlExtendo() {
         double extendoJoystickValue = -(applyDeadband(GamepadEx2.getLeftY()));
         Extendo.setPower(extendoJoystickValue);
+    }
+
+
+
+    private boolean leftTriggerPressed() {
+        boolean currentTrigger;
+        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) > 0.5) {
+            currentTrigger = true;
+        } else {
+            currentTrigger = false;
+        }
+        if (currentTrigger != leftTrigger) {
+            leftTrigger = currentTrigger;
+            return true;
+        } else {
+            return false;
+        }
+    }
+    private boolean rightTriggerPressed() {
+        boolean currentTrigger;
+        if (GamepadEx2.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) > 0.5) {
+            currentTrigger = true;
+        } else {
+            currentTrigger = false;
+        }
+        if (currentTrigger != rightTrigger) {
+            rightTrigger = currentTrigger;
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
