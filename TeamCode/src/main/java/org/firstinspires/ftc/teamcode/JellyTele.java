@@ -147,7 +147,6 @@ public class JellyTele extends BaseOpMode {
         switch (driveMode) {
             case MECANUM:
                 motorSpeeds = MecanumDrive();
-
                 break;
             case FIELDCENTRIC:
                 motorSpeeds = MecanumDrive();
