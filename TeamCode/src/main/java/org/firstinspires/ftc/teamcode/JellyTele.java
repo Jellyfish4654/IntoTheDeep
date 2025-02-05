@@ -224,7 +224,7 @@ public class JellyTele extends BaseOpMode {
         return MAX_SCALE;
     }
 
-    private enum SlideMode {
+    protected enum SlideMode {
         HIGH,
         LOW,
         TRANSFER,
@@ -267,15 +267,19 @@ public class JellyTele extends BaseOpMode {
             case TRANSFER:
                 slides.setTransfer();
                 slides.update(true, false,0);
+                break;
             case MANUAL:
-                slidePower = -applyDeadband(GamepadEx2.getRightY()) * 30;
+                slidePower = -applyDeadband(GamepadEx2.getRightY());
                 slides.update(false, false, slidePower);
+                break;
             case HANGPREP:
                 slidePower = -applyDeadband(GamepadEx2.getRightY());
                 slides.update(false, true, slidePower);
+                break;
             case HANG:
                 slidePower = -1;
                 slides.update(false, true, slidePower);
+                break;
         }
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
