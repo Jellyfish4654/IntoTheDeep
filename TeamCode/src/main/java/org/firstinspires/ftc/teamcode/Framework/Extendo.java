@@ -11,13 +11,12 @@ public class Extendo {
     private DcMotorEx Extendo;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
-    public final double defaultp = 0.03, defaulti = 0.0061, defaultd = 0.004;
-    public static double p = 0.03, i = 0.0061, d = 0.0004;
+    public final double defaultp = 0.02, defaulti = 0, defaultd = 0;
+    public static double p = 0.02, i = 0, d = 0;
     private PIDController controller;
     private double target;
-    private double retract;
-    private double midextend;
-    private double extend;
+    private final int retract = 0;
+    private final int extend = 0;
     private final double ticks_in_degree = 587.3/360;
     private int targetPosition;
     private double voltageCompensation;
@@ -37,9 +36,6 @@ public class Extendo {
 
     public void setRetract() {
         setTargetPosition(retract);
-    }
-    public void setMidExtend() {
-        setTargetPosition(midextend);
     }
     public void setExtend() {
         setTargetPosition(extend);
@@ -80,7 +76,7 @@ public class Extendo {
     public class ExtendoExtend implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            Extendo.setTargetPosition(1000);
+            Extendo.setTargetPosition(extend);
             control(Extendo, target, controller);
             return false;
         }
@@ -91,7 +87,7 @@ public class Extendo {
     public class ExtendoRetract implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            Extendo.setTargetPosition(0);
+            Extendo.setTargetPosition(retract);
             control(Extendo, target, controller);
             if (Extendo.getCurrentPosition() == target) {
                 return false;

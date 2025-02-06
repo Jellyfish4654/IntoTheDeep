@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -25,8 +26,9 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class JellyBotR extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Pose2d initialPose = new Pose2d(-23.5, 62, Math.toRadians(270));
+        Pose2d initialPose = new Pose2d(-23.5, 62, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+        drive.pose = new Pose2d(-23.5, 62, Math.toRadians(90));
         Actions.runBlocking(slides.slidesDown());
         Actions.runBlocking(outtakeServo.clawClose());
         Actions.runBlocking(wrist.wristDown());
@@ -69,14 +71,24 @@ public class JellyBotR extends BaseOpMode {
         Action action4 = toSample2.build();
         Action action5 = toPark.build();
 
-        Actions.runBlocking(
+        Actions.runBlocking(new ParallelAction(
                 new SequentialAction(
-                        action1,
+                        outtakeRotatingArmServos.outtakeDeposit(),
+                        drive.actionBuilder(drive.pose)
+                                .splineToConstantHeading(new Vector2d(-5, 35.3), Math.toRadians(0))
+                                .build(),
                         slides.slidesUp(),
-                        outtakeRotatingArmServos.outtakeDeposit(),
                         outtakeServo.clawOpen(),
-                        action2,
-                        slides.slidesDown(),
+                        slides.slidesDown()
+                        )
+        ));
+        drive.updatePoseEstimate();
+        Actions.runBlocking(new ParallelAction(
+                new SequentialAction(
+                        drive.actionBuilder(drive.pose)
+                                .splineToLinearHeading(new Pose2d(-40.2, 50, Math.toRadians(270)), Math.toRadians(0))
+                                .splineToConstantHeading(new Vector2d(-48.2, 45.3), Math.toRadians(0))
+                                .build(),
                         intakeServo.clawOpen(),
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
@@ -86,20 +98,42 @@ public class JellyBotR extends BaseOpMode {
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         wrist.wristDown(),
-                        outtakeRotatingArmServos.outtakeDeposit(),
-                        action3,
-                        outtakeServo.clawOpen(),
-                        action4,
-                        extendo.extendoExtend(),
-                        intakeServo.clawClose(),
-                        extendo.extendoRetract(),
-                        outtakeRotatingArmServos.outtakeTransfer(),
-                        wrist.wristUp(),
-                        outtakeServo.clawClose(),
-                        intakeServo.clawOpen(),
-                        wrist.wristDown(),
-                        action5
+                        outtakeRotatingArmServos.outtakeDeposit()
                 )
-        );
+        ));
+        drive.updatePoseEstimate();
+        Actions.runBlocking(new ParallelAction(
+                new SequentialAction(
+                        drive.actionBuilder(drive.pose)
+                                .splineToConstantHeading(new Vector2d(-48.2, 55.3), Math.toRadians(0))
+                                .build(),
+                        outtakeServo.clawOpen()
+                )
+        ));
+        drive.updatePoseEstimate();
+        Actions.runBlocking(new ParallelAction(
+                new SequentialAction(
+                        drive.actionBuilder(drive.pose)
+                                .splineToConstantHeading(new Vector2d (-58.2, 45.3), Math.toRadians(0))
+                                .build(),
+                        extendo.extendoExtend(),
+                        intakeServo.clawClose(),
+                        extendo.extendoRetract(),
+                        outtakeRotatingArmServos.outtakeTransfer(),
+                        wrist.wristUp(),
+                        outtakeServo.clawClose(),
+                        intakeServo.clawOpen(),
+                        wrist.wristDown()
+                )
+        ));
+        drive.updatePoseEstimate();
+        Actions.runBlocking(new ParallelAction(
+                new SequentialAction(
+                        drive.actionBuilder(drive.pose)
+                                .splineToConstantHeading(new Vector2d (-58.2, 61.3), Math.toRadians(0))
+                                .build()
+                )
+        ));
+
     }
 }

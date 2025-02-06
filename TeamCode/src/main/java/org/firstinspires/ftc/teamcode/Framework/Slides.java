@@ -26,6 +26,8 @@ public class Slides {
     public static double f = 0;
     public static double leftTarget = 0;
     public static double rightTarget = 0;
+    public final double highest_set_left = 0;
+    public final double highest_set_right = 0;
     public final double high_set_left = 0;
     public final double high_set_right = 0;
     public final double transfer_set_left = 0;
@@ -61,6 +63,10 @@ public class Slides {
 
     public void setHigh() {
         setTargetPositions(high_set_left, high_set_right);
+    }
+
+    public void setHighest() {
+        setTargetPositions(highest_set_left, highest_set_right);
     }
 
     public void update(boolean PID, boolean rightSlide, double joyStickValue) {
@@ -128,26 +134,44 @@ public class Slides {
         return slideMotorRight.getCurrentPosition();
     }
 
-    public class SlidesUp implements Action {
-        private boolean initialized = false;
+    public class SlidesHighest implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if (!initialized) {
-                slideMotorLeft.setPower(0.8);
-                slideMotorRight.setPower(0.8);
-                initialized = true;
-            }
+            setHigh();
+            update(true, false, 0);
+
             double posLeft = getCurrentLeftPosition();
             double posRight = getCurrentRightPosition();
             telemetryPacket.put("left slide pos", posLeft);
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (posLeft < 3000 && posRight < 3000) {
+            if (posLeft != highest_set_left) {
                 return true;
             } else {
-                slideMotorLeft.setPower(0);
-                slideMotorRight.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    public Action slidesHighest() {
+        return new SlidesHighest();
+    }
+    public class SlidesUp implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            setHigh();
+            update(true, false, 0);
+
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+
+            if (posLeft != high_set_left) {
+                return true;
+            } else {
                 return false;
             }
 
@@ -156,26 +180,43 @@ public class Slides {
     public Action slidesUp() {
         return new SlidesUp();
     }
-    public class SlidesDown implements Action {
-        private boolean initialized = false;
+    public class SlidesTransfer implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if (!initialized) {
-                slideMotorLeft.setPower(-0.8);
-                slideMotorRight.setPower(-0.8);
-                initialized = true;
-            }
+            setTransfer();
+            update(true, false, 0);
+
             double posLeft = getCurrentLeftPosition();
             double posRight = getCurrentRightPosition();
             telemetryPacket.put("left slide pos", posLeft);
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (posLeft > 100 && posRight > 100) {
+            if (posLeft != transfer_set_left) {
                 return true;
             } else {
-                slideMotorLeft.setPower(0);
-                slideMotorRight.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    public Action slidesTransfer() {
+        return new SlidesTransfer();
+    }
+    public class SlidesDown implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            setLow();
+            update(true, false, 0);
+
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+            if (posLeft != low_set_left) {
+                return true;
+            } else {
                 return false;
             }
 
