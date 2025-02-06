@@ -7,9 +7,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class Wrist {
     private final Servo servo;
-    private final double taka = 0.67;
+    private final double up = 0.67;
     // these are going to change depending on what position the irl servo is set to... let's change later
-    private final double matt = 0.05;
+    private final double down = 0.1245;
     private int position;
 
     public Wrist(Servo servo){
@@ -17,11 +17,11 @@ public class Wrist {
     }
 
     public void setPosUp() {
-        changePosition(taka);
+        changePosition(up);
     }
 
     public void setPosDown() {
-        changePosition(matt);
+        changePosition(down);
     }
 
     private void changePosition(double position) {
@@ -34,8 +34,8 @@ public class Wrist {
     public class WristUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            servo.setPosition(taka);
-            return servo.getPosition() != taka;
+            servo.setPosition(up);
+            return servo.getPosition() != up;
         }
     }
     public Action wristUp() {
@@ -44,8 +44,8 @@ public class Wrist {
     public class WristDown implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            servo.setPosition(matt);
-            return servo.getPosition() != matt;
+            servo.setPosition(down);
+            return servo.getPosition() != down;
         }
     }
     public Action wristDown() {
