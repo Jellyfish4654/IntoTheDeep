@@ -29,9 +29,9 @@ public class JellyBotR extends BaseOpMode {
         Pose2d initialPose = new Pose2d(-23.5, 62, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         drive.pose = new Pose2d(-23.5, 62, Math.toRadians(90));
-        Actions.runBlocking(slides.slidesDown());
-        Actions.runBlocking(outtakeServo.clawClose());
-        Actions.runBlocking(wrist.wristDown());
+        Actions.runBlocking(slides.new SlidesDown());
+        Actions.runBlocking(outtakeServo.new ClawClose());
+        Actions.runBlocking(wrist.new WristDown());
 
         TrajectoryActionBuilder toSubmersible = drive.actionBuilder(initialPose)
                 .lineToY(42)
@@ -73,13 +73,13 @@ public class JellyBotR extends BaseOpMode {
 
         Actions.runBlocking(
                 new SequentialAction(
-                        outtakeRotatingArm.outtakeDeposit(),
+                        outtakeRotatingArm.new OuttakeDeposit(),
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d(-5, 35.3), Math.toRadians(0))
                                 .build(),
-                        slides.slidesUp(),
-                        outtakeServo.clawOpen(),
-                        slides.slidesDown()
+                        slides.new SlidesUp(),
+                        outtakeServo.new ClawOpen(),
+                        slides.new SlidesDown()
                         )
         );
         drive.updatePoseEstimate();
@@ -89,17 +89,17 @@ public class JellyBotR extends BaseOpMode {
                                 .splineToLinearHeading(new Pose2d(-40.2, 50, Math.toRadians(270)), Math.toRadians(0))
                                 .splineToConstantHeading(new Vector2d(-48.2, 45.3), Math.toRadians(0))
                                 .build(),
-                        intakeServo.clawOpen(),
-                        extendo.extendoExtend(),
-                        intakeServo.clawClose(),
-                        extendo.extendoRetract(),
-                        slides.slidesTransfer(),
-                        outtakeRotatingArm.outtakeTransfer(),
-                        wrist.wristUp(),
-                        outtakeServo.clawClose(),
-                        intakeServo.clawOpen(),
-                        wrist.wristDown(),
-                        outtakeRotatingArm.outtakeDeposit()
+                        intakeServo.new ClawOpen(),
+                        extendo.new ExtendoExtend(),
+                        intakeServo.new ClawClose(),
+                        extendo.new ExtendoRetract(),
+                        slides.new SlidesTransfer(),
+                        outtakeRotatingArm.new OuttakeTransfer(),
+                        wrist.new WristUp(),
+                        outtakeServo.new ClawClose(),
+                        intakeServo.new ClawOpen(),
+                        wrist.new WristDown(),
+                        outtakeRotatingArm.new OuttakeDeposit()
                 )
         );
         drive.updatePoseEstimate();
@@ -108,7 +108,7 @@ public class JellyBotR extends BaseOpMode {
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d(-48.2, 55.3), Math.toRadians(0))
                                 .build(),
-                        outtakeServo.clawOpen()
+                        outtakeServo.new ClawOpen()
                 )
         );
         drive.updatePoseEstimate();
@@ -117,15 +117,15 @@ public class JellyBotR extends BaseOpMode {
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d (-58.2, 45.3), Math.toRadians(0))
                                 .build(),
-                        extendo.extendoExtend(),
-                        intakeServo.clawClose(),
-                        extendo.extendoRetract(),
-                        slides.slidesTransfer(),
-                        outtakeRotatingArm.outtakeTransfer(),
-                        wrist.wristUp(),
-                        outtakeServo.clawClose(),
-                        intakeServo.clawOpen(),
-                        wrist.wristDown()
+                        extendo.new ExtendoExtend(),
+                        intakeServo.new ClawClose(),
+                        extendo.new ExtendoRetract(),
+                        slides.new SlidesTransfer(),
+                        outtakeRotatingArm.new OuttakeTransfer(),
+                        wrist.new WristUp(),
+                        outtakeServo.new ClawClose(),
+                        intakeServo.new ClawOpen(),
+                        wrist.new WristDown()
                 )
         );
         drive.updatePoseEstimate();

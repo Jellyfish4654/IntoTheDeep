@@ -16,6 +16,7 @@ public class Slides {
     private DcMotorEx slideMotorLeft, slideMotorRight;
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
+    public double offset_tracker;
     public final double defaultp = 0.01, defaulti = 0, defaultd = 0;
     public static double pleft = 0.01, ileft = 0, dleft = 0;
     public static double pright = 0.03, iright = 0.0061, dright = 0.0004;

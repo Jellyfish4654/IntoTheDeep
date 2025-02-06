@@ -28,9 +28,9 @@ public class JellyBotL extends BaseOpMode {
         Pose2d initialPose = new Pose2d(23.5, 62, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         drive.pose = new Pose2d(23.5, 62, Math.toRadians(90));
-        Actions.runBlocking(slides.slidesDown());
-        Actions.runBlocking(outtakeServo.clawClose());
-        Actions.runBlocking(wrist.wristDown());
+        Actions.runBlocking(slides.new SlidesDown());
+        Actions.runBlocking(outtakeServo.new ClawClose());
+        Actions.runBlocking(wrist.new WristDown());
 
         TrajectoryActionBuilder toSubmersible = drive.actionBuilder(initialPose)
                 .lineToY(42)
@@ -85,26 +85,26 @@ public class JellyBotL extends BaseOpMode {
                         .splineToLinearHeading(new Pose2d(23.5, 42, Math.toRadians(0)), Math.toRadians(0))
                         .splineToLinearHeading(new Pose2d(5, 35.3, Math.toRadians(90)), Math.toRadians(0))
                         .build(),
-                outtakeRotatingArm.outtakeDeposit(),
-                slides.slidesUp(),
-                outtakeServo.clawOpen()
+                outtakeRotatingArm.new OuttakeDeposit(),
+                slides.new SlidesUp(),
+                outtakeServo.new ClawOpen()
                 )
 
         );
         drive.updatePoseEstimate();
         Actions.runBlocking(new SequentialAction(
-                slides.slidesDown(),
+                slides.new SlidesDown(),
                 drive.actionBuilder(drive.pose)
                         .splineToLinearHeading(new Pose2d(48.2, 45.3, Math.toRadians(90)), Math.toRadians(0))
                         .build(),
-                extendo.extendoExtend(),
-                intakeServo.clawClose(),
-                extendo.extendoRetract(),
-                slides.slidesTransfer(),
-                outtakeRotatingArm.outtakeTransfer(),
-                wrist.wristUp(),
-                outtakeServo.clawClose(),
-                intakeServo.clawOpen()
+                extendo.new ExtendoExtend(),
+                intakeServo.new ClawClose(),
+                extendo.new ExtendoRetract(),
+                slides.new SlidesTransfer(),
+                outtakeRotatingArm.new OuttakeTransfer(),
+                wrist.new WristUp(),
+                outtakeServo.new ClawClose(),
+                intakeServo.new ClawOpen()
                 )
 
         );
@@ -113,11 +113,11 @@ public class JellyBotL extends BaseOpMode {
                 drive.actionBuilder(drive.pose)
                         .splineToLinearHeading(new Pose2d(53.2, 51.8, Math.toRadians(45)), Math.toRadians(0))
                         .build(),
-                slides.slidesHighest(),
-                outtakeRotatingArm.outtakeDeposit(),
-                outtakeServo.clawOpen(),
-                outtakeRotatingArm.outtakeTransfer(),
-                slides.slidesDown()
+                slides.new SlidesHighest(),
+                outtakeRotatingArm.new OuttakeDeposit(),
+                outtakeServo.new ClawOpen(),
+                outtakeRotatingArm.new OuttakeTransfer(),
+                slides.new SlidesDown()
                 )
 
         );
@@ -126,14 +126,14 @@ public class JellyBotL extends BaseOpMode {
                 drive.actionBuilder(drive.pose)
                         .splineToLinearHeading(new Pose2d(-40.2, 50, Math.toRadians(90)), Math.toRadians(0))
                         .build(),
-                wrist.wristDown(),
-                extendo.extendoExtend(),
-                intakeServo.clawClose(),
-                extendo.extendoRetract(),
-                slides.slidesTransfer(),
-                wrist.wristUp(),
-                outtakeServo.clawClose(),
-                intakeServo.clawOpen()
+                wrist.new WristDown(),
+                extendo.new ExtendoExtend(),
+                intakeServo.new ClawClose(),
+                extendo.new ExtendoRetract(),
+                slides.new SlidesTransfer(),
+                wrist.new WristUp(),
+                outtakeServo.new ClawClose(),
+                intakeServo.new ClawOpen()
                 )
 
         );
@@ -142,10 +142,10 @@ public class JellyBotL extends BaseOpMode {
                 drive.actionBuilder(drive.pose)
                         .splineToLinearHeading(new Pose2d(51.8, 53.2, Math.toRadians(45)), Math.toRadians(0))
                         .build(),
-                slides.slidesHighest(),
-                outtakeRotatingArm.outtakeDeposit(),
-                outtakeServo.clawOpen(),
-                slides.slidesDown()
+                slides.new SlidesHighest(),
+                outtakeRotatingArm.new OuttakeDeposit(),
+                outtakeServo.new ClawOpen(),
+                slides.new SlidesDown()
                 )
 
         );
