@@ -15,6 +15,7 @@ public class OuttakeRotatingArm {
     private final Servo armLeftServo;
     double positionL = ARM_INTAKE;
 
+
     public double getCurrentPosition() {
         return armLeftServo.getPosition();
     }
@@ -22,12 +23,7 @@ public class OuttakeRotatingArm {
     {
         this.armLeftServo = servo1;
         armLeftServo.setPosition(positionL);
-    }
-    public void addServoPos() {
-        positionL += 0.01;
-    }
-    public void subtractServoPos() {
-        positionL -= 0.01;
+        armLeftServo.setDirection(Servo.Direction.REVERSE);
     }
     public void armOuttakeIntake()
     {

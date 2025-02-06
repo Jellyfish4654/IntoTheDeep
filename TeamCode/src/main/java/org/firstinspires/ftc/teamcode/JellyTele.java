@@ -106,7 +106,7 @@ public class JellyTele extends BaseOpMode {
     private void updateOuttakeModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y) || GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B) || GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
             outtakeMode = OuttakeMode.TRANSFER;
         }
     }
@@ -238,10 +238,10 @@ public class JellyTele extends BaseOpMode {
 //        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
 //            slideMode = SlideMode.TRANSFER;
 //        }
-        if (leftTriggerPressed()) {
+        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
             slideMode = SlideMode.HANGPREP;
         }
-        if (rightTriggerPressed()) {
+        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
             slideMode = SlideMode.HANG;
         }
     }
