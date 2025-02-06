@@ -8,7 +8,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class OuttakeRotatingArmServos {
+public class OuttakeRotatingArm {
     private static final double ARM_INTAKE = 1;
     private static final double ARM_DEPOSIT = 0.67;
     //replace values after testing
@@ -18,7 +18,7 @@ public class OuttakeRotatingArmServos {
     public double getCurrentPosition() {
         return armLeftServo.getPosition();
     }
-    public OuttakeRotatingArmServos(Servo servo1)
+    public OuttakeRotatingArm(Servo servo1)
     {
         this.armLeftServo = servo1;
         armLeftServo.setPosition(positionL);

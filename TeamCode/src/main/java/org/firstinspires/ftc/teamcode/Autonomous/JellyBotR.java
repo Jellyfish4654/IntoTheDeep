@@ -73,7 +73,7 @@ public class JellyBotR extends BaseOpMode {
 
         Actions.runBlocking(new ParallelAction(
                 new SequentialAction(
-                        outtakeRotatingArmServos.outtakeDeposit(),
+                        outtakeRotatingArm.outtakeDeposit(),
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d(-5, 35.3), Math.toRadians(0))
                                 .build(),
@@ -93,12 +93,12 @@ public class JellyBotR extends BaseOpMode {
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
                         extendo.extendoRetract(),
-                        outtakeRotatingArmServos.outtakeTransfer(),
+                        outtakeRotatingArm.outtakeTransfer(),
                         wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         wrist.wristDown(),
-                        outtakeRotatingArmServos.outtakeDeposit()
+                        outtakeRotatingArm.outtakeDeposit()
                 )
         ));
         drive.updatePoseEstimate();
@@ -119,7 +119,7 @@ public class JellyBotR extends BaseOpMode {
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
                         extendo.extendoRetract(),
-                        outtakeRotatingArmServos.outtakeTransfer(),
+                        outtakeRotatingArm.outtakeTransfer(),
                         wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),

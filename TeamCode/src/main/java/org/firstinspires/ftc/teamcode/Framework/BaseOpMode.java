@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Framework;
 
-import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -29,7 +28,7 @@ public abstract class BaseOpMode extends LinearOpMode {
     //two claw servos
 
     protected Wrist wrist;
-    protected OuttakeRotatingArmServos outtakeRotatingArmServos;
+    protected OuttakeRotatingArm outtakeRotatingArm;
     protected IntakeRotatingArmServos intakeRotatingArmServos;
 
     //two outtake arm servos
@@ -66,7 +65,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         outtakeServo.closeClaw();
         wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
 
-        outtakeRotatingArmServos = new OuttakeRotatingArmServos(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
+        outtakeRotatingArm = new OuttakeRotatingArm(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
