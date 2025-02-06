@@ -95,9 +95,9 @@ public class Slides {
     }
 
 
-    private double calculateMotorPowerWithPID(DcMotorEx motor, double targetPosition, PIDController slideController) {
-        double position = motor.getCurrentPosition();
-        return slideController.calculate(position, targetPosition);
+    private double calculateMotorPowerWithPID(double targetPosition) {
+        double position = slideMotorLeft.getCurrentPosition();
+        return lcontroller.calculate(position, targetPosition);
     }
     public void enablePID() {
         pidenable = true;
