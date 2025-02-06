@@ -73,9 +73,9 @@ public class Slides {
     public void update(boolean PID, boolean rightSlide, double joyStickValue) {
         double elapsedTime = timer.seconds();
         if (PID) {
-            control(slideMotorLeft, leftTarget);
+            control(leftTarget);
             if (rightSlide) {
-                control(slideMotorRight, rightTarget);
+                control(rightTarget);
             }
         } else {
             controlNoPID(slideMotorLeft, joyStickValue);
@@ -85,10 +85,10 @@ public class Slides {
         }
     }
 
-    private void control(DcMotorEx motor, double target) {
+    private void control(double target) {
         double powerSlide;
-        powerSlide = calculateMotorPowerWithPID(motor, target, lcontroller);
-        motor.setPower(powerSlide);
+        powerSlide = calculateMotorPowerWithPID(slideMotorLeft, target, lcontroller);
+        slideMotorLeft.setPower(powerSlide);
     }
     private void controlNoPID(DcMotorEx motor, double power) {
         motor.setPower(power);
@@ -138,7 +138,7 @@ public class Slides {
     public class SlidesHighest implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setHigh();
+            setHighest();
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();
