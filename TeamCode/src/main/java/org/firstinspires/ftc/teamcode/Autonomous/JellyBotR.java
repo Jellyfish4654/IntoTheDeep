@@ -71,7 +71,7 @@ public class JellyBotR extends BaseOpMode {
         Action action4 = toSample2.build();
         Action action5 = toPark.build();
 
-        Actions.runBlocking(new ParallelAction(
+        Actions.runBlocking(
                 new SequentialAction(
                         outtakeRotatingArm.outtakeDeposit(),
                         drive.actionBuilder(drive.pose)
@@ -81,9 +81,9 @@ public class JellyBotR extends BaseOpMode {
                         outtakeServo.clawOpen(),
                         slides.slidesDown()
                         )
-        ));
+        );
         drive.updatePoseEstimate();
-        Actions.runBlocking(new ParallelAction(
+        Actions.runBlocking(
                 new SequentialAction(
                         drive.actionBuilder(drive.pose)
                                 .splineToLinearHeading(new Pose2d(-40.2, 50, Math.toRadians(270)), Math.toRadians(0))
@@ -93,6 +93,7 @@ public class JellyBotR extends BaseOpMode {
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
                         extendo.extendoRetract(),
+                        slides.slidesTransfer(),
                         outtakeRotatingArm.outtakeTransfer(),
                         wrist.wristUp(),
                         outtakeServo.clawClose(),
@@ -100,18 +101,18 @@ public class JellyBotR extends BaseOpMode {
                         wrist.wristDown(),
                         outtakeRotatingArm.outtakeDeposit()
                 )
-        ));
+        );
         drive.updatePoseEstimate();
-        Actions.runBlocking(new ParallelAction(
+        Actions.runBlocking(
                 new SequentialAction(
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d(-48.2, 55.3), Math.toRadians(0))
                                 .build(),
                         outtakeServo.clawOpen()
                 )
-        ));
+        );
         drive.updatePoseEstimate();
-        Actions.runBlocking(new ParallelAction(
+        Actions.runBlocking(
                 new SequentialAction(
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d (-58.2, 45.3), Math.toRadians(0))
@@ -119,21 +120,22 @@ public class JellyBotR extends BaseOpMode {
                         extendo.extendoExtend(),
                         intakeServo.clawClose(),
                         extendo.extendoRetract(),
+                        slides.slidesTransfer(),
                         outtakeRotatingArm.outtakeTransfer(),
                         wrist.wristUp(),
                         outtakeServo.clawClose(),
                         intakeServo.clawOpen(),
                         wrist.wristDown()
                 )
-        ));
+        );
         drive.updatePoseEstimate();
-        Actions.runBlocking(new ParallelAction(
+        Actions.runBlocking(
                 new SequentialAction(
                         drive.actionBuilder(drive.pose)
                                 .splineToConstantHeading(new Vector2d (-58.2, 61.3), Math.toRadians(0))
                                 .build()
                 )
-        ));
+        );
 
     }
 }
