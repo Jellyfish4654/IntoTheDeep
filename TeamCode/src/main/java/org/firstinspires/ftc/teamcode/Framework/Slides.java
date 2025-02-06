@@ -73,9 +73,9 @@ public class Slides {
     public void update(boolean PID, boolean rightSlide, double joyStickValue) {
         double elapsedTime = timer.seconds();
         if (PID) {
-            control(slideMotorLeft, leftTarget, lcontroller);
+            control(slideMotorLeft, leftTarget);
             if (rightSlide) {
-                control(slideMotorRight, rightTarget, rcontroller);
+                control(slideMotorRight, rightTarget);
             }
         } else {
             controlNoPID(slideMotorLeft, joyStickValue);
@@ -85,9 +85,9 @@ public class Slides {
         }
     }
 
-    private void control(DcMotorEx motor, double target, PIDController slideController) {
+    private void control(DcMotorEx motor, double target) {
         double powerSlide;
-        powerSlide = calculateMotorPowerWithPID(motor, target, slideController);
+        powerSlide = calculateMotorPowerWithPID(motor, target, lcontroller);
         motor.setPower(powerSlide);
     }
     private void controlNoPID(DcMotorEx motor, double power) {
