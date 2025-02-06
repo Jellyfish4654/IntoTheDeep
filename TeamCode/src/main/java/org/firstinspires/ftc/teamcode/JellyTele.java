@@ -114,23 +114,17 @@ public class JellyTele extends BaseOpMode {
     private void updateOuttakeMode() {
         switch (outtakeMode) {
             case ACTIVEOUTTAKE:
-                outtakeRotatingArmServos.armOuttakeDeposit();
+                outtakeRotatingArm.armOuttakeDeposit();
                 break;
             case TRANSFER:
-                outtakeRotatingArmServos.armOuttakeIntake();
+                outtakeRotatingArm.armOuttakeIntake();
                 break;
         }
-        outtakeRotatingArmServos.setOutput();
+        outtakeRotatingArm.setOutput();
         telemetry.addData("state:", outtakeMode.toString());
-        telemetry.addData("outtake servo position", outtakeRotatingArmServos.getCurrentPosition());
+        telemetry.addData("outtake servo position", outtakeRotatingArm.getCurrentPosition());
         telemetry.addData("slides right pos:", slides.getCurrentRightPosition());
         telemetry.addData("slides left pos:", slides.getCurrentLeftPosition());
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_LEFT)) {
-            outtakeRotatingArmServos.subtractServoPos();
-        }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
-            outtakeRotatingArmServos.addServoPos();
-        }
     }
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
@@ -170,10 +164,10 @@ public class JellyTele extends BaseOpMode {
         double denominator = Math.max(sum, 1);
 
         return new double[]{
-                0.6*(y + x + r)/denominator,
-                0.6*(y - x + r)/denominator,
-                0.6*(y - x - r)/denominator,
-                0.6*(y + x - r)/denominator
+                0.3*(y + x + r)/denominator,
+                0.3*(y - x + r)/denominator,
+                0.3*(y - x - r)/denominator,
+                0.3*(y + x - r)/denominator
         };
     }
 
@@ -269,10 +263,16 @@ public class JellyTele extends BaseOpMode {
                 break;
             case MANUAL:
                 slidePower = -applyDeadband(GamepadEx2.getRightY());
+                if (Math.signum(slidePower) == -1) {
+                    slidePower *= 0.6;
+                }
                 slides.update(false, false, slidePower);
                 break;
             case HANGPREP:
                 slidePower = -applyDeadband(GamepadEx2.getRightY());
+                if (Math.signum(slidePower) == -1) {
+                    slidePower *= 0.6;
+                }
                 slides.update(false, true, slidePower);
                 break;
             case HANG:
