@@ -229,15 +229,15 @@ public class JellyTele extends BaseOpMode {
     protected SlideMode slideMode = SlideMode.MANUAL;
 
     private void updateSlideModeFromGamepad() {
-//        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
-//            slideMode = SlideMode.LOW;
-//        }
-//        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
-//            slideMode = SlideMode.HIGH;
-//        }
-//        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
-//            slideMode = SlideMode.TRANSFER;
-//        }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
+            slideMode = SlideMode.LOW;
+        }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
+            slideMode = SlideMode.HIGH;
+        }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
+            slideMode = SlideMode.TRANSFER;
+        }
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
             slideMode = SlideMode.HANGPREP;
         }
