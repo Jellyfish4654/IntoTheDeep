@@ -18,7 +18,7 @@ public class Slides {
     private ElapsedTime timer;
     public double offset_tracker;
     public final double defaultp = 0.01, defaulti = 0, defaultd = 0;
-    public static double pleft = 0.01, ileft = 0, dleft = 0;
+    public static double pleft = 0.005, ileft = 0, dleft = 0;
     public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
     int targetPosition;
     private PIDController lcontroller;
@@ -27,13 +27,13 @@ public class Slides {
     public static double f = 0;
     public static double leftTarget = 0;
     public static double rightTarget = 0;
-    public final double highest_set_left = -4381;
+    public final double highest_set_left = 10543;
     public final double highest_set_right = 0;
-    public final double high_set_left = -2431;
+    public final double high_set_left = 10000;
     public final double high_set_right = 0;
-    public final double transfer_set_left = -386;
+    public final double transfer_set_left = 6650;
     public final double transfer_set_right = 0;
-    public final double low_set_left = 47;
+    public final double low_set_left = 6155;
     public final double low_set_right = 0;
     private final double ticks_in_degree = 587.3/360;
     private double voltageCompensation;

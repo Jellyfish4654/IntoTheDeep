@@ -25,6 +25,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class JellyBotL extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
+        initHardware();
         Pose2d initialPose = new Pose2d(23.5, 62, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
         drive.pose = new Pose2d(23.5, 62, Math.toRadians(90));
