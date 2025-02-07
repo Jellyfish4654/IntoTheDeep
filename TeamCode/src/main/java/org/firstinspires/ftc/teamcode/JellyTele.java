@@ -95,9 +95,9 @@ public class JellyTele extends BaseOpMode {
     }
 
     private void updateOuttakeModeFromGamepad() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y) || GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y) || GamepadEx2.wasJustPressed(GamepadKeys.Button.A) || GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
             outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
-        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B) || GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
             outtakeMode = OuttakeMode.TRANSFER;
         }
     }
@@ -214,6 +214,7 @@ public class JellyTele extends BaseOpMode {
     }
 
     protected enum SlideMode {
+        BASKET,
         HIGH,
         LOW,
         TRANSFER,
@@ -225,13 +226,16 @@ public class JellyTele extends BaseOpMode {
     protected SlideMode slideMode = SlideMode.MANUAL;
 
     private void updateSlideModeFromGamepad() {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
+            slideMode = SlideMode.BASKET;
+        }
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
             slideMode = SlideMode.LOW;
         }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_LEFT)) {
             slideMode = SlideMode.MANUAL;
         }
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
             slideMode = SlideMode.HIGH;
         }
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
@@ -277,6 +281,10 @@ public class JellyTele extends BaseOpMode {
             case HANG:
                 slidePower = -1;
                 slides.update(false, true, slidePower);
+                break;
+            case BASKET:
+                slides.setHighest();
+                slides.update(true, false,0);
                 break;
         }
         double leftPosition = slideMotorLeft.getCurrentPosition();

@@ -10,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArm {
     private static final double ARM_INTAKE = 1;
-    private static final double ARM_DEPOSIT = 0.67;
+    private static final double ARM_DEPOSIT = 0.75;
     //replace values after testing
     private final Servo armLeftServo;
     double positionL = ARM_INTAKE;

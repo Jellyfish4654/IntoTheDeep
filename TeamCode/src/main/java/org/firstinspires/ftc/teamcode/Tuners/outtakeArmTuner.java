@@ -47,7 +47,7 @@ public class outtakeArmTuner extends LinearOpMode
 			}
 			else if (gamepad1.x)
 			{
-				position = 0.67;
+				position = 0.75;
 			}
 
 		}
