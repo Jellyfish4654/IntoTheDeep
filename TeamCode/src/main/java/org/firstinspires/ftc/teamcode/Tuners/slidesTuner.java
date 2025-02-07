@@ -46,8 +46,8 @@ public class slidesTuner extends LinearOpMode
             double lpower = lcontroller.calculate(Lposition, leftTarget);
             double rpower = rcontroller.calculate(Rposition, rightTarget);
 
-            slideMotorLeft.setPower(lpower);
-            slideMotorRight.setPower(rpower);
+            slideMotorLeft.setPower(lpower/2);
+            slideMotorRight.setPower(rpower/2);
             telemetry.addData("left pos ", Lposition);
             telemetry.addData("right pos ", Rposition);
             telemetry.addData("left target ", leftTarget);

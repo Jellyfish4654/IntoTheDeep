@@ -87,7 +87,7 @@ public class Slides {
 
     private void control(double target) {
         double powerSlide;
-        powerSlide = calculateMotorPowerWithPID(slideMotorLeft, target, lcontroller);
+        powerSlide = calculateMotorPowerWithPID(target);
         slideMotorLeft.setPower(powerSlide);
     }
     private void controlNoPID(DcMotorEx motor, double power) {
