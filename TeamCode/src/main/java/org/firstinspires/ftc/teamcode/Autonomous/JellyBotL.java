@@ -45,7 +45,6 @@ public class JellyBotL extends BaseOpMode {
                 slides.new SlidesUp(),
                 outtakeServo.new ClawOpen()
                 )
-
         );
         drive.updatePoseEstimate();
         Actions.runBlocking(new SequentialAction(
@@ -75,7 +74,6 @@ public class JellyBotL extends BaseOpMode {
                 outtakeRotatingArm.new OuttakeTransfer(),
                 slides.new SlidesDown()
                 )
-
         );
         drive.updatePoseEstimate();
         Actions.runBlocking(new SequentialAction(
@@ -105,7 +103,5 @@ public class JellyBotL extends BaseOpMode {
                 )
 
         );
-
-
     }
 }
