@@ -33,15 +33,6 @@ public class JellyTele extends BaseOpMode {
     GamepadEx GamepadEx1;
     GamepadEx GamepadEx2;
 
-    private enum DriveMode {
-        MECANUM,
-        FIELDCENTRIC,
-        DWFIELDCENTRIC
-    }
-
-    protected DriveMode driveMode = DriveMode.MECANUM;
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         initHardware();
@@ -129,12 +120,17 @@ public class JellyTele extends BaseOpMode {
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.MECANUM;
-        } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.Y)) {
-            driveMode = DriveMode.DWFIELDCENTRIC;
         } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
-            driveMode = DriveMode.MECANUM;
+            driveMode = DriveMode.FIELDCENTRIC;
         }
     }
+
+    private enum DriveMode {
+        MECANUM,
+        FIELDCENTRIC
+    }
+
+    protected DriveMode driveMode = DriveMode.FIELDCENTRIC;
 
     private void updateDriveMode(double precisionMultiplier) {
         double[] motorSpeeds;
@@ -143,7 +139,7 @@ public class JellyTele extends BaseOpMode {
                 motorSpeeds = MecanumDrive();
                 break;
             case FIELDCENTRIC:
-                motorSpeeds = MecanumDrive();
+                motorSpeeds = FieldCentricDrive();
                 break;
             //case DWFIELDCENTRIC:
             default:
