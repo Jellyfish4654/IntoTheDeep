@@ -33,53 +33,8 @@ public class JellyBotL extends BaseOpMode {
         Actions.runBlocking(outtakeServo.new ClawClose());
         Actions.runBlocking(wrist.new WristDown());
 
-        TrajectoryActionBuilder toSubmersible = drive.actionBuilder(initialPose)
-                .lineToY(42)
-                .setTangent(Math.toRadians(0))
-                .lineToX(5)
-                .setTangent(Math.toRadians(270))
-                .lineToY(35.3);
-
-        Pose2d secondPose = new Pose2d(5, 35.3, Math.toRadians(270));
-        TrajectoryActionBuilder toSample = drive.actionBuilder(secondPose)
-                .lineToY(45.3)
-                .setTangent(Math.toRadians(180))
-                .lineToX(48.2)
-                .setTangent(Math.toRadians(90));
-
-        Pose2d thirdPose = new Pose2d(48.2, 45.3, Math.toRadians(90));
-        TrajectoryActionBuilder toBasket = drive.actionBuilder(thirdPose)
-                .lineToY(53.2)
-                .setTangent(Math.toRadians(0))
-                .lineToX(51.8)
-                .setTangent(Math.toRadians(45));
-
-        Pose2d fourthPose = new Pose2d(51.8, 53.2, Math.toRadians(45));
-        TrajectoryActionBuilder toSecondSample = drive.actionBuilder(fourthPose)
-                .setTangent(Math.toRadians(0))
-                .lineToX(48.2)
-                .setTangent(Math.toRadians(90))
-                .lineToY(45.3)
-                .setTangent(Math.toRadians(180))
-                .lineToX(58.2)
-                .setTangent(Math.toRadians(90));
-
-        Pose2d fifthPose = new Pose2d(58.2, 45.3, Math.toRadians(90));
-        TrajectoryActionBuilder toSecondBasket = drive.actionBuilder(fifthPose)
-                .setTangent(Math.toRadians(0))
-                .lineToX(51.8)
-                .setTangent(Math.toRadians(270))
-                .lineToY(53.2)
-                .setTangent(Math.toRadians(45));
-
-
         waitForStart();
         if (isStopRequested()) return;
-        Action action1 = toSubmersible.build();
-        Action action2 = toSample.build();
-        Action action3 = toBasket.build();
-        Action action4 = toSecondSample.build();
-        Action action5 = toSecondBasket.build();
 
         Actions.runBlocking(new SequentialAction(
                 drive.actionBuilder(drive.pose)
