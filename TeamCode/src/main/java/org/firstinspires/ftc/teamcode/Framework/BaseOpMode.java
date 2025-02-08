@@ -66,6 +66,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
 
         outtakeRotatingArm = new OuttakeRotatingArm(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
+        outtakeRotatingArm.armOuttakeDeposit();
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");

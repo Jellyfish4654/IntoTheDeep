@@ -27,13 +27,13 @@ public class Slides {
     public static double f = 0;
     public static double leftTarget = 0;
     public static double rightTarget = 0;
-    public final double highest_set_left = 4315;
+    public final double highest_set_left = 9300;
     public final double highest_set_right = 0;
-    public final double high_set_left = 1800;
+    public final double high_set_left = 7186;
     public final double high_set_right = 0;
-    public final double transfer_set_left = 445;
+    public final double transfer_set_left = 5387;
     public final double transfer_set_right = 0;
-    public final double low_set_left = -39;
+    public final double low_set_left = 5090;
     public final double low_set_right = 0;
     private final double ticks_in_degree = 587.3/360;
     private double voltageCompensation;

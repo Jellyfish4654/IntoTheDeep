@@ -22,8 +22,8 @@ public class JellyTele extends BaseOpMode {
     private VoltageSensor voltageSensor;
     boolean leftTrigger = false;
     boolean rightTrigger = false;
-    private final double PRECISION_MULTIPLIER_LOW = 0.35;
-    private final double PRECISION_MULTIPLIER_HIGH = 0.7;
+    private final double PRECISION_MULTIPLIER_LOW = 0.6;
+    private final double PRECISION_MULTIPLIER_HIGH = 0.85;
     private final double ENDGAME_ALERT_TIME = 110.0;
     private final double DEADBAND_VALUE = 0.02;
     private final double STRAFE_ADJUSTMENT_FACTOR = (14.0 / 13.0);
@@ -120,8 +120,6 @@ public class JellyTele extends BaseOpMode {
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.MECANUM;
-        } else if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
-            driveMode = DriveMode.FIELDCENTRIC;
         }
     }
 
@@ -130,7 +128,7 @@ public class JellyTele extends BaseOpMode {
         FIELDCENTRIC
     }
 
-    protected DriveMode driveMode = DriveMode.FIELDCENTRIC;
+    protected DriveMode driveMode = DriveMode.MECANUM;
 
     private void updateDriveMode(double precisionMultiplier) {
         double[] motorSpeeds;
