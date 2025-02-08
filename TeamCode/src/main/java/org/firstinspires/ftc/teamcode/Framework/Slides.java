@@ -147,7 +147,7 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - highest_set_left) < 100) {
+            if (Math.abs(posLeft - highest_set_left) < 500) {
                 return true;
             } else {
                 return false;
@@ -170,7 +170,7 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - high_set_left) < 100) {
+            if (Math.abs(posLeft - high_set_left) < 500) {
                 return true;
             } else {
                 return false;
@@ -193,7 +193,7 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - transfer_set_left) < 100) {
+            if (Math.abs(posLeft - transfer_set_left) < 500) {
                 return true;
             } else {
                 return false;
@@ -215,7 +215,7 @@ public class Slides {
             telemetryPacket.put("left slide pos", posLeft);
             telemetryPacket.put("right slide pos", posRight);
 
-            if (Math.abs(posLeft - low_set_left) < 100) {
+            if (Math.abs(posLeft - low_set_left) < 500) {
                 return true;
             } else {
                 return false;
