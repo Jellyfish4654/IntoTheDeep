@@ -31,10 +31,10 @@ public class Slides {
     public final double high_to_highest = 2150;
     public final double highest_set_right = 0;
     public double high_set_left = 7186;
-    public final double transfer_to_high = 1799;
+    public final double transfer_to_high = 1779;
     public final double high_set_right = 0;
     public double transfer_set_left = 5387;
-    public final double low_to_transfer = 330;
+    public final double low_to_transfer = 350;
     public final double transfer_set_right = 0;
     public double low_set_left = 5090;
     public final double low_set_right = 0;
