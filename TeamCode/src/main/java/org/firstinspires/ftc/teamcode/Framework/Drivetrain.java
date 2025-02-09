@@ -31,6 +31,7 @@ public class Drivetrain {
     private void applyPrecisionAndScale(double multiplier, double[] powers) {
         for (int i = 0; i < powers.length; i++) {
             powers[i] *= multiplier;
+            powers[i] *= 0.3;
         }
 
         double maxPower = findMaxPower(powers);

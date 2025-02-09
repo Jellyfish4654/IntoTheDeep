@@ -158,10 +158,10 @@ public class JellyTele extends BaseOpMode {
         double denominator = Math.max(sum, 1);
 
         return new double[]{
-                0.3*(y + x + r)/denominator,
-                0.3*(y - x + r)/denominator,
-                0.3*(y - x - r)/denominator,
-                0.3*(y + x - r)/denominator
+                (y + x + r)/denominator,
+                (y - x + r)/denominator,
+                (y - x - r)/denominator,
+                (y + x - r)/denominator
         };
     }
 
