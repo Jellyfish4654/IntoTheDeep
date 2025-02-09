@@ -66,7 +66,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
 
         outtakeRotatingArm = new OuttakeRotatingArm(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
-        outtakeRotatingArm.armOuttakeDeposit();
+        outtakeRotatingArm.armOuttakeInit();
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
@@ -74,6 +74,8 @@ public abstract class BaseOpMode extends LinearOpMode {
         slideMotorRight.setDirection(DcMotorSimple.Direction.FORWARD);
 
         slides = new Slides(slideMotorLeft, slideMotorRight, voltageSensor);
+        slides.establishPositions(slideMotorLeft);
+
 
         Extendo = hardwareMap.get(DcMotorEx.class, "extendo");
 
