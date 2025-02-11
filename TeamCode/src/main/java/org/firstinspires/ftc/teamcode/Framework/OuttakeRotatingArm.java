@@ -10,7 +10,9 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArm {
     private static final double ARM_INTAKE = 1;
-    private static final double ARM_DEPOSIT = 0.72;
+    private static final double ARM_DEPOSIT = 0.60;
+    private static final double ARM_CHAMBER = 0.67;
+    private static final double ARM_GRAB = 0.72;
     private static final double ARM_INIT= 0.3;
     //replace values after testing
     private final Servo armLeftServo;
@@ -34,11 +36,32 @@ public class OuttakeRotatingArm {
     }
     public void armOuttakeDeposit()
     {
-        armLeftServo.setDirection(Servo.Direction.FORWARD);
-        positionL = ARM_DEPOSIT;
+        if (positionL == ARM_INTAKE) {
+            armLeftServo.setDirection(Servo.Direction.FORWARD);
+            positionL = ARM_DEPOSIT;
+        } else {
+            armLeftServo.setDirection(Servo.Direction.REVERSE);
+            positionL = 1-ARM_DEPOSIT;
+        }
         armLeftServo.setPosition(positionL);
     }
-
+    public void armOuttakeGrab()
+    {
+        armLeftServo.setDirection(Servo.Direction.FORWARD);
+        positionL = ARM_GRAB;
+        armLeftServo.setPosition(positionL);
+    }
+    public void armOuttakeChamber()
+    {
+        if (positionL == ARM_GRAB) {
+            armLeftServo.setDirection(Servo.Direction.REVERSE);
+            positionL = 1-ARM_CHAMBER;
+        } else {
+            armLeftServo.setDirection(Servo.Direction.FORWARD);
+            positionL = ARM_CHAMBER;
+        }
+        armLeftServo.setPosition(positionL);
+    }
     public void armOuttakeInit()
     {
         armLeftServo.setDirection(Servo.Direction.FORWARD);

@@ -68,12 +68,6 @@ public class JellyTele extends BaseOpMode {
         updateSlideModeFromGamepad();
     }
 
-    private enum OuttakeMode {
-        ACTIVEOUTTAKE,
-        TRANSFER
-    }
-    protected OuttakeMode outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
-
     private void updateClawsManual() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.LEFT_BUMPER)) {
             intakeServo.clawToggle();
@@ -94,21 +88,38 @@ public class JellyTele extends BaseOpMode {
         }
     }
 
+    private enum OuttakeMode {
+        GRAB,
+        TRANSFER,
+        CHAMBER,
+        BASKET
+    }
+    protected OuttakeMode outtakeMode = OuttakeMode.CHAMBER;
     private void updateOuttakeModeFromGamepad() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y) || GamepadEx2.wasJustPressed(GamepadKeys.Button.A) || GamepadEx2.wasJustPressed(GamepadKeys.Button.X)) {
-            outtakeMode = OuttakeMode.ACTIVEOUTTAKE;
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
+            outtakeMode = OuttakeMode.BASKET;
         } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.B)) {
             outtakeMode = OuttakeMode.TRANSFER;
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
+            outtakeMode = OuttakeMode.GRAB;
+        } else if (GamepadEx2.wasJustPressed(GamepadKeys.Button.A)) {
+            outtakeMode = OuttakeMode.CHAMBER;
         }
     }
 
     private void updateOuttakeMode() {
         switch (outtakeMode) {
-            case ACTIVEOUTTAKE:
-                outtakeRotatingArm.armOuttakeDeposit();
+            case GRAB:
+                outtakeRotatingArm.armOuttakeGrab();
                 break;
             case TRANSFER:
                 outtakeRotatingArm.armOuttakeIntake();
+                break;
+            case BASKET:
+                outtakeRotatingArm.armOuttakeDeposit();
+                break;
+            case CHAMBER:
+                outtakeRotatingArm.armOuttakeChamber();
                 break;
         }
         outtakeRotatingArm.setOutput();
