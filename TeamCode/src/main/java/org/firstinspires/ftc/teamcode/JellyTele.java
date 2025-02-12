@@ -55,7 +55,7 @@ public class JellyTele extends BaseOpMode {
             updateClawsManual();
             updateWrist();
             updateSlideMode();
-            controlExtendo();
+            updateExtendoMode();
             telemetry.update();
         }
     }
@@ -66,6 +66,7 @@ public class JellyTele extends BaseOpMode {
         updateDriveModeFromGamepad();
         updateOuttakeModeFromGamepad();
         updateSlideModeFromGamepad();
+        updateExtendoModeFromGamepad();
     }
 
     private void updateClawsManual() {
@@ -304,6 +305,32 @@ public class JellyTele extends BaseOpMode {
         telemetry.addData("slides power:", slidePower);
     }
 
+    protected enum ExtendoMode {
+        IN,
+        MANUAL
+    }
+
+    protected ExtendoMode extendoMode = ExtendoMode.MANUAL;
+
+    private void updateExtendoModeFromGamepad() {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+            extendoMode = ExtendoMode.IN;
+        }
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
+            extendoMode = ExtendoMode.MANUAL;
+        }
+    }
+    private void updateExtendoMode() {
+        switch (extendoMode) {
+            case IN:
+                extendo.setRetract();
+                extendo.update();
+                break;
+            case MANUAL:
+                controlExtendo();
+                break;
+        }
+    }
     private void controlExtendo() {
         double extendoJoystickValue = -(applyDeadband(GamepadEx2.getLeftY()));
         Extendo.setPower(extendoJoystickValue);

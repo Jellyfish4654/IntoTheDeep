@@ -49,6 +49,9 @@ public class Extendo {
         double powerExtendo = calculateMotorPower(motor, target, controller);
         motor.setPower(powerExtendo);
     }
+    private void controlNoPID(DcMotorEx motor, double power) {
+        motor.setPower(power);
+    }
 
 
     private double calculateMotorPower(DcMotorEx motor, double targetPosition, PIDController controller) {
