@@ -313,7 +313,7 @@ public class JellyTele extends BaseOpMode {
     protected ExtendoMode extendoMode = ExtendoMode.MANUAL;
 
     private void updateExtendoModeFromGamepad() {
-        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
+        if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             extendoMode = ExtendoMode.IN;
         }
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT)) {
