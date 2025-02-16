@@ -33,7 +33,7 @@ public class jocelynsauto extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
         initHardware();
-        Pose2d initialPose = new Pose2d(23.5, 62, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(22, 61, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
@@ -41,7 +41,7 @@ public class jocelynsauto extends BaseOpMode {
                 .splineToConstantHeading(new Vector2d(-15, 35.3), Math.toRadians(90));
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .lineToY(33.7);
+                .lineToY(32.7);
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -57,7 +57,7 @@ public class jocelynsauto extends BaseOpMode {
                         slides.slidesUnderBar(),
                         outtakeRotatingArm.outtakeChamber(),
                         tab2.build(),
-                        slides.slidesHighest(),
+                        slides.slidesOverBar(),
                         outtakeServo.clawOpen()
                 )
         );
