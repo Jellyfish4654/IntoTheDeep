@@ -330,6 +330,7 @@ public class JellyTele extends BaseOpMode {
                 controlExtendo();
                 break;
         }
+        telemetry.addData("extendo pos:", Extendo.getCurrentPosition());
     }
     private void controlExtendo() {
         double extendoJoystickValue = -(applyDeadband(GamepadEx2.getLeftY()));

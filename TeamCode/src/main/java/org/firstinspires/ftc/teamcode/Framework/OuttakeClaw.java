@@ -10,7 +10,7 @@ public class OuttakeClaw {
     private Servo clawServo;
     boolean clawOpen = false;
     private static final double CLAW_OPEN = 0.646;
-    private static final double CLAW_CLOSE = 0.422;
+    private static final double CLAW_CLOSE = 0.32;
     //subject to change
 
     public OuttakeClaw(Servo servo){
@@ -54,7 +54,7 @@ public class OuttakeClaw {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             clawServo.setPosition(CLAW_OPEN);
-            return clawServo.getPosition() != CLAW_OPEN;
+            return clawServo.getPosition() == CLAW_OPEN;
         }
     }
     public Action clawOpen() {
@@ -63,8 +63,8 @@ public class OuttakeClaw {
     public class ClawClose implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            clawServo.setPosition(CLAW_CLOSE);;
-            return clawServo.getPosition() != CLAW_CLOSE;
+            clawServo.setPosition(CLAW_CLOSE);
+            return false;
         }
     }
     public Action clawClose() {

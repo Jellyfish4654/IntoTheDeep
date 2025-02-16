@@ -7,6 +7,7 @@ import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
@@ -22,36 +23,42 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
+import org.firstinspires.ftc.teamcode.Framework.Slides;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 @Config
 @Autonomous(name = "jocelynsauto", group = "Autonomous")
-public class jocelynsauto extends LinearOpMode {
+public class jocelynsauto extends BaseOpMode {
+
     @Override
-    public void runOpMode() {
+    public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
-        Pose2d initialPose = new Pose2d(11.8, 61.7, Math.toRadians(90));
+        initHardware();
+        Pose2d initialPose = new Pose2d(23.5, 62, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(33, Math.toRadians(0))
-                .waitSeconds(2)
-                .setTangent(Math.toRadians(90))
-                .lineToY(48)
-                .setTangent(Math.toRadians(0))
-                .lineToX(32)
-                .strafeTo(new Vector2d(44.5, 30))
-                .turn(Math.toRadians(180))
-                .lineToX(47.5)
-                .waitSeconds(3);
+                .lineToYSplineHeading(42, Math.toRadians(90))
+                .splineToConstantHeading(new Vector2d(-15, 35.3), Math.toRadians(90));
+
+        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
+                .lineToY(33.7);
 
         while (!isStopRequested() && !opModeIsActive()) {
+            telemetry.addData("left target", Slides.leftTarget);
+            telemetry.addData("left slide pos", slides.getCurrentLeftPosition());
             telemetry.update();
         }
         waitForStart();
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                        tab1.build()
+                        outtakeServo.clawClose(),
+                        tab1.build(),
+                        slides.slidesUnderBar(),
+                        outtakeRotatingArm.outtakeChamber(),
+                        tab2.build(),
+                        slides.slidesHighest(),
+                        outtakeServo.clawOpen()
                 )
         );
 

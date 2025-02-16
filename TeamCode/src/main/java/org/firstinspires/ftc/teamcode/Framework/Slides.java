@@ -28,16 +28,18 @@ public class Slides {
     public static double leftTarget = 0;
     public static double rightTarget = 0;
     public double highest_set_left = 9300;
-    public final double high_to_highest = 2150;
+    public final double high_to_highest = 2450;
     public final double highest_set_right = 0;
     public double high_set_left = 7186;
-    public final double transfer_to_high = 1779;
+    public final double transfer_to_high = 1499;
     public final double high_set_right = 0;
-    public double transfer_set_left = 5387;
-    public final double low_to_transfer = 350;
+    public double transfer_set_left = 5317;
+    public final double low_to_transfer = 330;
     public final double transfer_set_right = 0;
     public double low_set_left = 5090;
     public final double low_set_right = 0;
+
+    public double under_bar_set_left;
     private final double ticks_in_degree = 587.3/360;
     private double voltageCompensation;
 
@@ -55,6 +57,7 @@ public class Slides {
         transfer_set_left = low_set_left+low_to_transfer;
         high_set_left = transfer_set_left+transfer_to_high;
         highest_set_left = high_set_left+high_to_highest;
+        under_bar_set_left = transfer_set_left + 400;
     }
 
     public void setTargetPositions(double TargetPositionLeft, double TargetPositionRight) {
@@ -77,6 +80,10 @@ public class Slides {
 
     public void setHighest() {
         setTargetPositions(highest_set_left, highest_set_right);
+    }
+
+    public void setUnderBar() {
+        setTargetPositions(under_bar_set_left, under_bar_set_left);
     }
 
     public void update(boolean PID, boolean rightSlide, double joyStickValue) {
@@ -156,9 +163,10 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - highest_set_left) < 100) {
+            if (Math.abs(posLeft - highest_set_left) > 50) {
                 return true;
             } else {
+                slideMotorLeft.setPower(0);
                 return false;
             }
 
@@ -179,9 +187,10 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - high_set_left) < 100) {
+            if (Math.abs(posLeft - leftTarget) > 50) {
                 return true;
             } else {
+                slideMotorLeft.setPower(0);
                 return false;
             }
 
@@ -202,9 +211,10 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - transfer_set_left) < 100) {
+            if (Math.abs(posLeft - leftTarget) > 20) {
                 return true;
             } else {
+                slideMotorLeft.setPower(0);
                 return false;
             }
 
@@ -212,6 +222,30 @@ public class Slides {
     }
     public Action slidesTransfer() {
         return new SlidesTransfer();
+    }
+    public class SlidesUnderBar implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            setUnderBar();
+            update(true, false, 0);
+
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+
+            if (Math.abs(posLeft - leftTarget) > 50) {
+                return true;
+            } else {
+                slideMotorLeft.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    public Action slidesUnderBar() {
+        return new SlidesUnderBar();
     }
     public class SlidesDown implements Action {
         @Override

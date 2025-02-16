@@ -6,14 +6,15 @@ import androidx.annotation.NonNull;
 // import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArm {
-    private static final double ARM_INTAKE = 1;
+    private static final double ARM_INTAKE = 0.96;
     private static final double ARM_DEPOSIT = 0.60;
-    private static final double ARM_CHAMBER = 0.67;
+    private static final double ARM_CHAMBER = 0.69;
     private static final double ARM_GRAB = 0.72;
-    private static final double ARM_INIT= 0.3;
+    private static final double ARM_INIT = 0.3;
     //replace values after testing
     private final Servo armLeftServo;
     double positionL = ARM_INTAKE;
@@ -95,6 +96,17 @@ public class OuttakeRotatingArm {
     }
     public Action outtakeTransfer() {
         return new OuttakeTransfer();
+    }
+    public class OuttakeChamber implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            armLeftServo.setPosition(ARM_CHAMBER);
+            return false;
+        }
+    }
+    public Action outtakeChamber() {
+        return new InstantAction(() ->
+                armLeftServo.setPosition(ARM_CHAMBER));
     }
 
 }

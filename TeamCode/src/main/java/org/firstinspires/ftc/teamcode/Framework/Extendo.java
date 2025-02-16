@@ -15,7 +15,7 @@ public class Extendo {
     public static double p = 0.02, i = 0, d = 0;
     private PIDController controller;
     private double target;
-    private final int retract = 0;
+    private final int retract = 140;
     private final int extend = 0;
     private final double ticks_in_degree = 587.3/360;
     private int targetPosition;
