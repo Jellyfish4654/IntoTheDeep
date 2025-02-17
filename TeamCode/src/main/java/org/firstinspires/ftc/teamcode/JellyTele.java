@@ -162,9 +162,9 @@ public class JellyTele extends BaseOpMode {
     }
 
     private double[] MecanumDrive() {
-        double r = 0.7*applyDeadband(GamepadEx1.getRightX());
-        double x = 0.7*applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
-        double y = 0.7*applyDeadband(GamepadEx1.getLeftY());
+        double r = applyDeadband(GamepadEx1.getRightX());
+        double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
+        double y = applyDeadband(GamepadEx1.getLeftY());
 
         double sum = ((Math.abs(y))+(Math.abs(x))+(Math.abs(r)));
         double denominator = Math.max(sum, 1);
@@ -220,7 +220,7 @@ public class JellyTele extends BaseOpMode {
         } else if (GamepadEx1.isDown(GamepadKeys.Button.RIGHT_BUMPER)) {
             return PRECISION_MULTIPLIER_HIGH;
         }
-        return MAX_SCALE;
+        return 1;
     }
 
     protected enum SlideMode {

@@ -12,10 +12,10 @@ public class Extendo {
     private VoltageSensor voltageSensor;
     private ElapsedTime timer;
     public final double defaultp = 0.02, defaulti = 0, defaultd = 0;
-    public static double p = 0.02, i = 0, d = 0;
+    public static double p = 0.015, i = 0, d = 0;
     private PIDController controller;
     private double target;
-    private final int retract = 1460;
+    private final int retract = 1410;
     private final int extend = 0;
     private final double ticks_in_degree = 587.3/360;
     private int targetPosition;
