@@ -43,26 +43,22 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d specimenHangingPose = new Pose2d(5, 34, Math.toRadians(90));
 
         TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(specimenHangingPose)
-                .strafeToLinearHeading(new Vector2d(45, 50), Math.toRadians(270));
+                .strafeToLinearHeading(new Vector2d(49, 47), Math.toRadians(270));
 
-        Pose2d sampleGettingPose = new Pose2d(45, 50, Math.toRadians(270));
+        Pose2d sampleGettingPose = new Pose2d(49, 47, Math.toRadians(270));
 
         TrajectoryActionBuilder approachBasket = drive.actionBuilder(sampleGettingPose)
-                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(315));
+                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
 
-        Pose2d approachBasketPose = new Pose2d(50, 53, Math.toRadians(315));
+        Pose2d approachBasketPose = new Pose2d(50, 53, Math.toRadians(225));
 
         TrajectoryActionBuilder dropSample = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(55, 56), Math.toRadians(315));
+                .strafeToLinearHeading(new Vector2d(56.5, 56.5), Math.toRadians(225));
 
-        Pose2d dropSamplePose = new Pose2d(55, 56, Math.toRadians(315));
+        Pose2d dropSamplePose = new Pose2d(56.5, 56.5, Math.toRadians(225));
 
         TrajectoryActionBuilder getMiddleSample = drive.actionBuilder(dropSamplePose)
-                .strafeToLinearHeading(new Vector2d(50, 50), Math.toRadians(270));
-
-
-
-
+                .strafeToLinearHeading(new Vector2d(50, 50), Math.toRadians(0));
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -78,6 +74,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                 hangSpecimen.build(),
                                 new SequentialAction(
                                         outtakeRotatingArm.outtakeChamber(),
+                                        new SleepAction(0.55),
                                         slides.slidesOverBar()
                                 )
                         ),
@@ -93,8 +90,10 @@ public class jocelynsampleauto extends BaseOpMode {
                                 extendo.extendoExtend(),
                                 wrist.wristDown()
                         ),
+                        new SleepAction(0.3),
 
                         intakeServo.clawClose(),
+
                         new ParallelAction(
                                 wrist.wristUp(),
                                 extendo.extendoRetract()
@@ -111,6 +110,7 @@ public class jocelynsampleauto extends BaseOpMode {
                         ),
                         dropSample.build(),
                         outtakeServo.clawOpen(),
+                        new SleepAction(0.3),
                         new ParallelAction(
                                 slides.slidesTransfer(),
                                 outtakeRotatingArm.outtakeTransfer()

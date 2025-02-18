@@ -15,11 +15,11 @@ public class Extendo {
     public static double p = 0.015, i = 0, d = 0;
     private PIDController controller;
     private double target;
-    private final int retract = -20;
+    private double retract = -20;
     private double initial = 0;
-    private final int extend = -1500;
-    private double initialToExtend;
-    private double initialToRetract;
+    private double extend = -1500;
+    private final double initialToExtend = -1500;
+    private final double initialToRetract = -20;
 
     public Extendo (DcMotorEx Extendo, VoltageSensor sensor) {
         this.Extendo = Extendo;
@@ -30,8 +30,8 @@ public class Extendo {
     }
     public void establishPositions() {
         initial = Extendo.getCurrentPosition();
-        initialToRetract = initial + retract;
-        initialToExtend = initial+extend;
+        retract = initial + initialToRetract;
+        extend = initial+initialToExtend;
     }
 
     public void setTargetPosition (double TargetPosition) {
