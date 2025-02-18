@@ -41,7 +41,7 @@ public class jocelynsauto extends BaseOpMode {
                 .splineToConstantHeading(new Vector2d(-15, 35.3), Math.toRadians(90));
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .lineToY(32.45 );
+                .lineToY(31);
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
