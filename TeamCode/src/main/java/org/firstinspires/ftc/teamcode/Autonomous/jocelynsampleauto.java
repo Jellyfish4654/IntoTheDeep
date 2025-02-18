@@ -36,12 +36,33 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d initialPose = new Pose2d(22, 61, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
-        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(42, Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-15, 35.3), Math.toRadians(90));
+        TrajectoryActionBuilder hangSpecimen = drive.actionBuilder(initialPose)
+                .lineToY(50)
+                .strafeToLinearHeading(new Vector2d(5, 34), Math.toRadians(90));
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .lineToY(31);
+        Pose2d specimenHangingPose = new Pose2d(5, 34, Math.toRadians(90));
+
+        TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(specimenHangingPose)
+                .strafeToLinearHeading(new Vector2d(45, 50), Math.toRadians(270));
+
+        Pose2d sampleGettingPose = new Pose2d(45, 50, Math.toRadians(270));
+
+        TrajectoryActionBuilder approachBasket = drive.actionBuilder(sampleGettingPose)
+                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(315));
+
+        Pose2d approachBasketPose = new Pose2d(50, 53, Math.toRadians(315));
+
+        TrajectoryActionBuilder dropSample = drive.actionBuilder(approachBasketPose)
+                .strafeToLinearHeading(new Vector2d(55, 56), Math.toRadians(315));
+
+        Pose2d dropSamplePose = new Pose2d(55, 56, Math.toRadians(315));
+
+        TrajectoryActionBuilder getMiddleSample = drive.actionBuilder(dropSamplePose)
+                .strafeToLinearHeading(new Vector2d(50, 50), Math.toRadians(270));
+
+
+
+
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -53,12 +74,51 @@ public class jocelynsampleauto extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         outtakeServo.clawClose(),
-                        tab1.build(),
+                        new ParallelAction(
+                                hangSpecimen.build(),
+                                new SequentialAction(
+                                        outtakeRotatingArm.outtakeChamber(),
+                                        slides.slidesOverBar()
+                                )
+                        ),
                         slides.slidesUnderBar(),
-                        outtakeRotatingArm.outtakeChamber(),
-                        tab2.build(),
-                        slides.slidesOverBar(),
-                        outtakeServo.clawOpen()
+                        outtakeServo.clawOpen(),
+                        new ParallelAction(
+                                getRightMostSample.build(),
+                                slides.slidesTransfer(),
+                                outtakeRotatingArm.outtakeTransfer()
+                        ),
+
+                        new ParallelAction(
+                                extendo.extendoExtend(),
+                                wrist.wristDown()
+                        ),
+
+                        intakeServo.clawClose(),
+                        new ParallelAction(
+                                wrist.wristUp(),
+                                extendo.extendoRetract()
+                        ),
+
+
+                        intakeServo.clawOpen(),
+                        new SleepAction(0.5),
+                        outtakeServo.clawClose(),
+                        approachBasket.build(),
+                        new ParallelAction(
+                                slides.slidesHighest(),
+                                outtakeRotatingArm.outtakeDeposit()
+                        ),
+                        dropSample.build(),
+                        outtakeServo.clawOpen(),
+                        new ParallelAction(
+                                slides.slidesTransfer(),
+                                outtakeRotatingArm.outtakeTransfer()
+                        ),
+                        getMiddleSample.build()
+
+
+
                 )
         );
 

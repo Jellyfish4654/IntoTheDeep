@@ -80,6 +80,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         Extendo = hardwareMap.get(DcMotorEx.class, "extendo");
 
         extendo = new Extendo(Extendo, voltageSensor);
+        extendo.establishPositions();
     }
 
 

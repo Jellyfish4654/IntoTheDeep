@@ -16,10 +16,10 @@ public class Extendo {
     private PIDController controller;
     private double target;
     private final int retract = -20;
-    private final int extend = 0;
-    private final double ticks_in_degree = 587.3/360;
-    private int targetPosition;
-    private double voltageCompensation;
+    private double initial = 0;
+    private final int extend = -1500;
+    private double initialToExtend;
+    private double initialToRetract;
 
     public Extendo (DcMotorEx Extendo, VoltageSensor sensor) {
         this.Extendo = Extendo;
@@ -27,6 +27,11 @@ public class Extendo {
 
         this.voltageSensor = sensor;
         this.timer = new ElapsedTime();
+    }
+    public void establishPositions() {
+        initial = Extendo.getCurrentPosition();
+        initialToRetract = initial + retract;
+        initialToExtend = initial+extend;
     }
 
     public void setTargetPosition (double TargetPosition) {
@@ -40,6 +45,7 @@ public class Extendo {
     public void setExtend() {
         setTargetPosition(extend);
     }
+
     public void update() {
         double elapsedTime = timer.seconds();
         control(Extendo, target, controller);
@@ -68,10 +74,6 @@ public class Extendo {
         i = 0;
         d = 0;
     }
-    public int getTargetPosition()
-    {
-        return targetPosition;
-    }
     public int getCurrentPosition()
     {
         return Extendo.getCurrentPosition();
@@ -79,9 +81,17 @@ public class Extendo {
     public class ExtendoExtend implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            Extendo.setTargetPosition(extend);
+            setExtend();
             control(Extendo, target, controller);
-            return false;
+
+            double pos = getCurrentPosition();
+
+            if (Math.abs(pos - target) > 50) {
+                return true;
+            } else {
+                Extendo.setPower(0);
+                return false;
+            }
         }
     }
     public Action extendoExtend() {
@@ -90,12 +100,16 @@ public class Extendo {
     public class ExtendoRetract implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            Extendo.setTargetPosition(retract);
+            setRetract();
             control(Extendo, target, controller);
-            if (Extendo.getCurrentPosition() == target) {
-                return false;
-            } else {
+
+            double pos = getCurrentPosition();
+
+            if (Math.abs(pos - target) > 50) {
                 return true;
+            } else {
+                Extendo.setPower(0);
+                return false;
             }
         }
     }
