@@ -15,7 +15,7 @@ public class Extendo {
     public static double p = 0.015, i = 0, d = 0;
     private PIDController controller;
     private double target;
-    private double retract = -20;
+    private double retract = -60;
     private double initial = 0;
     private double extend = -1500;
     private final double initialToExtend = -1500;

@@ -1,49 +1,47 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
+import androidx.annotation.NonNull;
 
 // RR-specific imports
 import com.acmerobotics.dashboard.config.Config;
-        import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
-        import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.SleepAction;
+import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.ParallelAction;
 
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
-        import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
+import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.Framework.Slides;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 @Config
-@Autonomous(name = "ericsauto", group = "Autonomous")
+@Autonomous(name = "ericspecimenauto", group = "Autonomous")
 public class ericspecimenauto extends BaseOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
         initHardware();
-        Pose2d initialPose = new Pose2d(22, 61, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(-22, 61, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
-
-        // hang preloaded specimen
-        // get sample
-        // turn into specimen
-        // hang specimen
 
         TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
                 .lineToYSplineHeading(42, Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(-15, 32.45), Math.toRadians(90));
-        //to chamber to hang
+                .splineToConstantHeading(new Vector2d(15, 35.3), Math.toRadians(90));
 
         TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .splineTo(new Vector2d(0, 50), Math.toRadians(270));
-        // to the wall for specimen... also should turn around so it can grab a new one
-
-        TrajectoryActionBuilder tab4 = drive.actionBuilder(initialPose)
-                .lineToY(32.45 );
-        //back to the specimen bar to hang
-
+                .lineToY(31);
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -55,30 +53,12 @@ public class ericspecimenauto extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         outtakeServo.clawClose(),
-                        new ParallelAction(
-                                tab1.build(),
-                                new SequentialAction(
-                                        slides.slidesUnderBar(),
-                                        outtakeRotatingArm.outtakeChamber()
-                                )
-                        ),
+                        tab1.build(),
+                        slides.slidesUnderBar(),
+                        outtakeRotatingArm.outtakeChamber(),
+                        tab2.build(),
                         slides.slidesOverBar(),
-                        outtakeServo.clawOpen(),
-                        slides.slidesDown(),
-//                        new ParallelAction(
-//                                slides,
-//                                tab2.build()
-//                        ),
-                        outtakeServo.clawClose(),
-                        slides.slidesOverBar(),
-
-                        tab4.build()
-
-
-
-
-
-
+                        outtakeServo.clawOpen()
                 )
         );
 
