@@ -86,6 +86,18 @@ public class OuttakeRotatingArm {
     public Action outtakeDeposit() {
         return new OuttakeDeposit();
     }
+
+    public class OuttakeGrabSpecimen implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            armLeftServo.setDirection(Servo.Direction.FORWARD);
+            armLeftServo.setPosition(ARM_GRAB);
+            return armLeftServo.getPosition() != ARM_GRAB;
+        }
+    }
+    public Action outtakeGrabSpecimen() {
+        return new OuttakeDeposit();
+    }
     public class OuttakeTransfer implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
@@ -108,5 +120,6 @@ public class OuttakeRotatingArm {
         return new InstantAction(() ->
                 armLeftServo.setPosition(ARM_CHAMBER));
     }
+
 
 }
