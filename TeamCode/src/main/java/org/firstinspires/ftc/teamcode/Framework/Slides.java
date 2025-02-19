@@ -58,7 +58,7 @@ public class Slides {
         transfer_set_left = low_set_left+low_to_transfer;
         high_set_left = transfer_set_left+transfer_to_high;
         highest_set_left = high_set_left+high_to_highest;
-        under_bar_set_left = transfer_set_left + 600;
+        under_bar_set_left = transfer_set_left + 700;
         over_bar_set_left = high_set_left + 650;
     }
 
@@ -263,7 +263,7 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - leftTarget) > 50) {
+            if (Math.abs(posLeft - leftTarget) > 60) {
                 return true;
             } else {
                 slideMotorLeft.setPower(0);

@@ -10,7 +10,7 @@ public class OuttakeClaw {
     private Servo clawServo;
     boolean clawOpen = false;
     private static final double CLAW_OPEN = 0.646;
-    private static final double CLAW_CLOSE = 0.32;
+    private static final double CLAW_CLOSE = 0.27;
     //subject to change
 
     public OuttakeClaw(Servo servo){
