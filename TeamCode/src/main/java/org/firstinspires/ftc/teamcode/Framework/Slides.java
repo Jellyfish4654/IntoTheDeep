@@ -58,7 +58,7 @@ public class Slides {
         transfer_set_left = low_set_left+low_to_transfer;
         high_set_left = transfer_set_left+transfer_to_high;
         highest_set_left = high_set_left+high_to_highest;
-        under_bar_set_left = transfer_set_left + 550;
+        under_bar_set_left = high_set_left - 100;
         over_bar_set_left = high_set_left + 750;
     }
 
@@ -158,7 +158,7 @@ public class Slides {
     public class SlidesHighest implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setTargetPositions(highest_set_left+100, highest_set_right);
+            setTargetPositions(highest_set_left+200, highest_set_right);
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();
@@ -191,7 +191,7 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - leftTarget) > 75) {
+            if (Math.abs(posLeft - leftTarget) > 100) {
                 return true;
             } else {
                 slideMotorLeft.setPower(0);
@@ -230,7 +230,7 @@ public class Slides {
     public class SlidesTransfer implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setTargetPositions(transfer_set_left+50, transfer_set_right);
+            setTargetPositions(transfer_set_left+70, transfer_set_right);
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();
@@ -239,7 +239,7 @@ public class Slides {
             telemetryPacket.put("right slide pos", posRight);
 
 
-            if (Math.abs(posLeft - leftTarget) > 20) {
+            if (Math.abs(posLeft - leftTarget) > 60) {
                 return true;
             } else {
                 slideMotorLeft.setPower(0);
@@ -296,6 +296,30 @@ public class Slides {
         }
     }
     public Action slidesDown() {
+        return new SlidesDown();
+    }
+
+    public class SlidesFullDown implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            setLow();
+            slideMotorLeft.setPower(-1);
+
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+            if (posLeft != leftTarget) {
+                return true;
+            } else {
+                slideMotorLeft.setPower(0);
+                return false;
+            }
+
+        }
+    }
+    public Action slidesFullDown() {
         return new SlidesDown();
     }
 

@@ -117,4 +117,25 @@ public class Extendo {
         return new ExtendoRetract();
     }
 
+    public class ExtendoRetractFull implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            target = initial;
+
+
+            double pos = getCurrentPosition();
+
+            if (pos != target) {
+                Extendo.setPower(1);
+                return true;
+            } else {
+                Extendo.setPower(0);
+                return false;
+            }
+        }
+    }
+    public Action extendoRetractFull() {
+        return new ExtendoRetractFull();
+    }
+
 }
