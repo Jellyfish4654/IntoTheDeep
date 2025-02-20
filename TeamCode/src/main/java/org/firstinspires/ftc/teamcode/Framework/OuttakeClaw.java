@@ -54,7 +54,7 @@ public class OuttakeClaw {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
             clawServo.setPosition(CLAW_OPEN);
-            return clawServo.getPosition() == CLAW_OPEN;
+            return false;
         }
     }
     public Action clawOpen() {

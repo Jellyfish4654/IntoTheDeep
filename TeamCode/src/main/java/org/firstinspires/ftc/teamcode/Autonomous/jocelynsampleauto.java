@@ -55,14 +55,14 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d rightSampleGettingPose = new Pose2d(50.5, 47.5, Math.toRadians(270));
 
         TrajectoryActionBuilder approachBasket = drive.actionBuilder(rightSampleGettingPose)
-                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(51, 52), Math.toRadians(225));
 
-        Pose2d approachBasketPose = new Pose2d(50, 53, Math.toRadians(225));
+        Pose2d approachBasketPose = new Pose2d(51, 52, Math.toRadians(225));
 
         TrajectoryActionBuilder dropSample = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(54.5, 57.5), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(52, 58), Math.toRadians(225));
 
-        Pose2d dropSamplePose = new Pose2d(54.5, 57.5, Math.toRadians(225));
+        Pose2d dropSamplePose = new Pose2d(52, 58, Math.toRadians(225));
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(dropSamplePose)
                 .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
@@ -70,12 +70,12 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d backAwayPose = new Pose2d(50, 53, Math.toRadians(225));
 
         TrajectoryActionBuilder getMiddleSample = drive.actionBuilder(backAwayPose)
-                .strafeToLinearHeading(new Vector2d(50, 45), Math.toRadians(283));
+                .strafeToLinearHeading(new Vector2d(52, 45), Math.toRadians(283));
 
-        Pose2d middleSamplePose = new Pose2d(50, 45, Math.toRadians(283));
+        Pose2d middleSamplePose = new Pose2d(51.5, 45, Math.toRadians(283));
 
         TrajectoryActionBuilder approachBasketSecondTime = drive.actionBuilder(middleSamplePose)
-                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(51, 52), Math.toRadians(225));
 
         TrajectoryActionBuilder driveToAscent = drive.actionBuilder(backAwayPose)
                 .splineToLinearHeading(new Pose2d(15, 10, Math.toRadians(225)), Math.toRadians(180));
@@ -164,7 +164,6 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 outtakeServo.clawOpen(),
                                                 (telemetryPacket) -> {
                                                     actionRunning = false;
-                                                    telemetry.update();
                                                     return false;
                                                 }
                                         ),
@@ -179,6 +178,7 @@ public class jocelynsampleauto extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         new ParallelAction(
+                                outtakeServo.clawOpen(),
                                 backAway.build(),
                                 outtakeRotatingArm.outtakeTransfer(),
                                 slides.slidesTransfer()
@@ -208,11 +208,9 @@ public class jocelynsampleauto extends BaseOpMode {
                         ),
                         new SleepAction(0.2),
                         outtakeServo.clawClose(),
-                        new SleepAction(0.2),
 
                         new ParallelAction(
                                 approachBasketSecondTime.build(),
-                                outtakeServo.clawClose(),
                                 outtakeRotatingArm.outtakeDeposit()
                         ),
                         slides.slidesHighest(),
@@ -232,22 +230,16 @@ public class jocelynsampleauto extends BaseOpMode {
                                     return actionRunning;
                                 }
                         ),
-                        outtakeServo.clawClose(),
                         outtakeRotatingArm.outtakeInit(),
                         new ParallelAction(
-                                new SequentialAction(
-                                        wrist.wristDown(),
-                                        extendo.extendoRetractFull()
-                                ),
+                                extendo.extendoRetract(),
                                 new SequentialAction(
                                         backAway.build(),
                                         slides.slidesFullDown()
                                 )
                         ),
+                        driveToAscent.build()
 
-                        new ParallelAction(
-                                driveToAscent.build()
-                        )
                 )
 
         );
@@ -261,3 +253,4 @@ public class jocelynsampleauto extends BaseOpMode {
 
     }
 }
+
