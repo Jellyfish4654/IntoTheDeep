@@ -9,7 +9,7 @@ public class Wrist {
     private final Servo servo;
     private final double up = 0.77;
     // these are going to change depending on what position the irl servo is set to... let's change later
-    private final double down = 0.17;
+    private final double down = 0.1875;
     private int position;
 
     public Wrist(Servo servo){

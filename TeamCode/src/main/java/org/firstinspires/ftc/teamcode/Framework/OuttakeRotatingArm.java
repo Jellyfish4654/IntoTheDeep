@@ -13,7 +13,7 @@ public class OuttakeRotatingArm {
     private static final double ARM_INTAKE = 0.96;
     private static final double ARM_DEPOSIT = 0.645;
     private static final double ARM_CHAMBER = 0.71;
-    private static final double ARM_GRAB = 0.72;
+    private static final double ARM_GRAB = 0.74;
     private static final double ARM_INIT = 0.3;
     //replace values after testing
     private final Servo armLeftServo;
@@ -103,7 +103,7 @@ public class OuttakeRotatingArm {
         public boolean run(@NonNull TelemetryPacket packet) {
             armLeftServo.setDirection(Servo.Direction.REVERSE);
             armLeftServo.setPosition(ARM_INTAKE);
-            return armLeftServo.getPosition() != ARM_INTAKE;
+            return false;
         }
     }
     public Action outtakeTransfer() {

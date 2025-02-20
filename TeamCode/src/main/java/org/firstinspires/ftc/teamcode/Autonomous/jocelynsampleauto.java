@@ -38,9 +38,9 @@ public class jocelynsampleauto extends BaseOpMode {
 
         TrajectoryActionBuilder hangSpecimen = drive.actionBuilder(initialPose)
                 .lineToY(50)
-                .strafeToLinearHeading(new Vector2d(5, 35.2), Math.toRadians(90));
+                .strafeToLinearHeading(new Vector2d(5, 34.5), Math.toRadians(90));
 
-        Pose2d specimenHangingPose = new Pose2d(5, 35.2, Math.toRadians(90));
+        Pose2d specimenHangingPose = new Pose2d(5, 34.5, Math.toRadians(90));
 
         TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(specimenHangingPose)
                 .strafeToLinearHeading(new Vector2d(50.5, 47), Math.toRadians(270));
@@ -78,8 +78,13 @@ public class jocelynsampleauto extends BaseOpMode {
                                         slides.slidesOverBar()
                                 )
                         ),
-                        slides.slidesUnderBar(),
-                        outtakeServo.clawOpen(),
+                        new ParallelAction(
+                               slides.slidesDown(),
+                                new SequentialAction(
+                                        new SleepAction(0.15),
+                                        outtakeServo.clawOpen()
+                                )
+                        ),
                         getRightMostSample.build(),
 
                         new ParallelAction(
@@ -103,7 +108,6 @@ public class jocelynsampleauto extends BaseOpMode {
                                 outtakeRotatingArm.outtakeTransfer(),
                                 outtakeServo.clawOpen()
                         ),
-                        new SleepAction(0.3),
                         outtakeServo.clawClose(),
                         new SleepAction(0.3),
                         new ParallelAction(
@@ -119,18 +123,15 @@ public class jocelynsampleauto extends BaseOpMode {
                                         outtakeServo.clawOpen()
                                 )
                         ),
-                        new SleepAction(0.3),
-                        backAway.build(),
+                        new SleepAction(0.1),
                         new ParallelAction(
                                 outtakeServo.clawClose(),
                                 outtakeRotatingArm.outtakeTransfer(),
                                 new SequentialAction(
-                                        new SleepAction(0.3),
+                                        backAway.build(),
                                         slides.slidesTransfer()
                                 )
                         )
-
-
                 )
         );
 

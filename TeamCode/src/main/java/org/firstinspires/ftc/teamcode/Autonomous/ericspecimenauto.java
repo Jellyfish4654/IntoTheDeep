@@ -33,15 +33,17 @@ public class ericspecimenauto extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
         initHardware();
-        Pose2d initialPose = new Pose2d(-22, 61, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(-22, 61.2, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
-        TrajectoryActionBuilder tab1 = drive.actionBuilder(initialPose)
-                .lineToYSplineHeading(42, Math.toRadians(90))
-                .splineToConstantHeading(new Vector2d(15, 35.3), Math.toRadians(90));
+        TrajectoryActionBuilder hangSpecimen = drive.actionBuilder(initialPose)
+                .lineToY(50)
+                .strafeToLinearHeading(new Vector2d(-5, 35), Math.toRadians(90));
 
-        TrajectoryActionBuilder tab2 = drive.actionBuilder(initialPose)
-                .lineToY(31);
+        Pose2d specimenHangingPose = new Pose2d(-5, 35, Math.toRadians(90));
+
+        TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(specimenHangingPose)
+                .strafeToLinearHeading(new Vector2d(-50.5, 47), Math.toRadians(270));
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -53,12 +55,22 @@ public class ericspecimenauto extends BaseOpMode {
         Actions.runBlocking(
                 new SequentialAction(
                         outtakeServo.clawClose(),
-                        tab1.build(),
-                        slides.slidesUnderBar(),
-                        outtakeRotatingArm.outtakeChamber(),
-                        tab2.build(),
-                        slides.slidesOverBar(),
-                        outtakeServo.clawOpen()
+                        new ParallelAction(
+                                hangSpecimen.build(),
+                                new SequentialAction(
+                                        outtakeRotatingArm.outtakeChamber(),
+                                        new SleepAction(0.55),
+                                        slides.slidesOverBar()
+                                )
+                        ),
+                        new ParallelAction(
+                                slides.slidesDown(),
+                                new SequentialAction(
+                                        new SleepAction(0.15),
+                                        outtakeServo.clawOpen()
+                                )
+                        ),
+                        getRightMostSample.build()
                 )
         );
 
