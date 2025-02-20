@@ -31,7 +31,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class jocelynsampleauto extends BaseOpMode {
 
 
-    boolean finishedScoring;
+    boolean finishedScoring = false;
     public class toggleScoring implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
@@ -48,7 +48,7 @@ public class jocelynsampleauto extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
 
-        finishedScoring = false;
+
         initHardware();
         Pose2d initialPose = new Pose2d(22, 61.2, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
@@ -172,7 +172,10 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 outtakeServo.clawOpen(),
                                                 toggleScoring()
                                         ),
-                                        slides.maintain(finishedScoring)
+                                        (telemetryPacket) -> {
+                                            slides.update(true, false, 0);
+                                            return !finishedScoring;
+                                        }
                                 ),
 
                                 new ParallelAction(
