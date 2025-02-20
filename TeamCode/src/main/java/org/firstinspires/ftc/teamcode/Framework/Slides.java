@@ -323,27 +323,6 @@ public class Slides {
         return new SlidesFullDown();
     }
 
-    public class maintain implements Action {
-        public boolean run(@NonNull TelemetryPacket telemetryPacket, boolean running) {
 
-            update(true, false, 0);
-
-            double posLeft = getCurrentLeftPosition();
-            double posRight = getCurrentRightPosition();
-            telemetryPacket.put("left slide pos", posLeft);
-            telemetryPacket.put("right slide pos", posRight);
-
-            return !running;
-
-        }
-
-        @Override
-        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            return false;
-        }
-    }
-    public Action maintain(boolean running) {
-        return new maintain();
-    }
 
 }

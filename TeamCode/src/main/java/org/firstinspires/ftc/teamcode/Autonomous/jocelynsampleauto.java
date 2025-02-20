@@ -60,9 +60,9 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d approachBasketPose = new Pose2d(50, 53, Math.toRadians(225));
 
         TrajectoryActionBuilder dropSample = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(55, 57), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(54.5, 57.5), Math.toRadians(225));
 
-        Pose2d dropSamplePose = new Pose2d(55, 57, Math.toRadians(225));
+        Pose2d dropSamplePose = new Pose2d(54.5, 57.5, Math.toRadians(225));
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(dropSamplePose)
                 .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
@@ -85,6 +85,7 @@ public class jocelynsampleauto extends BaseOpMode {
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
             telemetry.addData("left slide pos", slides.getCurrentLeftPosition());
+            telemetry.addData("action running", actionRunning);
             telemetry.update();
         }
         waitForStart();
@@ -101,6 +102,11 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 slides.slidesUnderBar()
                                         )
                                 ),
+                                 (telemetryPacket) -> {
+                                     actionRunning = false;
+                                     telemetry.update();
+                                     return false;
+                                 },
 
                                 //go to specimen bar
 
