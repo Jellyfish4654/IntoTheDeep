@@ -58,8 +58,8 @@ public class Slides {
         transfer_set_left = low_set_left+low_to_transfer;
         high_set_left = transfer_set_left+transfer_to_high;
         highest_set_left = high_set_left+high_to_highest;
-        under_bar_set_left = transfer_set_left + 700;
-        over_bar_set_left = high_set_left + 650;
+        under_bar_set_left = transfer_set_left + 550;
+        over_bar_set_left = high_set_left + 750;
     }
 
     public void setTargetPositions(double TargetPositionLeft, double TargetPositionRight) {
