@@ -172,93 +172,92 @@ public class jocelynsampleauto extends BaseOpMode {
                                             slides.update(true, false, 0);
                                             return actionRunning;
                                         }
-                                ),
+                                )
+                         ));
+        actionRunning = true;
 
-                                new ParallelAction(
-                                        backAway.build(),
-                                        outtakeRotatingArm.outtakeTransfer(),
-                                        slides.slidesTransfer()
-                                ),
+        Actions.runBlocking(
+                new SequentialAction(
+                        new ParallelAction(
+                                backAway.build(),
+                                outtakeRotatingArm.outtakeTransfer(),
+                                slides.slidesTransfer()
+                        ),
 
-                                getMiddleSample.build(),
+                        getMiddleSample.build(),
 
-                                new ParallelAction(
-                                        extendo.extendoExtend(),
-                                        wrist.wristDown()
-                                ),
-                                new SleepAction(0.3),
+                        new ParallelAction(
+                                extendo.extendoExtend(),
+                                wrist.wristDown()
+                        ),
+                        new SleepAction(0.3),
 
-                                intakeServo.clawClose(),
-                                new SleepAction(0.2),
+                        intakeServo.clawClose(),
+                        new SleepAction(0.2),
 
-                                new ParallelAction(
-                                        wrist.wristUp(),
-                                        extendo.extendoRetract()
-                                ),
+                        new ParallelAction(
+                                wrist.wristUp(),
+                                extendo.extendoRetract()
+                        ),
 
 
-                                intakeServo.clawOpen(),
-                                new ParallelAction(
-                                        slides.slidesTransfer(),
-                                        outtakeRotatingArm.outtakeTransfer()
-                                ),
-                                new SleepAction(0.2),
+                        intakeServo.clawOpen(),
+                        new ParallelAction(
+                                slides.slidesTransfer(),
+                                outtakeRotatingArm.outtakeTransfer()
+                        ),
+                        new SleepAction(0.2),
+                        outtakeServo.clawClose(),
+                        new SleepAction(0.2),
+
+                        new ParallelAction(
+                                approachBasketSecondTime.build(),
                                 outtakeServo.clawClose(),
-                                new SleepAction(0.2),
+                                outtakeRotatingArm.outtakeDeposit()
+                        ),
+                        slides.slidesHighest(),
 
-                                new ParallelAction(
-                                        approachBasketSecondTime.build(),
-                                        outtakeServo.clawClose(),
-                                        outtakeRotatingArm.outtakeDeposit()
+                        new ParallelAction(
+                                new SequentialAction(
+                                        dropSample.build(),
+                                        outtakeServo.clawOpen(),
+                                        (telemetryPacket) -> {
+                                            actionRunning = false;
+                                            telemetry.update();
+                                            return false;
+                                        }
                                 ),
-                                 slides.slidesHighest(),
-                                 (telemetryPacket) -> {
-                                     actionRunning = true;
-                                     telemetry.update();
-                                     return false;
-                                 },
-                                 new ParallelAction(
-                                         new SequentialAction(
-                                                 dropSample.build(),
-                                                 outtakeServo.clawOpen(),
-                                                 (telemetryPacket) -> {
-                                                     actionRunning = false;
-                                                     telemetry.update();
-                                                     return false;
-                                                 }
-                                         ),
-                                         (telemetryPacket) -> {
-                                             slides.update(true, false, 0);
-                                             return actionRunning;
-                                         }
-                                 ),
-                                 outtakeServo.clawClose(),
-                                 outtakeRotatingArm.outtakeInit(),
-                                 new ParallelAction(
-                                        new SequentialAction(
-                                                wrist.wristDown(),
-                                                extendo.extendoRetractFull()
-                                        ),
-                                        new SequentialAction(
-                                                backAway.build(),
-                                                slides.slidesFullDown()
-                                        )
-                                 ),
+                                (telemetryPacket) -> {
+                                    slides.update(true, false, 0);
+                                    return actionRunning;
+                                }
+                        ),
+                        outtakeServo.clawClose(),
+                        outtakeRotatingArm.outtakeInit(),
+                        new ParallelAction(
+                                new SequentialAction(
+                                        wrist.wristDown(),
+                                        extendo.extendoRetractFull()
+                                ),
+                                new SequentialAction(
+                                        backAway.build(),
+                                        slides.slidesFullDown()
+                                )
+                        ),
 
-                                 new ParallelAction(
-                                         driveToAscent.build()
-                                 )
-
-
-
-
+                        new ParallelAction(
+                                driveToAscent.build()
                         )
-
-
-
-
+                )
 
         );
+
+
+
+
+
+
+
 
     }
 }
