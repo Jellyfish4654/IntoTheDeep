@@ -31,17 +31,7 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 public class jocelynsampleauto extends BaseOpMode {
 
 
-    boolean finishedScoring = false;
-    public class toggleScoring implements Action {
-        @Override
-        public boolean run(@NonNull TelemetryPacket packet) {
-            finishedScoring = !finishedScoring;
-            return false;
-        }
-    }
-    public Action toggleScoring() {
-        return new toggleScoring();
-    }
+    public boolean actionRunning = true;
 
 
     @Override
@@ -70,9 +60,9 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d approachBasketPose = new Pose2d(50, 53, Math.toRadians(225));
 
         TrajectoryActionBuilder dropSample = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(57, 56.2), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(55, 57), Math.toRadians(225));
 
-        Pose2d dropSamplePose = new Pose2d(57, 56.2, Math.toRadians(225));
+        Pose2d dropSamplePose = new Pose2d(55, 57, Math.toRadians(225));
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(dropSamplePose)
                 .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
@@ -166,15 +156,19 @@ public class jocelynsampleauto extends BaseOpMode {
 
                                 //drop sample
                                 slides.slidesHighest(),
+
                                 new ParallelAction(
                                         new SequentialAction(
                                                 dropSample.build(),
                                                 outtakeServo.clawOpen(),
-                                                toggleScoring()
+                                                (telemetryPacket) -> {
+                                                    actionRunning = false;
+                                                    return false;
+                                                }
                                         ),
                                         (telemetryPacket) -> {
                                             slides.update(true, false, 0);
-                                            return !finishedScoring;
+                                            return actionRunning;
                                         }
                                 ),
 
@@ -212,23 +206,31 @@ public class jocelynsampleauto extends BaseOpMode {
 
                                 new ParallelAction(
                                         approachBasketSecondTime.build(),
-                                        slides.slidesHighest(),
                                         outtakeServo.clawClose(),
                                         outtakeRotatingArm.outtakeDeposit()
                                 ),
-                                new ParallelAction(
-                                        slides.slidesHighest(),
-                                        new SequentialAction(
-                                                dropSample.build(),
-                                                outtakeServo.clawOpen()
-                                        )
-                                ),
-                                outtakeServo.clawClose(),
-                                new SequentialAction(
-                                        slides.slidesHighest(),
-                                        outtakeRotatingArm.outtakeInit()
-                                ),
-                                new ParallelAction(
+                                 slides.slidesHighest(),
+                                 (telemetryPacket) -> {
+                                     actionRunning = true;
+                                     return false;
+                                 },
+                                 new ParallelAction(
+                                         new SequentialAction(
+                                                 dropSample.build(),
+                                                 outtakeServo.clawOpen(),
+                                                 (telemetryPacket) -> {
+                                                     actionRunning = false;
+                                                     return false;
+                                                 }
+                                         ),
+                                         (telemetryPacket) -> {
+                                             slides.update(true, false, 0);
+                                             return actionRunning;
+                                         }
+                                 ),
+                                 outtakeServo.clawClose(),
+                                 outtakeRotatingArm.outtakeInit(),
+                                 new ParallelAction(
                                         new SequentialAction(
                                                 wrist.wristDown(),
                                                 extendo.extendoRetractFull()
@@ -237,12 +239,11 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 backAway.build(),
                                                 slides.slidesFullDown()
                                         )
-                                ),
+                                 ),
 
-                                new ParallelAction(
-
-                                        driveToAscent.build()
-                                )
+                                 new ParallelAction(
+                                         driveToAscent.build()
+                                 )
 
 
 
