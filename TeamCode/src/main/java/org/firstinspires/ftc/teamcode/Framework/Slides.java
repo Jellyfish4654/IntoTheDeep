@@ -158,7 +158,7 @@ public class Slides {
     public class SlidesHighest implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setTargetPositions(highest_set_left+200, highest_set_right);
+            setTargetPositions(highest_set_left+250, highest_set_right);
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();
@@ -320,7 +320,30 @@ public class Slides {
         }
     }
     public Action slidesFullDown() {
-        return new SlidesDown();
+        return new SlidesFullDown();
+    }
+
+    public class maintain implements Action {
+        public boolean run(@NonNull TelemetryPacket telemetryPacket, boolean running) {
+
+            update(true, false, 0);
+
+            double posLeft = getCurrentLeftPosition();
+            double posRight = getCurrentRightPosition();
+            telemetryPacket.put("left slide pos", posLeft);
+            telemetryPacket.put("right slide pos", posRight);
+
+            return !running;
+
+        }
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            return false;
+        }
+    }
+    public Action maintain(boolean running) {
+        return new maintain();
     }
 
 }

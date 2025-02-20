@@ -109,6 +109,18 @@ public class OuttakeRotatingArm {
     public Action outtakeTransfer() {
         return new OuttakeTransfer();
     }
+
+    public class OuttakeInit implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            armLeftServo.setDirection(Servo.Direction.FORWARD);
+            armLeftServo.setPosition(ARM_INIT);
+            return false;
+        }
+    }
+    public Action outtakeInit() {
+        return new OuttakeTransfer();
+    }
     public class OuttakeChamber implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {

@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
@@ -29,9 +30,25 @@ import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
 @Autonomous(name = "jocelynsampleauto", group = "Autonomous")
 public class jocelynsampleauto extends BaseOpMode {
 
+
+    boolean finishedScoring;
+    public class toggleScoring implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            finishedScoring = !finishedScoring;
+            return false;
+        }
+    }
+    public Action toggleScoring() {
+        return new toggleScoring();
+    }
+
+
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
+
+        finishedScoring = false;
         initHardware();
         Pose2d initialPose = new Pose2d(22, 61.2, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
@@ -83,150 +100,156 @@ public class jocelynsampleauto extends BaseOpMode {
         waitForStart();
         if (isStopRequested()) return;
         Actions.runBlocking(
-                new SequentialAction(
+                         new SequentialAction(
 
-                        outtakeServo.clawClose(),
-                        new ParallelAction(
-                                hangSpecimen.build(),
-                                new SequentialAction(
-                                        outtakeRotatingArm.outtakeChamber(),
-                                        new SleepAction(0.55),
-                                        slides.slidesUnderBar()
-                                )
-                        ),
-
-                        //go to specimen bar
-
-                        new ParallelAction(
-                               slides.slidesOverBar(),
-                                new SequentialAction(
-                                        new SleepAction(0.8),
-                                        outtakeServo.clawOpen()
-                                )
-                        ),
-
-                        // hang specimen
-
-                        getRightMostSample.build(),
-
-                        new ParallelAction(
-                                extendo.extendoExtend(),
-                                wrist.wristDown()
-                        ),
-
-                        //extend to reach sample
-                        new SleepAction(0.1),
-
-                        intakeServo.clawClose(),
-                        new SleepAction(0.1),
-
-                        //grab sample
-
-                        new ParallelAction(
-                                wrist.wristUp(),
-                                extendo.extendoRetract()
-                        ),
-
-                        // transfer sample
-
-                        intakeServo.clawOpen(),
-                        new ParallelAction(
-                                slides.slidesTransfer(),
-                                outtakeRotatingArm.outtakeTransfer()
-                        ),
-
-
-                        new SleepAction(0.2),
-                        outtakeServo.clawClose(),
-                        new SleepAction(0.2),
-
-                        new ParallelAction(
-                                approachBasket.build(),
-                                slides.slidesHighest(),
                                 outtakeServo.clawClose(),
-                                outtakeRotatingArm.outtakeDeposit()
-                        ),
+                                new ParallelAction(
+                                        hangSpecimen.build(),
+                                        new SequentialAction(
+                                                outtakeRotatingArm.outtakeChamber(),
+                                                new SleepAction(0.55),
+                                                slides.slidesUnderBar()
+                                        )
+                                ),
 
-                        //drop sample
+                                //go to specimen bar
 
-                        new ParallelAction(
+                                new ParallelAction(
+                                        slides.slidesOverBar(),
+                                        new SequentialAction(
+                                                new SleepAction(0.8),
+                                                outtakeServo.clawOpen()
+                                        )
+                                ),
+
+                                // hang specimen
+
+                                getRightMostSample.build(),
+
+                                new ParallelAction(
+                                        extendo.extendoExtend(),
+                                        wrist.wristDown()
+                                ),
+
+                                //extend to reach sample
+                                new SleepAction(0.1),
+
+                                intakeServo.clawClose(),
+                                new SleepAction(0.1),
+
+                                //grab sample
+
+                                new ParallelAction(
+                                        wrist.wristUp(),
+                                        extendo.extendoRetract()
+                                ),
+
+                                // transfer sample
+
+                                intakeServo.clawOpen(),
+                                new ParallelAction(
+                                        slides.slidesTransfer(),
+                                        outtakeRotatingArm.outtakeTransfer()
+                                ),
+
+
+                                new SleepAction(0.2),
+                                outtakeServo.clawClose(),
+                                new SleepAction(0.2),
+
+                                new ParallelAction(
+                                        approachBasket.build(),
+                                        slides.slidesHighest(),
+                                        outtakeServo.clawClose(),
+                                        outtakeRotatingArm.outtakeDeposit()
+                                ),
+
+                                //drop sample
                                 slides.slidesHighest(),
-                                new SequentialAction(
-                                        dropSample.build(),
-                                        outtakeServo.clawOpen()
-                                )
-                        ),
+                                new ParallelAction(
+                                        new SequentialAction(
+                                                dropSample.build(),
+                                                outtakeServo.clawOpen(),
+                                                toggleScoring()
+                                        ),
+                                        slides.maintain(finishedScoring)
+                                ),
 
-
-
-                        new SleepAction(0.1),
-                        new ParallelAction(
-                                outtakeRotatingArm.outtakeTransfer(),
-                                new SequentialAction(
+                                new ParallelAction(
                                         backAway.build(),
+                                        outtakeRotatingArm.outtakeTransfer(),
                                         slides.slidesTransfer()
-                                )
-                        ),
+                                ),
 
-                        getMiddleSample.build(),
+                                getMiddleSample.build(),
 
-                        new ParallelAction(
-                                extendo.extendoExtend(),
-                                wrist.wristDown()
-                        ),
-                        new SleepAction(0.3),
+                                new ParallelAction(
+                                        extendo.extendoExtend(),
+                                        wrist.wristDown()
+                                ),
+                                new SleepAction(0.3),
 
-                        intakeServo.clawClose(),
-                        new SleepAction(0.2),
+                                intakeServo.clawClose(),
+                                new SleepAction(0.2),
 
-                        new ParallelAction(
-                                wrist.wristUp(),
-                                extendo.extendoRetract()
-                        ),
+                                new ParallelAction(
+                                        wrist.wristUp(),
+                                        extendo.extendoRetract()
+                                ),
 
 
-                        intakeServo.clawOpen(),
-                        new ParallelAction(
-                                slides.slidesTransfer(),
-                                outtakeRotatingArm.outtakeTransfer()
-                        ),
-                        new SleepAction(0.2),
-                        outtakeServo.clawClose(),
-                        new SleepAction(0.2),
-
-                        new ParallelAction(
-                                approachBasketSecondTime.build(),
-                                slides.slidesHighest(),
+                                intakeServo.clawOpen(),
+                                new ParallelAction(
+                                        slides.slidesTransfer(),
+                                        outtakeRotatingArm.outtakeTransfer()
+                                ),
+                                new SleepAction(0.2),
                                 outtakeServo.clawClose(),
-                                outtakeRotatingArm.outtakeDeposit()
-                        ),
-                        new ParallelAction(
-                                slides.slidesHighest(),
-                                new SequentialAction(
-                                        dropSample.build(),
-                                        outtakeServo.clawOpen()
-                                )
-                        ),
-                        new SleepAction(0.2),
-                        new ParallelAction(
-                                outtakeServo.clawClose(),
-                                outtakeRotatingArm.outtakeTransfer(),
-                                extendo.extendoRetractFull(),
-                                new SequentialAction(
-                                        backAway.build(),
-                                        slides.slidesTransfer()
-                                )
-                        ),
+                                new SleepAction(0.2),
 
-                        new ParallelAction(
-                                slides.slidesFullDown(),
-                                driveToAscent.build()
+                                new ParallelAction(
+                                        approachBasketSecondTime.build(),
+                                        slides.slidesHighest(),
+                                        outtakeServo.clawClose(),
+                                        outtakeRotatingArm.outtakeDeposit()
+                                ),
+                                new ParallelAction(
+                                        slides.slidesHighest(),
+                                        new SequentialAction(
+                                                dropSample.build(),
+                                                outtakeServo.clawOpen()
+                                        )
+                                ),
+                                outtakeServo.clawClose(),
+                                new SequentialAction(
+                                        slides.slidesHighest(),
+                                        outtakeRotatingArm.outtakeInit()
+                                ),
+                                new ParallelAction(
+                                        new SequentialAction(
+                                                wrist.wristDown(),
+                                                extendo.extendoRetractFull()
+                                        ),
+                                        new SequentialAction(
+                                                backAway.build(),
+                                                slides.slidesFullDown()
+                                        )
+                                ),
+
+                                new ParallelAction(
+
+                                        driveToAscent.build()
+                                )
+
+
+
+
                         )
 
 
 
 
-                )
+
         );
 
     }
