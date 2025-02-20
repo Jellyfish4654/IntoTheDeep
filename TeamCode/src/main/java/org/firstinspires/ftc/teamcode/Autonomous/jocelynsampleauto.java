@@ -102,11 +102,6 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 slides.slidesUnderBar()
                                         )
                                 ),
-                                 (telemetryPacket) -> {
-                                     actionRunning = false;
-                                     telemetry.update();
-                                     return false;
-                                 },
 
                                 //go to specimen bar
 
@@ -169,6 +164,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 outtakeServo.clawOpen(),
                                                 (telemetryPacket) -> {
                                                     actionRunning = false;
+                                                    telemetry.update();
                                                     return false;
                                                 }
                                         ),
@@ -218,6 +214,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                  slides.slidesHighest(),
                                  (telemetryPacket) -> {
                                      actionRunning = true;
+                                     telemetry.update();
                                      return false;
                                  },
                                  new ParallelAction(
@@ -226,6 +223,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                                  outtakeServo.clawOpen(),
                                                  (telemetryPacket) -> {
                                                      actionRunning = false;
+                                                     telemetry.update();
                                                      return false;
                                                  }
                                          ),
