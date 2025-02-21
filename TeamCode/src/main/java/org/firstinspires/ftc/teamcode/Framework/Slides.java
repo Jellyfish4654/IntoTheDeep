@@ -310,7 +310,7 @@ public class Slides {
             telemetryPacket.put("left slide pos", posLeft);
             telemetryPacket.put("right slide pos", posRight);
 
-            if (posLeft != leftTarget) {
+            if (Math.abs(posLeft - leftTarget) > 20) {
                 return true;
             } else {
                 slideMotorLeft.setPower(0);
