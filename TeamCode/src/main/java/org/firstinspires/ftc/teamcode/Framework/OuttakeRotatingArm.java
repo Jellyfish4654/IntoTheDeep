@@ -96,7 +96,7 @@ public class OuttakeRotatingArm {
         }
     }
     public Action outtakeGrabSpecimen() {
-        return new OuttakeDeposit();
+        return new OuttakeGrabSpecimen();
     }
     public class OuttakeTransfer implements Action {
         @Override

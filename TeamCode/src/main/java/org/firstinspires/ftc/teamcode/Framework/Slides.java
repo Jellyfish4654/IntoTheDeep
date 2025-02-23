@@ -206,7 +206,7 @@ public class Slides {
     public class SlidesUp implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setHigh();
+            setTargetPositions(high_set_left + 80, high_set_right + 80);
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();

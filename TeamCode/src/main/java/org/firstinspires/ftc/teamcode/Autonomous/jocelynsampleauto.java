@@ -91,88 +91,87 @@ public class jocelynsampleauto extends BaseOpMode {
         waitForStart();
         if (isStopRequested()) return;
         Actions.runBlocking(
-                         new SequentialAction(
-
-                                outtakeServo.clawClose(),
-                                new ParallelAction(
-                                        hangSpecimen.build(),
-                                        new SequentialAction(
-                                                outtakeRotatingArm.outtakeChamber(),
-                                                new SleepAction(0.55),
-                                                slides.slidesUnderBar()
-                                        )
-                                ),
-
-                                //go to specimen bar
-
-                                new ParallelAction(
-                                        slides.slidesOverBar(),
-                                        new SequentialAction(
-                                                new SleepAction(0.8),
-                                                outtakeServo.clawOpen()
-                                        )
-                                ),
-
-                                // hang specimen
-
-                                getRightMostSample.build(),
-
-                                new ParallelAction(
-                                        extendo.extendoExtend(),
-                                        wrist.wristDown()
-                                ),
-
-                                //extend to reach sample
-                                new SleepAction(0.1),
-
-                                intakeServo.clawClose(),
-                                new SleepAction(0.1),
-
-                                //grab sample
-
-                                new ParallelAction(
-                                        wrist.wristUp(),
-                                        extendo.extendoRetract()
-                                ),
-
-                                // transfer sample
-
-                                intakeServo.clawOpen(),
-                                new ParallelAction(
-                                        slides.slidesTransfer(),
-                                        outtakeRotatingArm.outtakeTransfer()
-                                ),
 
 
-                                new SleepAction(0.2),
-                                outtakeServo.clawClose(),
-                                new SleepAction(0.2),
-
-                                new ParallelAction(
-                                        approachBasket.build(),
-                                        slides.slidesHighest(),
-                                        outtakeServo.clawClose(),
-                                        outtakeRotatingArm.outtakeDeposit()
-                                ),
-
-                                //drop sample
-                                slides.slidesHighest(),
-
-                                new ParallelAction(
-                                        new SequentialAction(
-                                                dropSample.build(),
-                                                outtakeServo.clawOpen(),
-                                                (telemetryPacket) -> {
-                                                    actionRunning = false;
-                                                    return false;
-                                                }
-                                        ),
-                                        (telemetryPacket) -> {
-                                            slides.update(true, false, 0);
-                                            return actionRunning;
-                                        }
+                new ParallelAction(
+                        outtakeServo.clawClose(),
+                        new ParallelAction(
+                                hangSpecimen.build(),
+                                new SequentialAction(
+                                        outtakeRotatingArm.outtakeChamber(),
+                                        new SleepAction(0.55),
+                                        slides.slidesUnderBar()
                                 )
-                         ));
+                        ),
+
+                        //go to specimen bar
+
+                        new ParallelAction(
+                                slides.slidesOverBar(),
+                                new SequentialAction(
+                                        new SleepAction(0.8),
+                                        outtakeServo.clawOpen()
+                                )
+                        ),
+
+                        // hang specimen
+
+                        getRightMostSample.build(),
+
+                        new ParallelAction(
+                                extendo.extendoExtend(),
+                                wrist.wristDown()
+                        ),
+
+                        //extend to reach sample
+                        new SleepAction(0.1),
+
+                        intakeServo.clawClose(),
+                        new SleepAction(0.1),
+
+                        //grab sample
+
+                        new ParallelAction(
+                                wrist.wristUp(),
+                                extendo.extendoRetract()
+                        ),
+
+                        // transfer sample
+
+                        intakeServo.clawOpen(),
+                        new ParallelAction(
+                                slides.slidesTransfer(),
+                                outtakeRotatingArm.outtakeTransfer()
+                        ),
+
+
+                        new SleepAction(0.2),
+                        outtakeServo.clawClose(),
+                        new SleepAction(0.2),
+
+                        new ParallelAction(
+                                approachBasket.build(),
+                                slides.slidesHighest(),
+                                outtakeServo.clawClose(),
+                                outtakeRotatingArm.outtakeDeposit()
+                        ),
+
+                        //drop sample
+                        slides.slidesHighest(),
+                        new SequentialAction(
+                                dropSample.build(),
+                                outtakeServo.clawOpen(),
+                                (telemetryPacket) -> {
+                                    actionRunning = false;
+                                    return false;
+                                }
+                        ),
+                        (telemetryPacket) -> {
+                            slides.update(true, false, 0);
+                            return actionRunning;
+                        }
+                )
+         );
         actionRunning = true;
 
         Actions.runBlocking(
