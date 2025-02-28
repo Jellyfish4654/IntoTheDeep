@@ -240,13 +240,5 @@ public class jocelynsampleauto extends BaseOpMode {
                 )
 
         );
-
-
-
-
-
-
-
-
     }
 }
