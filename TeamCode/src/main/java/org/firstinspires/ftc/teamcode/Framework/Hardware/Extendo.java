@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Framework;
+package org.firstinspires.ftc.teamcode.Framework.Hardware;
 import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;

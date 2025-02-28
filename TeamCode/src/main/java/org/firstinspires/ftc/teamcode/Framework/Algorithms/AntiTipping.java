@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Framework;
+package org.firstinspires.ftc.teamcode.Framework.Algorithms;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;

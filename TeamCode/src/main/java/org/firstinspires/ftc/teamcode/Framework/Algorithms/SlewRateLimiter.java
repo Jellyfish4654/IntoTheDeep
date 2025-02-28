@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Framework;
+package org.firstinspires.ftc.teamcode.Framework.Algorithms;
 
 import androidx.core.math.MathUtils;
 

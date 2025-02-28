@@ -8,6 +8,15 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.teamcode.Framework.Hardware.Drivetrain;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.Extendo;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.IntakeClaw;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.OuttakeClaw;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.OuttakeRotatingArm;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.Slides;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.Wrist;
+import org.firstinspires.ftc.teamcode.Framework.Old.IntakeRotatingArmServos;
+
 
 public abstract class BaseOpMode extends LinearOpMode {
 
@@ -16,7 +25,7 @@ public abstract class BaseOpMode extends LinearOpMode {
     protected DcMotorEx slideMotorLeft;
     protected DcMotorEx slideMotorRight;
     protected DcMotorEx Extendo;
-    protected Extendo extendo;
+    protected org.firstinspires.ftc.teamcode.Framework.Hardware.Extendo extendo;
     protected Slides slides;
     //two slide motors
     //one intake rotating arm motor

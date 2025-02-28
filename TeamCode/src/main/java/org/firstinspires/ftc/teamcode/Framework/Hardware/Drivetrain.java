@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Framework;
+package org.firstinspires.ftc.teamcode.Framework.Hardware;
 
 import static android.icu.util.UniversalTimeScale.MAX_SCALE;
 
