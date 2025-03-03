@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.Autonomous.Current;
+package org.firstinspires.ftc.teamcode.Autonomous.Functional;
 
 // RR-specific imports
 import com.acmerobotics.dashboard.config.Config;
@@ -9,9 +9,6 @@ import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.ParallelAction;
-import org.openftc.easyopencv.OpenCvCamera;
-import org.openftc.easyopencv.OpenCvCameraFactory;
-import org.openftc.easyopencv.OpenCvCameraRotation;
 
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
