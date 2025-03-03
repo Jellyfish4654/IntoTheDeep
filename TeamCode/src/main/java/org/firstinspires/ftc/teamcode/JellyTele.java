@@ -40,7 +40,7 @@ public class JellyTele extends BaseOpMode {
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                RevHubOrientationOnRobot.UsbFacingDirection.FORWARD));
+                RevHubOrientationOnRobot.UsbFacingDirection.RIGHT));
         imu.initialize(parameters);
 
         waitForStart();
@@ -129,6 +129,9 @@ public class JellyTele extends BaseOpMode {
     private void updateDriveModeFromGamepad() {
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.X)) {
             driveMode = DriveMode.MECANUM;
+        }
+        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.B)) {
+            driveMode = DriveMode.FIELDCENTRIC;
         }
     }
 
