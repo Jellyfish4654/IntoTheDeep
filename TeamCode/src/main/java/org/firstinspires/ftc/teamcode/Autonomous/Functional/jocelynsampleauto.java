@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.Autonomous.Functional;
 
-
 // RR-specific imports
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Pose2d;
@@ -11,33 +10,22 @@ import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.ParallelAction;
 
-
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
 
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.Framework.Hardware.Slides;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 @Config
 @Autonomous(name = "jocelynsampleauto", group = "Autonomous")
 public class jocelynsampleauto extends BaseOpMode {
-
-
-
-
     public boolean actionRunning = true;
-
-
-
-
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
-
-
-
-
         initHardware();
         Pose2d initialPose = new Pose2d(22, 60.1, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
@@ -93,11 +81,6 @@ public class jocelynsampleauto extends BaseOpMode {
         TrajectoryActionBuilder driveToAscent = drive.actionBuilder(backAwayPose)
                 .splineToLinearHeading(new Pose2d(15, 10, Math.toRadians(225)), Math.toRadians(180));
 
-
-
-
-
-
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
             telemetry.addData("left slide pos", slides.getCurrentLeftPosition());
@@ -107,10 +90,6 @@ public class jocelynsampleauto extends BaseOpMode {
         waitForStart();
         if (isStopRequested()) return;
         Actions.runBlocking(
-
-
-
-
                 new ParallelAction(
                         new SequentialAction(
                                 outtakeServo.clawClose(),
@@ -122,11 +101,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 slides.slidesUnderBar()
                                         )
                                 ),
-
-
                                 //go to specimen bar
-
-
                                 new ParallelAction(
                                         slides.slidesOverBar(),
                                         new SequentialAction(
@@ -134,49 +109,27 @@ public class jocelynsampleauto extends BaseOpMode {
                                                 outtakeServo.clawOpen()
                                         )
                                 ),
-
-
                                 // hang specimen
-
-
                                 getRightMostSample.build(),
-
-
                                 new ParallelAction(
                                         extendo.extendoExtend(),
                                         wrist.wristDown()
                                 ),
-
-
                                 //extend to reach sample
                                 new SleepAction(0.1),
-
-
                                 intakeServo.clawClose(),
                                 new SleepAction(0.1),
-
-
                                 //grab sample
-
-
                                 new ParallelAction(
                                         wrist.wristUp(),
                                         extendo.extendoRetract()
                                 ),
-
-
                                 // transfer sample
-
-
                                 intakeServo.clawOpen(),
                                 new ParallelAction(
                                         slides.slidesTransfer(),
                                         outtakeRotatingArm.outtakeTransfer()
                                 ),
-
-
-
-
                                 new SleepAction(0.2),
                                 outtakeServo.clawClose(),
                                 new SleepAction(0.2),
@@ -188,8 +141,6 @@ public class jocelynsampleauto extends BaseOpMode {
                                         outtakeServo.clawClose(),
                                         outtakeRotatingArm.outtakeDeposit()
                                 ),
-
-
                                 //drop sample
                                 slides.slidesHighest(),
                                 new SequentialAction(
@@ -210,8 +161,6 @@ public class jocelynsampleauto extends BaseOpMode {
                 )
         );
         actionRunning = true;
-
-
         Actions.runBlocking(
                 new SequentialAction(
                         new ParallelAction(
@@ -220,30 +169,18 @@ public class jocelynsampleauto extends BaseOpMode {
                                 outtakeRotatingArm.outtakeTransfer(),
                                 slides.slidesTransfer()
                         ),
-
-
                         getMiddleSample.build(),
-
-
                         new ParallelAction(
                                 extendo.extendoExtend(),
                                 wrist.wristDown()
                         ),
                         new SleepAction(0.3),
-
-
                         intakeServo.clawClose(),
                         new SleepAction(0.2),
-
-
                         new ParallelAction(
                                 wrist.wristUp(),
                                 extendo.extendoRetract()
                         ),
-
-
-
-
                         intakeServo.clawOpen(),
                         new ParallelAction(
                                 slides.slidesTransfer(),
@@ -251,15 +188,11 @@ public class jocelynsampleauto extends BaseOpMode {
                         ),
                         new SleepAction(0.2),
                         outtakeServo.clawClose(),
-
-
                         new ParallelAction(
                                 approachBasketSecondTime.build(),
                                 outtakeRotatingArm.outtakeDeposit()
                         ),
                         slides.slidesHighest(),
-
-
                         new ParallelAction(
                                 new SequentialAction(
                                         dropSample.build(),
@@ -284,11 +217,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                 )
                         ),
                         driveToAscent.build()
-
-
                 )
-
-
         );
     }
 }

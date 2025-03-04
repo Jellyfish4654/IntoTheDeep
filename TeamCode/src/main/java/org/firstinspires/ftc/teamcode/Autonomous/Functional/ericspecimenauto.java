@@ -16,6 +16,9 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
         import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.Framework.Hardware.Slides;
 import org.firstinspires.ftc.teamcode.RoadRunner.MecanumDrive;
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
 @Config
 @Autonomous(name = "ericspecimenauto", group = "Autonomous")
 public class ericspecimenauto extends BaseOpMode {
