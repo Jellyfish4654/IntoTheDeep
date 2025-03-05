@@ -185,7 +185,7 @@ public class JellyTele extends BaseOpMode {
     private double[] FieldCentricDrive() {
         double y = -applyDeadband(GamepadEx1.getLeftY());
         double x = applyDeadband(GamepadEx1.getLeftX()) * STRAFE_ADJUSTMENT_FACTOR;
-        double r = -applyDeadband(GamepadEx1.getRightX());
+        double r = applyDeadband(GamepadEx1.getRightX());
         double Yaw = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS) - resetHeading;
 
         double x2 = x * Math.cos(-Yaw) - y * Math.sin(-Yaw);
