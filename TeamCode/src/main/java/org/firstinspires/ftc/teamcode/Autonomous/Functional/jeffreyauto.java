@@ -9,6 +9,7 @@ import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.acmerobotics.roadrunner.ParallelAction;
+import org.firstinspires.ftc.teamcode.Framework.Algorithms.ConceptAprilTagLocalization;
 
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -39,8 +40,9 @@ public class jeffreyauto extends BaseOpMode {
         TrajectoryActionBuilder moveForward = drive.actionBuilder(initialPose)
                 .lineToY(0);
 
-
-
+        Pose2d initinitialPose = new Pose2d(0, 0, Math.toRadians(90));
+        TrajectoryActionBuilder moveToPlace = drive.actionBuilder(initinitialPose)
+                .lineToY(0);
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -52,10 +54,11 @@ public class jeffreyauto extends BaseOpMode {
         if (isStopRequested()) return;
         Actions.runBlocking(
                 new SequentialAction(
-                    moveForward.build()
-
+                    moveForward.build(),
+                        new ParallelAction(
+                        )
                 )
-
         );
+
     }
 }
