@@ -12,6 +12,7 @@ import com.acmerobotics.roadrunner.ParallelAction;
 
 // Non-RR imports
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import org.firstinspires.ftc.teamcode.Autonomous.ConceptAprilTagLocalization;
 
 import org.firstinspires.ftc.teamcode.Framework.BaseOpMode;
 import org.firstinspires.ftc.teamcode.Framework.Hardware.Slides;
