@@ -27,9 +27,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -214,7 +213,7 @@ public class ConceptAprilTagLocalization extends LinearOpMode {
     /**
      * Add telemetry about AprilTag detections.
      */
-    public List<Integer> telemetryAprilTag() {
+    private void telemetryAprilTag() {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
@@ -240,6 +239,27 @@ public class ConceptAprilTagLocalization extends LinearOpMode {
         // Add "key" information to telemetry
         telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
         telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
+
+    }   // end method telemetryAprilTag()
+
+    public double[] detectCoordinates() {
+
+        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+        telemetry.addData("# AprilTags Detected", currentDetections.size());
+        double[] a = new double[]{0.0, 0.0, 0.0};
+        // Step through the list of detections and display info for each one.
+        for (AprilTagDetection detection : currentDetections) {
+            if (detection.metadata != null) {
+                a[0] = detection.robotPose.getPosition().x;
+                a[1] = detection.robotPose.getPosition().y;
+                a[2] = detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES);
+
+            }
+        }   // end for() loop
+
+        // Add "key" information to telemetry
+
+        return a;
 
     }   // end method telemetryAprilTag()
 
