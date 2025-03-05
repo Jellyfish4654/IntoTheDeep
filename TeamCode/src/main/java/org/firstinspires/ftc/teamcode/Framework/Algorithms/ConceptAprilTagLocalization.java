@@ -27,8 +27,12 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Autonomous;
+package org.firstinspires.ftc.teamcode.Framework.Algorithms;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -242,7 +246,7 @@ public class ConceptAprilTagLocalization extends LinearOpMode {
 
     }   // end method telemetryAprilTag()
 
-    public double[] detectCoordinates() {
+    public double[] findCoordinates() {
 
         List<AprilTagDetection> currentDetections = aprilTag.getDetections();
         telemetry.addData("# AprilTags Detected", currentDetections.size());
@@ -262,5 +266,20 @@ public class ConceptAprilTagLocalization extends LinearOpMode {
         return a;
 
     }   // end method telemetryAprilTag()
+
+    public class DetectCoordinates implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            double xpos = findCoordinates()[0];
+            double ypos = findCoordinates()[1];
+            double zpos = findCoordinates()[2];
+
+            return false;
+        }
+    }
+
+    public Action detectCoordinates() {
+        return new DetectCoordinates();
+    }
 
 }   // end class
