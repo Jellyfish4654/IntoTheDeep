@@ -36,13 +36,13 @@ public class jeffreyauto extends BaseOpMode {
         initHardware();
         Pose2d initialPose = new Pose2d(0, 60, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
+        ConceptAprilTagLocalization webcam = new ConceptAprilTagLocalization();
 
         TrajectoryActionBuilder moveForward = drive.actionBuilder(initialPose)
                 .lineToY(0);
 
-        Pose2d initinitialPose = new Pose2d(0, 0, Math.toRadians(90));
-        TrajectoryActionBuilder moveToPlace = drive.actionBuilder(initinitialPose)
-                .lineToY(0);
+
+
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addData("left target", Slides.leftTarget);
@@ -52,13 +52,20 @@ public class jeffreyauto extends BaseOpMode {
         }
         waitForStart();
         if (isStopRequested()) return;
+
+        double[] coordinates = webcam.findCoordinates();
+        Pose2d newPose = new Pose2d(coordinates[0], coordinates[1], coordinates[2]);
+
+        TrajectoryActionBuilder moveToPlace = drive.actionBuilder(newPose)
+                .strafeToLinearHeading(new Vector2d(41, 38.7), Math.toRadians(270));
+
         Actions.runBlocking(
                 new SequentialAction(
-                    moveForward.build(),
-                        new ParallelAction(
-                        )
+                    moveToPlace.build()
                 )
         );
+
+
 
     }
 }
