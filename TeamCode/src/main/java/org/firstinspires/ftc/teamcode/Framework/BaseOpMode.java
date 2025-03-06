@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.IMU;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.Framework.Hardware.Webcam;
 import org.firstinspires.ftc.teamcode.Framework.Hardware.Drivetrain;
 import org.firstinspires.ftc.teamcode.Framework.Hardware.Extendo;
 import org.firstinspires.ftc.teamcode.Framework.Hardware.IntakeClaw;
@@ -43,6 +45,8 @@ public abstract class BaseOpMode extends LinearOpMode {
     //two outtake arm servos
     protected IMU imu;
 
+    protected Webcam webcam;
+
     public void initHardware() {
 
         // wheel motors
@@ -68,6 +72,7 @@ public abstract class BaseOpMode extends LinearOpMode {
         //intake claw servo
         intakeServo = new IntakeClaw(hardwareMap.get(Servo.class, "intakeServo"));
         imu = hardwareMap.get(IMU.class, "imu");
+        webcam = new Webcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
 
         outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
         intakeServo.openClaw();

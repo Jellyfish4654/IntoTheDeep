@@ -27,21 +27,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Framework.Algorithms;
+package org.firstinspires.ftc.teamcode.Framework.Hardware;
 
-import androidx.annotation.NonNull;
-
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-import com.acmerobotics.roadrunner.Action;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.Position;
@@ -71,9 +60,9 @@ import java.util.List;
  * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
  * Remove or comment out the @Disabled line to add this OpMode to the Driver Station OpMode list.
  */
-public class ConceptAprilTagLocalization {
+public class Webcam {
 
- // true for webcam, false for phone camera
+    // true for webcam, false for phone camera
 
     /**
      * Variables to store the position and orientation of the camera on the robot. Setting these
@@ -110,7 +99,7 @@ public class ConceptAprilTagLocalization {
      */
     private VisionPortal visionPortal;
 
-    public ConceptAprilTagLocalization() {
+    public Webcam(WebcamName w) {
 
         Position cameraPosition = new Position(DistanceUnit.INCH,
                 0, 0, 0, 0);
@@ -130,6 +119,7 @@ public class ConceptAprilTagLocalization {
 
                 .build();
         VisionPortal.Builder builder = new VisionPortal.Builder();
+        builder.setCamera(w);
 
 
         // Set and enable the processor.
@@ -151,28 +141,28 @@ public class ConceptAprilTagLocalization {
     public double[] findCoordinates() {
 
 
-        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        double[] a = new double[]{0.0, 0.0, 0.0};
-        // Step through the list of detections and display info for each one.
-        for (AprilTagDetection detection : currentDetections) {
-            if (detection.metadata != null) {
-                a[0] = detection.robotPose.getPosition().x;
-                a[1] = detection.robotPose.getPosition().y;
-                a[2] = detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES);
+        double[] a = new double[]{30.0, 30.0, 0.0};
+        boolean b = false;
+        List<AprilTagDetection> currentDetections;
 
+        while (!b) {
+            currentDetections = aprilTag.getDetections();
+            for (AprilTagDetection detection : currentDetections) {
+
+                if (detection != null) {
+                    b = true;
+                    a[0] = detection.robotPose.getPosition().x;
+                    a[1] = detection.robotPose.getPosition().y;
+                    a[2] = detection.robotPose.getOrientation().getYaw(AngleUnit.DEGREES);
+
+                }
             }
-        }   // end for() loop
 
-        // Add "key" information to telemetry
 
+        }   // end method telemetryAprilTag()
+
+        // Wait for the DS start button to be touched.
         return a;
 
-    }   // end method telemetryAprilTag()
-
-    // Wait for the DS start button to be touched.
-
-
-
-
+    }
 }
-
