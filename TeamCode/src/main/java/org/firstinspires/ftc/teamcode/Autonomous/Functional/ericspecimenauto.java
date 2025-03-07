@@ -42,11 +42,11 @@ public class ericspecimenauto extends BaseOpMode {
 //                .strafeToConstantHeading(new Vector2d(-44, 10))
                 .strafeToConstantHeading(new Vector2d(-15, 40))
 
-                .splineToLinearHeading(new Pose2d(-30, 5, Math.toRadians(88)), Math.toRadians(0))
-                .lineToX(-46)
-                .strafeToLinearHeading(new Vector2d(-46, 53), Math.toRadians(88));
+                .splineToLinearHeading(new Pose2d(-30, 5, Math.toRadians(85)), Math.toRadians(0))
+                .lineToX(-42.5)
+                .strafeToConstantHeading(new Vector2d(-42.5, 52.5));
 
-        Pose2d pushSamplePose = new Pose2d(-46, 53, Math.toRadians(88));
+        Pose2d pushSamplePose = new Pose2d(-43, 52.5, Math.toRadians(85));
 
 //        TrajectoryActionBuilder pushSecondSample = drive.actionBuilder(pushSamplePose)
 //                .strafeToConstantHeading(new Vector2d(-35, 45))
@@ -54,7 +54,7 @@ public class ericspecimenauto extends BaseOpMode {
 //                .strafeToConstantHeading(new Vector2d(-54, 10))
 //                .strafeToConstantHeading(new Vector2d(-54, 57));
 
-        Pose2d pushSamplePoseTwo = new Pose2d(-54, 57, Math.toRadians(88));
+        Pose2d pushSamplePoseTwo = new Pose2d(-54, 57, Math.toRadians(85));
 
         TrajectoryActionBuilder readyGrabSpecimen = drive.actionBuilder(pushSamplePose)
                 .strafeToConstantHeading(new Vector2d(-40, 53))
@@ -63,9 +63,9 @@ public class ericspecimenauto extends BaseOpMode {
         Pose2d readyGrabSpecimenPose = new Pose2d(-42, 53, Math.toRadians(268));
 
         TrajectoryActionBuilder grabSpecimen = drive.actionBuilder(readyGrabSpecimenPose)
-                .strafeToConstantHeading(new Vector2d(-42, 56.5));
+                .strafeToConstantHeading(new Vector2d(-45, 56.5));
 
-        Pose2d grabSpecimenPose = new Pose2d(-42, 56.5, Math.toRadians(268));
+        Pose2d grabSpecimenPose = new Pose2d(-45, 56.5, Math.toRadians(268));
 
         TrajectoryActionBuilder hangSecondSpecimen = drive.actionBuilder(grabSpecimenPose)
                 .strafeToLinearHeading(new Vector2d(5, 33), Math.toRadians(90));
@@ -73,14 +73,14 @@ public class ericspecimenauto extends BaseOpMode {
         Pose2d hangedSecondSpecimenPose = new Pose2d(5, 33, Math.toRadians(90));
 
         TrajectoryActionBuilder grabThirdSpecimen = drive.actionBuilder(hangedSecondSpecimenPose)
-                .strafeToConstantHeading(new Vector2d(-40, 53))
+                .strafeToConstantHeading(new Vector2d(-43, 53))
                 .turn(Math.toRadians(170))
-                .strafeToConstantHeading(new Vector2d(-40, 57));
+                .strafeToConstantHeading(new Vector2d(-43, 58));
 
-        Pose2d grabThirdSpecimenPose = new Pose2d(-40, 57, Math.toRadians(263.5));
+        Pose2d grabThirdSpecimenPose = new Pose2d(-43, 58, Math.toRadians(263.5));
 
         TrajectoryActionBuilder hangThirdSpecimen = drive.actionBuilder(grabThirdSpecimenPose)
-                .strafeToLinearHeading(new Vector2d(-2, 33), Math.toRadians(90));
+                .strafeToLinearHeading(new Vector2d(-2, 30.5), Math.toRadians(90));
 
 
 

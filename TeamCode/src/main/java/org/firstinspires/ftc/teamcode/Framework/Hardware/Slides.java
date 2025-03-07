@@ -18,7 +18,7 @@ public class Slides {
     private ElapsedTime timer;
     public double offset_tracker;
     public final double defaultp = 0.01, defaulti = 0, defaultd = 0;
-    public static double pleft = 0.005, ileft = 0, dleft = 0;
+    public static double pleft = 0.008, ileft = 0, dleft = 0;
     public static double pright = 0.03, iright = 0.0061, dright = 0.0004;
     int targetPosition;
     private PIDController lcontroller;
@@ -230,7 +230,7 @@ public class Slides {
     public class SlidesTransfer implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setTargetPositions(transfer_set_left+70, transfer_set_right);
+            setTargetPositions(transfer_set_left+80, transfer_set_right);
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();
