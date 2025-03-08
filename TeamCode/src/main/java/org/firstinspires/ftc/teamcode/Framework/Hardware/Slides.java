@@ -230,7 +230,7 @@ public class Slides {
     public class SlidesTransfer implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            setTargetPositions(transfer_set_left+80, transfer_set_right);
+            setTargetPositions(transfer_set_left+67, transfer_set_right);
             update(true, false, 0);
 
             double posLeft = getCurrentLeftPosition();

@@ -80,7 +80,7 @@ public class ericspecimenauto extends BaseOpMode {
         Pose2d grabThirdSpecimenPose = new Pose2d(-43, 58, Math.toRadians(263.5));
 
         TrajectoryActionBuilder hangThirdSpecimen = drive.actionBuilder(grabThirdSpecimenPose)
-                .strafeToLinearHeading(new Vector2d(-2, 30.5), Math.toRadians(90));
+                .strafeToLinearHeading(new Vector2d(-2, 31), Math.toRadians(84.25));
 
 
 
