@@ -33,7 +33,7 @@ public class noahauto extends BaseOpMode {
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
         TrajectoryActionBuilder hangSpecimen = drive.actionBuilder(initialPose)
-                .lineToY(50)
+                .lineToY(50*scale)
                 .strafeToLinearHeading(new Vector2d(-5*scale, 35*scale), Math.toRadians(90));
 
         Pose2d specimenHangingPose = new Pose2d(-5*scale, 35*scale, Math.toRadians(90));
