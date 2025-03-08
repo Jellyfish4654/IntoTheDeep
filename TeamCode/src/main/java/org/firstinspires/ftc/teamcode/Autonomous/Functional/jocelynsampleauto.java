@@ -31,49 +31,53 @@ public class jocelynsampleauto extends BaseOpMode {
 
         TrajectoryActionBuilder hangSpecimen = drive.actionBuilder(initialPose)
                 .lineToY(50)
-                .strafeToLinearHeading(new Vector2d(5, 34.5), Math.toRadians(90));
+                .strafeToLinearHeading(new Vector2d(5, 33), Math.toRadians(90));
 
 
-        Pose2d specimenHangingPose = new Pose2d(5, 34.5, Math.toRadians(90));
+        Pose2d specimenHangingPose = new Pose2d(5, 33, Math.toRadians(90));
 
 
         TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(specimenHangingPose)
-                .strafeToLinearHeading(new Vector2d(50.5, 45.5), Math.toRadians(270));
+                .strafeToLinearHeading(new Vector2d(48.4, 45.5), Math.toRadians(270));
 
 
-        Pose2d rightSampleGettingPose = new Pose2d(50.5, 45.5, Math.toRadians(270));
+        Pose2d rightSampleGettingPose = new Pose2d(48.4, 45.5, Math.toRadians(270));
 
 
         TrajectoryActionBuilder approachBasket = drive.actionBuilder(rightSampleGettingPose)
-                .strafeToLinearHeading(new Vector2d(51, 52), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(52, 51), Math.toRadians(225));
 
 
-        Pose2d approachBasketPose = new Pose2d(51, 52, Math.toRadians(225));
+        Pose2d approachBasketPose = new Pose2d(52, 51, Math.toRadians(225));
 
 
         TrajectoryActionBuilder dropSample = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(52, 58), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(54, 55), Math.toRadians(225));
 
 
-        Pose2d dropSamplePose = new Pose2d(52, 58, Math.toRadians(225));
+        Pose2d dropSamplePose = new Pose2d(54, 55, Math.toRadians(225));
 
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(dropSamplePose)
                 .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
 
+        TrajectoryActionBuilder backAwayTwo = drive.actionBuilder(approachBasketPose)
+                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
+
 
         Pose2d backAwayPose = new Pose2d(50, 53, Math.toRadians(225));
 
-
         TrajectoryActionBuilder getMiddleSample = drive.actionBuilder(backAwayPose)
-                .strafeToLinearHeading(new Vector2d(55, 43.6), Math.toRadians(283));
+                .strafeToLinearHeading(new Vector2d(56, 45.8), Math.toRadians(278));
 
 
-        Pose2d middleSamplePose = new Pose2d(55, 43.6, Math.toRadians(283));
+        Pose2d middleSamplePose = new Pose2d(56, 45.8, Math.toRadians(278));
 
 
         TrajectoryActionBuilder approachBasketSecondTime = drive.actionBuilder(middleSamplePose)
                 .strafeToLinearHeading(new Vector2d(51, 52), Math.toRadians(225));
+
+
 
 
         TrajectoryActionBuilder driveToAscent = drive.actionBuilder(backAwayPose)
@@ -114,9 +118,9 @@ public class jocelynsampleauto extends BaseOpMode {
                                         wrist.wristDown()
                                 ),
                                 //extend to reach sample
-                                new SleepAction(0.1),
+                                new SleepAction(0.3),
                                 intakeServo.clawClose(),
-                                new SleepAction(0.1),
+                                new SleepAction(0.3),
                                 //grab sample
                                 new ParallelAction(
                                         wrist.wristUp(),
@@ -128,7 +132,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                         slides.slidesTransfer(),
                                         outtakeRotatingArm.outtakeTransfer()
                                 ),
-                                new SleepAction(0.2),
+                                new SleepAction(0.5),
                                 outtakeServo.clawClose(),
                                 new SleepAction(0.2),
 
@@ -136,85 +140,68 @@ public class jocelynsampleauto extends BaseOpMode {
                                 new ParallelAction(
                                         approachBasket.build(),
                                         slides.slidesHighest(),
-                                        outtakeServo.clawClose(),
                                         outtakeRotatingArm.outtakeDeposit()
                                 ),
                                 //drop sample
-                                slides.slidesHighest(),
-                                new SequentialAction(
-                                        dropSample.build(),
-                                        outtakeServo.clawOpen(),
-                                        (telemetryPacket) -> {
-                                            actionRunning = false;
-                                            return false;
-                                        }
-                                ),
-                                (telemetryPacket) -> {
-                                    slides.update(true, false, 0);
-                                    return actionRunning;
-                                }
-                        )
-
-
-                )
-        );
-        actionRunning = true;
-        Actions.runBlocking(
-                new SequentialAction(
-                        new ParallelAction(
+                                dropSample.build(),
                                 outtakeServo.clawOpen(),
-                                backAway.build(),
-                                outtakeRotatingArm.outtakeTransfer(),
-                                slides.slidesTransfer()
-                        ),
-                        getMiddleSample.build(),
-                        new ParallelAction(
-                                extendo.extendoExtend(),
-                                wrist.wristDown()
-                        ),
-                        new SleepAction(0.3),
-                        intakeServo.clawClose(),
-                        new SleepAction(0.2),
-                        new ParallelAction(
-                                wrist.wristUp(),
-                                extendo.extendoRetract()
-                        ),
-                        intakeServo.clawOpen(),
-                        new ParallelAction(
-                                slides.slidesTransfer(),
-                                outtakeRotatingArm.outtakeTransfer()
-                        ),
-                        new SleepAction(0.2),
-                        outtakeServo.clawClose(),
-                        new ParallelAction(
-                                approachBasketSecondTime.build(),
-                                outtakeRotatingArm.outtakeDeposit()
-                        ),
-                        slides.slidesHighest(),
-                        new ParallelAction(
-                                new SequentialAction(
-                                        dropSample.build(),
-                                        outtakeServo.clawOpen(),
-                                        (telemetryPacket) -> {
-                                            actionRunning = false;
-                                            telemetry.update();
-                                            return false;
-                                        }
+                                new SleepAction(0.8),
+                                new ParallelAction(
+                                        backAway.build(),
+                                        outtakeRotatingArm.outtakeTransfer()
+                                ),
+                                new ParallelAction(
+                                        slides.slidesTransfer(),
+                                        getMiddleSample.build()
+                                ),
+                                new ParallelAction(
+                                        extendo.extendoExtend(),
+                                        wrist.wristDown()
+                                ),
+                                new SleepAction(0.3),
+                                intakeServo.clawClose(),
+                                new SleepAction(0.2),
+                                new ParallelAction(
+                                        wrist.wristUp(),
+                                        extendo.extendoRetract()
+                                ),
+                                intakeServo.clawOpen(),
+                                new ParallelAction(
+                                        slides.slidesTransfer(),
+                                        outtakeRotatingArm.outtakeTransfer()
+                                ),
+                                new SleepAction(0.8),
+                                outtakeServo.clawClose(),
+                                new SleepAction(0.2),
+                                new ParallelAction(
+                                        approachBasketSecondTime.build(),
+                                        slides.slidesHighest(),
+                                        outtakeRotatingArm.outtakeDeposit()
+                                ),
+                                outtakeServo.clawOpen(),
+                                new SleepAction(0.8),
+                                outtakeRotatingArm.outtakeInit(),
+                                new ParallelAction(
+                                        extendo.extendoRetract(),
+                                        new SleepAction(0.2),
+                                        outtakeRotatingArm.outtakeDeposit(),
+                                        new SequentialAction(
+                                                backAwayTwo.build(),
+                                                slides.slidesFullDown()
+                                        )
                                 ),
                                 (telemetryPacket) -> {
-                                    slides.update(true, false, 0);
-                                    return actionRunning;
+                                    actionRunning = false;
+                                    return false;
                                 }
                         ),
-                        outtakeRotatingArm.outtakeInit(),
-                        new ParallelAction(
-                                extendo.extendoRetract(),
-                                new SequentialAction(
-                                        backAway.build(),
-                                        slides.slidesFullDown()
-                                )
-                        ),
-                        driveToAscent.build()
+
+                        (telemetryPacket) -> {
+                            slides.update(true, false, 0);
+                            return actionRunning;
+                        }
+
+
                 )
         );
     }
