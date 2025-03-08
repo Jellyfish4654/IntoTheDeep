@@ -53,6 +53,8 @@ public class JellyTele extends BaseOpMode {
             updateWrist();
             updateSlideMode();
             updateExtendoMode();
+            resetExtendoPositions();
+            resetSlidePositions();
             telemetry.update();
         }
     }
@@ -365,6 +367,17 @@ public class JellyTele extends BaseOpMode {
             return true;
         } else {
             return false;
+        }
+    }
+
+    public void resetSlidePositions() {
+        if (leftTriggerPressed()) {
+            slides.establishPositions(slideMotorLeft);
+        }
+    }
+    public void resetExtendoPositions() {
+        if (leftTriggerPressed()) {
+            extendo.establishPositions();
         }
     }
 
