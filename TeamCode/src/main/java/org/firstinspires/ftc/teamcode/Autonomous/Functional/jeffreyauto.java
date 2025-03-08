@@ -28,7 +28,7 @@ public class jeffreyauto extends BaseOpMode {
         // instantiate your MecanumDrive at a particular pose.
 
         double[] coordinates;
-        initHardware();
+        initHardware(true);
         Pose2d initialPose = new Pose2d(50, 50, Math.toRadians(0));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 

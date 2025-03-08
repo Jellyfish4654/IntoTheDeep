@@ -47,7 +47,7 @@ public abstract class BaseOpMode extends LinearOpMode {
 
     protected Webcam webcam;
 
-    public void initHardware() {
+    public void initHardware(boolean auto) {
 
         // wheel motors
 
@@ -75,12 +75,16 @@ public abstract class BaseOpMode extends LinearOpMode {
         webcam = new Webcam(hardwareMap.get(WebcamName.class, "Webcam 1"));
 
         outtakeServo = new OuttakeClaw(hardwareMap.get(Servo.class, "outtakeServo"));
-        intakeServo.openClaw();
-        outtakeServo.closeClaw();
+        if (auto) {
+            intakeServo.openClaw();
+            outtakeServo.closeClaw();
+        }
         wrist = new Wrist(hardwareMap.get(Servo.class, "wristServo"));
 
         outtakeRotatingArm = new OuttakeRotatingArm(hardwareMap.get(Servo.class, "outtakeArmServoLeft"));
-        outtakeRotatingArm.armOuttakeInit();
+        if (auto) {
+            outtakeRotatingArm.armOuttakeInit();
+        }
 
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");

@@ -21,7 +21,7 @@ public class clawTuner extends BaseOpMode {
 
         GamepadEx1 = new GamepadEx(gamepad1);
         GamepadEx2 = new GamepadEx(gamepad2);
-        initHardware();
+        initHardware(false);
 
         IMU.Parameters parameters = new IMU.Parameters(new RevHubOrientationOnRobot(
                 RevHubOrientationOnRobot.LogoFacingDirection.UP,

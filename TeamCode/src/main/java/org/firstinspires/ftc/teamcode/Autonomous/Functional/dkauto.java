@@ -32,7 +32,7 @@ public class dkauto extends BaseOpMode {
         // instantiate your MecanumDrive at a particular pose.
 
 
-        initHardware();
+        initHardware(true);
         Pose2d initialPose = new Pose2d(22, 60.1, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 

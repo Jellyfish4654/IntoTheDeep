@@ -26,6 +26,7 @@ public class OuttakeRotatingArm {
     public OuttakeRotatingArm(Servo servo1)
     {
         this.armLeftServo = servo1;
+        positionL = armLeftServo.getPosition();
         armLeftServo.setPosition(positionL);
         armLeftServo.setDirection(Servo.Direction.REVERSE);
     }

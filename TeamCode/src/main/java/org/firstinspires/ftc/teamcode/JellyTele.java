@@ -32,7 +32,7 @@ public class JellyTele extends BaseOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
-        initHardware();
+        initHardware(false);
         initializeSlewRateLimiters();
         GamepadEx1 = new GamepadEx(gamepad1);
         GamepadEx2 = new GamepadEx(gamepad2);
@@ -53,8 +53,7 @@ public class JellyTele extends BaseOpMode {
             updateWrist();
             updateSlideMode();
             updateExtendoMode();
-            resetExtendoPositions();
-            resetSlidePositions();
+            resetPositions();
             telemetry.update();
         }
     }
@@ -94,7 +93,7 @@ public class JellyTele extends BaseOpMode {
         CHAMBER,
         BASKET
     }
-    protected OuttakeMode outtakeMode = OuttakeMode.CHAMBER;
+    protected OuttakeMode outtakeMode = OuttakeMode.TRANSFER;
     private void updateOuttakeModeFromGamepad() {
         if (GamepadEx2.wasJustPressed(GamepadKeys.Button.Y)) {
             outtakeMode = OuttakeMode.BASKET;
@@ -370,13 +369,9 @@ public class JellyTele extends BaseOpMode {
         }
     }
 
-    public void resetSlidePositions() {
-        if (leftTriggerPressed()) {
+    public void resetPositions() {
+        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
             slides.establishPositions(slideMotorLeft);
-        }
-    }
-    public void resetExtendoPositions() {
-        if (leftTriggerPressed()) {
             extendo.establishPositions();
         }
     }

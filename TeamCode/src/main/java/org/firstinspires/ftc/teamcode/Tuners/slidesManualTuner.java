@@ -33,7 +33,7 @@ public class slidesManualTuner extends BaseOpMode
 
         GamepadEx1 = new GamepadEx(gamepad1);
         GamepadEx2 = new GamepadEx(gamepad2);
-        initHardware();
+        initHardware(false);
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         slideMotorRight = hardwareMap.get(DcMotorEx.class, "slideMotorRight");
         slideMotorLeft = hardwareMap.get(DcMotorEx.class, "slideMotorLeft");
