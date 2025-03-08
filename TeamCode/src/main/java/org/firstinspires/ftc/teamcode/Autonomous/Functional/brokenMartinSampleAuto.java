@@ -24,7 +24,7 @@ public class brokenMartinSampleAuto extends BaseOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
-        initHardware();
+        initHardware(true);
         double scale = 0.6;
 
         Pose2d initialPose = new Pose2d(22*scale, 60.1*scale, Math.toRadians(90));
