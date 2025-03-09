@@ -64,7 +64,6 @@ public class jocelynsampleauto extends BaseOpMode {
 
 
         Pose2d middleSamplePose = new Pose2d(59.65, 45.5, Math.toRadians(274));
-```````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         TrajectoryActionBuilder approachBasketSecondTime = drive.actionBuilder(middleSamplePose)
                 .strafeToLinearHeading(new Vector2d(51.75, 50.25), Math.toRadians(223));
 
