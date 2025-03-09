@@ -25,29 +25,29 @@ public class jocelynsampleauto extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
         initHardware(true);
-        Pose2d initialPose = new Pose2d(20.5, 60.1, Math.toRadians(90));
+        Pose2d initialPose = new Pose2d(20.5, 59.5, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
 
         TrajectoryActionBuilder approachBasketFirst = drive.actionBuilder(initialPose)
-                .strafeToLinearHeading(new Vector2d(52.5, 52.5), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(51.75, 51.75), Math.toRadians(225));
 
 
-        Pose2d approachBasketPoseFirst = new Pose2d(52.5, 52.5, Math.toRadians(225));
+        Pose2d approachBasketPoseFirst = new Pose2d(51.75, 51.75, Math.toRadians(225));
 
 
         TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(approachBasketPoseFirst)
-                .strafeToLinearHeading(new Vector2d(44, 45), Math.toRadians(266));
+                .strafeToLinearHeading(new Vector2d(43.75, 45), Math.toRadians(266));
 
 
-        Pose2d rightSampleGettingPose = new Pose2d(44, 45, Math.toRadians(266));
+        Pose2d rightSampleGettingPose = new Pose2d(43.75, 45, Math.toRadians(266));
 
 
         TrajectoryActionBuilder approachBasket = drive.actionBuilder(rightSampleGettingPose)
-                .strafeToLinearHeading(new Vector2d(52.5, 51.5), Math.toRadians(222));
+                .strafeToLinearHeading(new Vector2d(51.25, 50.25), Math.toRadians(222));
 
 
-        Pose2d approachBasketPose = new Pose2d(52.5, 51.5, Math.toRadians(222));
+        Pose2d approachBasketPose = new Pose2d(51.25, 50.25, Math.toRadians(222));
 
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(approachBasketPose)
@@ -60,25 +60,25 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d backAwayPose = new Pose2d(50, 53, Math.toRadians(225));
 
         TrajectoryActionBuilder getMiddleSample = drive.actionBuilder(backAwayPose)
-                .strafeToLinearHeading(new Vector2d(58.5, 45.5), Math.toRadians(274));
+                .strafeToLinearHeading(new Vector2d(59.65, 45.5), Math.toRadians(274));
 
 
-        Pose2d middleSamplePose = new Pose2d(58.5, 45.5, Math.toRadians(274));
-
+        Pose2d middleSamplePose = new Pose2d(59.65, 45.5, Math.toRadians(274));
+```````````````````````````````````````````````````````````````````````````````````````````````````````````````````
         TrajectoryActionBuilder approachBasketSecondTime = drive.actionBuilder(middleSamplePose)
-                .strafeToLinearHeading(new Vector2d(53, 51.5), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(51.75, 50.25), Math.toRadians(223));
 
-        Pose2d approachBasketSecondTimePose = new Pose2d(53, 51.5, Math.toRadians(225));
+        Pose2d approachBasketSecondTimePose = new Pose2d(51.75, 50.25, Math.toRadians(223));
 
         TrajectoryActionBuilder getLeftSample = drive.actionBuilder(approachBasketSecondTimePose)
-                .strafeToLinearHeading(new Vector2d(63.25, 43.7), Math.toRadians(296));
+                .strafeToLinearHeading(new Vector2d(66, 43.5), Math.toRadians(300));
 
-        Pose2d getLeftSamplePose = new Pose2d(63.25, 43.7, Math.toRadians(296));
+        Pose2d getLeftSamplePose = new Pose2d(66, 43.5, Math.toRadians(300));
 
         TrajectoryActionBuilder approachBasketThirdTime = drive.actionBuilder(getLeftSamplePose)
-                .strafeToLinearHeading(new Vector2d(53.5, 52), Math.toRadians(220));
+                .strafeToLinearHeading(new Vector2d(52.5, 51), Math.toRadians(220));
 
-        Pose2d approachBasketThirdTimePose = new Pose2d(53.5, 52, Math.toRadians(220));
+        Pose2d approachBasketThirdTimePose = new Pose2d(52.5, 51, Math.toRadians(220));
 
         TrajectoryActionBuilder backAwayThree = drive.actionBuilder(approachBasketThirdTimePose)
                 .strafeToLinearHeading(new Vector2d(40, 45), Math.toRadians(220));
@@ -139,7 +139,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                 ),
                                 new SleepAction(0.5),
                                 outtakeServo.clawClose(),
-                                new SleepAction(0.4),
+                                new SleepAction(0.6),
 
 
                                 new ParallelAction(
@@ -212,7 +212,7 @@ public class jocelynsampleauto extends BaseOpMode {
                                 ),
                                 new SleepAction(0.8),
                                 outtakeServo.clawClose(),
-                                new SleepAction(0.4),
+                                new SleepAction(0.6),
                                 new ParallelAction(
                                         approachBasketThirdTime.build(),
                                         slides.slidesHighest(),

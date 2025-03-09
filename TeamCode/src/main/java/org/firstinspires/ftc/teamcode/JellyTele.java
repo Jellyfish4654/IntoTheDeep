@@ -294,7 +294,7 @@ public class JellyTele extends BaseOpMode {
                 slides.update(true, false,0);
                 break;
             case HANG:
-                slides.setHigh();
+                slides.setUnderBar();
                 slides.update(true, true, 0);
                 break;
         }
