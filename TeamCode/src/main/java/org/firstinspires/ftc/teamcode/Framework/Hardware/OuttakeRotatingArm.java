@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 
 public class OuttakeRotatingArm {
     private static final double ARM_INTAKE = 0.96;
-    private static final double ARM_DEPOSIT = 0.615;
+    private static final double ARM_DEPOSIT = 0.67;
     private static final double ARM_CHAMBER = 0.71;
     private static final double ARM_GRAB = 0.74;
     private static final double ARM_INIT = 0.3;

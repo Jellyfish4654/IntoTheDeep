@@ -256,7 +256,7 @@ public class JellyTele extends BaseOpMode {
             slideMode = SlideMode.HANGPREP;
         }
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
-            slideMode = SlideMode.HANGPREP;
+            slideMode = SlideMode.HANG;
         }
     }
 
@@ -296,6 +296,7 @@ public class JellyTele extends BaseOpMode {
             case HANG:
                 slides.setHigh();
                 slides.update(true, true, 0);
+                break;
         }
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
