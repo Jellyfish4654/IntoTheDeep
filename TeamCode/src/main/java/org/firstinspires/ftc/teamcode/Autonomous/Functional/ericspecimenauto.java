@@ -175,7 +175,7 @@ public class ericspecimenauto extends BaseOpMode {
                                 slides.slidesUp(),
                                 hangThirdSpecimen.build(),
                                 new ParallelAction(
-                                        slides.slidesTransfer(),
+                                        slides.slidesFullDown(),
                                         new SequentialAction(
                                                 new SleepAction(0.35),
                                                 outtakeServo.clawOpen()

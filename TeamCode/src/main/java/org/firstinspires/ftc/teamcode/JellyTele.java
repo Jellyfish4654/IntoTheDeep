@@ -256,7 +256,7 @@ public class JellyTele extends BaseOpMode {
             slideMode = SlideMode.HANGPREP;
         }
         if (GamepadEx1.wasJustPressed(GamepadKeys.Button.A)) {
-            slideMode = SlideMode.HANG;
+            slideMode = SlideMode.HANGPREP;
         }
     }
 
@@ -289,14 +289,13 @@ public class JellyTele extends BaseOpMode {
                 }
                 slides.update(false, true, slidePower);
                 break;
-            case HANG:
-                slidePower = -1;
-                slides.update(false, true, slidePower);
-                break;
             case BASKET:
                 slides.setHighest();
                 slides.update(true, false,0);
                 break;
+            case HANG:
+                slides.setHigh();
+                slides.update(true, true, 0);
         }
         double leftPosition = slideMotorLeft.getCurrentPosition();
         double rightPosition = slideMotorRight.getCurrentPosition();
@@ -370,7 +369,7 @@ public class JellyTele extends BaseOpMode {
     }
 
     public void resetPositions() {
-        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_UP)) {
+        if (GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_UP) || GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_RIGHT) || GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_LEFT) || GamepadEx1.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)) {
             slides.establishPositions(slideMotorLeft);
             extendo.establishPositions();
         }

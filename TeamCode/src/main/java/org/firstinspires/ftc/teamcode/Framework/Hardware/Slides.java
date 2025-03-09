@@ -39,6 +39,8 @@ public class Slides {
     public double low_set_left = 5090;
     public final double low_set_right = 0;
 
+    double slidePower = 0;
+
     public double under_bar_set_left;
     public double over_bar_set_left;
     private final double ticks_in_degree = 587.3/360;
@@ -95,7 +97,7 @@ public class Slides {
         if (PID) {
             control(leftTarget);
             if (rightSlide) {
-                control(rightTarget);
+                slideMotorRight.setPower(slidePower);
             }
         } else {
             controlNoPID(slideMotorLeft, joyStickValue);
@@ -109,6 +111,7 @@ public class Slides {
         double powerSlide;
         powerSlide = calculateMotorPowerWithPID(target);
         slideMotorLeft.setPower(powerSlide);
+        slidePower = powerSlide;
     }
     private void controlNoPID(DcMotorEx motor, double power) {
         motor.setPower(power);

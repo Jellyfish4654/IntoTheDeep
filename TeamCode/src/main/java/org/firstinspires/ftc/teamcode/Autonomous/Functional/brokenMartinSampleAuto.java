@@ -54,37 +54,37 @@ public class brokenMartinSampleAuto extends BaseOpMode {
 
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(50*scale, 53*scale), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(50*scale, 53), Math.toRadians(225));
 
         TrajectoryActionBuilder backAwayTwo = drive.actionBuilder(approachBasketPose)
-                .strafeToLinearHeading(new Vector2d(50*scale, 53*scale), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(50, 53), Math.toRadians(225));
 
 
-        Pose2d backAwayPose = new Pose2d(50*scale, 53*scale, Math.toRadians(225));
+        Pose2d backAwayPose = new Pose2d(50, 53, Math.toRadians(225));
 
         TrajectoryActionBuilder getMiddleSample = drive.actionBuilder(backAwayPose)
-                .strafeToLinearHeading(new Vector2d(56*scale, 45.5*scale), Math.toRadians(275.5));
+                .strafeToLinearHeading(new Vector2d(56, 45.5), Math.toRadians(275.5));
 
 
-        Pose2d middleSamplePose = new Pose2d(56*scale, 45.5*scale, Math.toRadians(275.5));
+        Pose2d middleSamplePose = new Pose2d(56, 45.5, Math.toRadians(275.5));
 
         TrajectoryActionBuilder approachBasketSecondTime = drive.actionBuilder(middleSamplePose)
-                .strafeToLinearHeading(new Vector2d(53*scale, 51.5*scale), Math.toRadians(225));
+                .strafeToLinearHeading(new Vector2d(53, 51.5), Math.toRadians(225));
 
-        Pose2d approachBasketSecondTimePose = new Pose2d(53*scale, 51.5*scale, Math.toRadians(225));
+        Pose2d approachBasketSecondTimePose = new Pose2d(53, 51.5, Math.toRadians(225));
 
         TrajectoryActionBuilder getLeftSample = drive.actionBuilder(approachBasketSecondTimePose)
-                .strafeToLinearHeading(new Vector2d(62.25*scale, 43.7*scale), Math.toRadians(292));
+                .strafeToLinearHeading(new Vector2d(62.25, 43.7), Math.toRadians(292));
 
-        Pose2d getLeftSamplePose = new Pose2d(62.25*scale, 43.7*scale, Math.toRadians(292));
+        Pose2d getLeftSamplePose = new Pose2d(62.25, 43.7, Math.toRadians(292));
 
         TrajectoryActionBuilder approachBasketThirdTime = drive.actionBuilder(getLeftSamplePose)
-                .strafeToLinearHeading(new Vector2d(53*scale, 51.5*scale), Math.toRadians(220));
+                .strafeToLinearHeading(new Vector2d(53, 51.5), Math.toRadians(220));
 
-        Pose2d approachBasketThirdTimePose = new Pose2d(53*scale, 51.5*scale, Math.toRadians(220));
+        Pose2d approachBasketThirdTimePose = new Pose2d(53, 51.5, Math.toRadians(220));
 
         TrajectoryActionBuilder backAwayThree = drive.actionBuilder(approachBasketThirdTimePose)
-                .strafeToLinearHeading(new Vector2d(40*scale, 45*scale), Math.toRadians(220));
+                .strafeToLinearHeading(new Vector2d(40, 45), Math.toRadians(220));
 
 
 
