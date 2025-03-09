@@ -37,10 +37,10 @@ public class jocelynsampleauto extends BaseOpMode {
 
 
         TrajectoryActionBuilder getRightMostSample = drive.actionBuilder(approachBasketPoseFirst)
-                .strafeToLinearHeading(new Vector2d(45, 45), Math.toRadians(266));
+                .strafeToLinearHeading(new Vector2d(44, 45), Math.toRadians(266));
 
 
-        Pose2d rightSampleGettingPose = new Pose2d(45, 45, Math.toRadians(266));
+        Pose2d rightSampleGettingPose = new Pose2d(44, 45, Math.toRadians(266));
 
 
         TrajectoryActionBuilder approachBasket = drive.actionBuilder(rightSampleGettingPose)
@@ -76,9 +76,9 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d getLeftSamplePose = new Pose2d(63.25, 43.7, Math.toRadians(296));
 
         TrajectoryActionBuilder approachBasketThirdTime = drive.actionBuilder(getLeftSamplePose)
-                .strafeToLinearHeading(new Vector2d(53, 51.5), Math.toRadians(220));
+                .strafeToLinearHeading(new Vector2d(53.5, 52), Math.toRadians(220));
 
-        Pose2d approachBasketThirdTimePose = new Pose2d(53, 51.5, Math.toRadians(220));
+        Pose2d approachBasketThirdTimePose = new Pose2d(53.5, 52, Math.toRadians(220));
 
         TrajectoryActionBuilder backAwayThree = drive.actionBuilder(approachBasketThirdTimePose)
                 .strafeToLinearHeading(new Vector2d(40, 45), Math.toRadians(220));
