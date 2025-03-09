@@ -28,7 +28,7 @@ public class noahauto extends BaseOpMode {
     public void runOpMode() throws InterruptedException {
         // instantiate your MecanumDrive at a particular pose.
         initHardware(true);
-        double scale = 0.6;
+        double scale = 0.75;
         Pose2d initialPose = new Pose2d(-22*scale, 61.2*scale, Math.toRadians(90));
         MecanumDrive drive = new MecanumDrive(hardwareMap, initialPose);
 
