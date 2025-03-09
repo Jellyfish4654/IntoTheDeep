@@ -44,10 +44,10 @@ public class jocelynsampleauto extends BaseOpMode {
 
 
         TrajectoryActionBuilder approachBasket = drive.actionBuilder(rightSampleGettingPose)
-                .strafeToLinearHeading(new Vector2d(51.25, 50.25), Math.toRadians(222));
+                .strafeToLinearHeading(new Vector2d(52.25, 51.25), Math.toRadians(222));
 
 
-        Pose2d approachBasketPose = new Pose2d(51.25, 50.25, Math.toRadians(222));
+        Pose2d approachBasketPose = new Pose2d(52.25, 51.25, Math.toRadians(222));
 
 
         TrajectoryActionBuilder backAway = drive.actionBuilder(approachBasketPose)
@@ -65,9 +65,9 @@ public class jocelynsampleauto extends BaseOpMode {
 
         Pose2d middleSamplePose = new Pose2d(59.65, 45.5, Math.toRadians(274));
         TrajectoryActionBuilder approachBasketSecondTime = drive.actionBuilder(middleSamplePose)
-                .strafeToLinearHeading(new Vector2d(51.75, 50.25), Math.toRadians(223));
+                .strafeToLinearHeading(new Vector2d(52.75, 51.25), Math.toRadians(223));
 
-        Pose2d approachBasketSecondTimePose = new Pose2d(51.75, 50.25, Math.toRadians(223));
+        Pose2d approachBasketSecondTimePose = new Pose2d(52.75, 51.25, Math.toRadians(223));
 
         TrajectoryActionBuilder getLeftSample = drive.actionBuilder(approachBasketSecondTimePose)
                 .strafeToLinearHeading(new Vector2d(66, 43.5), Math.toRadians(300));
@@ -75,9 +75,9 @@ public class jocelynsampleauto extends BaseOpMode {
         Pose2d getLeftSamplePose = new Pose2d(66, 43.5, Math.toRadians(300));
 
         TrajectoryActionBuilder approachBasketThirdTime = drive.actionBuilder(getLeftSamplePose)
-                .strafeToLinearHeading(new Vector2d(52.5, 51), Math.toRadians(220));
+                .strafeToLinearHeading(new Vector2d(53.5, 52), Math.toRadians(220));
 
-        Pose2d approachBasketThirdTimePose = new Pose2d(52.5, 51, Math.toRadians(220));
+        Pose2d approachBasketThirdTimePose = new Pose2d(53.5, 52, Math.toRadians(220));
 
         TrajectoryActionBuilder backAwayThree = drive.actionBuilder(approachBasketThirdTimePose)
                 .strafeToLinearHeading(new Vector2d(40, 45), Math.toRadians(220));
